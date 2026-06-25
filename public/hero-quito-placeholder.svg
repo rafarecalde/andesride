@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stylized Quito skyline placeholder">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4FAFB"/>
+      <stop offset="0.55" stop-color="#EAF6F7"/>
+      <stop offset="1" stop-color="#FBEFD8"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9FC9B4"/>
+      <stop offset="1" stop-color="#7BB29A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1230" cy="210" r="150" fill="#FFF3DD" opacity="0.7"/>
+  <circle cx="1230" cy="210" r="74" fill="#FFE7B5" opacity="0.8"/>
+
+  <!-- climbing plane (UIO nod) -->
+  <g transform="translate(430 230) rotate(-18)" fill="#56657C" opacity="0.85">
+    <path d="M0 0 L78 -6 L96 -2 L78 6 Z"/>
+    <path d="M40 -3 L58 -26 L66 -24 L52 -1 Z"/>
+    <path d="M40 3 L58 26 L66 24 L52 1 Z"/>
+    <path d="M74 -4 L86 -14 L90 -13 L82 -2 Z"/>
+  </g>
+  <path d="M250 300 Q360 250 430 232" stroke="#C9D6E2" stroke-width="3" fill="none" stroke-dasharray="2 12" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- distant Andes ranges -->
+  <path d="M0 560 L210 430 L360 520 L520 410 L690 520 L520 560 Z" fill="#CBE6E9"/>
+  <path d="M0 600 L300 470 L470 560 L640 455 L820 560 L980 470 L1180 560 L1380 480 L1600 560 L1600 700 L0 700 Z" fill="#B7DCE0"/>
+  <path d="M820 560 L980 470 L1180 560 L1380 490 L1600 575 L1600 700 L760 700 Z" fill="#A2D0D5"/>
+
+  <!-- Panecillo hill with the Virgen del Panecillo silhouette -->
+  <path d="M860 690 Q1020 520 1190 690 Z" fill="url(#hill)"/>
+  <g transform="translate(1025 545)" fill="#F2F5F4" stroke="#D7E0DC" stroke-width="1">
+    <rect x="-16" y="-6" width="32" height="60" rx="4"/>
+    <rect x="-22" y="48" width="44" height="14" rx="3"/>
+    <circle cx="0" cy="-18" r="9"/>
+    <path d="M-9 -10 Q0 -2 9 -10 L7 14 L-7 14 Z"/>
+    <path d="M-9 -8 Q-30 -2 -34 22 Q-18 8 -8 12 Z"/>
+    <path d="M9 -8 Q30 -2 34 22 Q18 8 8 12 Z"/>
+  </g>
+
+  <!-- city sprinkle along the valley -->
+  <g fill="#E7EDF1">
+    <rect x="120" y="648" width="26" height="52"/><rect x="156" y="664" width="20" height="36"/>
+    <rect x="190" y="640" width="30" height="60"/><rect x="232" y="668" width="18" height="32"/>
+    <rect x="300" y="656" width="24" height="44"/><rect x="338" y="640" width="30" height="60"/>
+    <rect x="380" y="666" width="20" height="34"/><rect x="560" y="660" width="24" height="40"/>
+    <rect x="598" y="648" width="28" height="52"/><rect x="640" y="668" width="18" height="32"/>
+    <rect x="1280" y="652" width="26" height="48"/><rect x="1318" y="666" width="20" height="34"/>
+    <rect x="1352" y="644" width="30" height="56"/><rect x="1394" y="668" width="18" height="32"/>
+  </g>
+
+  <!-- foreground ridge -->
+  <path d="M0 720 L240 660 L470 712 L700 648 L940 720 L1180 656 L1420 716 L1600 670 L1600 900 L0 900 Z" fill="#CBE6E9" opacity="0.65"/>
+  <path d="M0 770 L300 712 L560 762 L860 700 L1140 768 L1420 706 L1600 752 L1600 900 L0 900 Z" fill="#B6DCE0" opacity="0.7"/>
+</svg>

@@ -22,10 +22,10 @@ const placeholders: Record<string, string> = {
         const photo = imageFor(v.key);
         return (
           <div class="fc reveal">
-            <div class="fimg">
+            <div class={`fimg${photo ? '' : ' is-placeholder'}`}>
               {photo
                 ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={520} height={360} />
-                : <svg viewBox="0 0 64 32" set:html={placeholders[v.key]} />}
+                : <><svg viewBox="0 0 64 32" set:html={placeholders[v.key]} /><span class="fimg-badge">Sample image</span></>}
             </div>
             <h3>{v.name}</h3>
             <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags</div>

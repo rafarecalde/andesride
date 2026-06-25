@@ -61,6 +61,14 @@ total = vehicleRate × (roundTrip ? 2 : 1)
       + (extraStop ? extraStop × (roundTrip ? 2 : 1) : 0)
 ```
 
+## Adding the hero image
+
+The hero shows an on-brand Quito **placeholder** (`public/hero-quito-placeholder.svg`)
+with a "Sample image" feel. To use a real photo (El Panecillo, the UIO terminal,
+the Andes at dawn), drop ONE landscape image at `src/assets/hero.webp` (or
+`.jpg`/`.png`, ≥1600×900). It replaces the placeholder automatically — no code
+change. A light wash keeps the headline readable over any photo.
+
 ## Adding fleet photos
 
 Drop representative photos into `src/assets/fleet/` named exactly
