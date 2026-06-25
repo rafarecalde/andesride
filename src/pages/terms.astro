@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, DISCLOSURE } from '../config';
+import { u } from '../lib/url';
 ---
 <BaseLayout title={`Terms of Service | ${SITE.name}`} description="AndesRide terms of service." path="/terms">
   <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Terms of service</h1></div></header>
@@ -13,7 +14,7 @@ import { SITE, DISCLOSURE } from '../config';
     <h2>Payment</h2>
     <p>The fare is collected at the time of booking as the carrier's booking and payment channel. Your booking is confirmed once payment is received and you are issued a reference number.</p>
     <h2>Cancellations</h2>
-    <p>See our <a href="/cancellation">cancellation &amp; refund policy</a>. In short: free cancellation up to {SITE.cancelFreeHours} hours before pickup; within {SITE.cancelFreeHours} hours or no-show is non-refundable.</p>
+    <p>See our <a href={u('/cancellation')}>cancellation &amp; refund policy</a>. In short: free cancellation up to {SITE.cancelFreeHours} hours before pickup; within {SITE.cancelFreeHours} hours or no-show is non-refundable.</p>
     <h2>The ride</h2>
     <p>Rides are provided by independent, licensed, airport-authorized carriers. You agree to provide accurate pickup details and a valid flight number where applicable, and to be ready at the scheduled pickup time.</p>
     <h2>Liability</h2>

@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config';
+import { u } from '../lib/url';
 import '../styles/global.css';
 
 interface Props {
@@ -21,7 +22,7 @@ const ogImage = new URL(image ?? '/og-default.png', SITE.domain).href;
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
 
 <!-- Open Graph -->
 <meta property="og:type" content={ogType} />

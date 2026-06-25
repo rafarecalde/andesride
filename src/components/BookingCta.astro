@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 interface Props {
   heading?: string;
   text?: string;
@@ -12,7 +13,7 @@ const {
   zone,
   label = 'Book your transfer',
 } = Astro.props;
-const href = zone ? `/?zone=${zone}#book` : '/#book';
+const href = zone ? u(`/?zone=${zone}#book`) : u('/#book');
 ---
 <aside class="cta-block">
   <h3>{heading}</h3>

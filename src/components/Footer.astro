@@ -1,5 +1,6 @@
 ---
 import { SITE, DISCLOSURE } from '../config';
+import { u } from '../lib/url';
 const year = new Date().getFullYear();
 const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
 ---
@@ -13,18 +14,18 @@ const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
       </div>
       <div class="foot-col">
         <h4>Transfers</h4>
-        <a href="/#book">Book a transfer</a>
-        <a href="/#rates">Flat rates</a>
-        <a href="/#fleet">Our fleet</a>
-        <a href="/guide">Travel guide</a>
-        <a href="/#faq">FAQ</a>
+        <a href={u('/#book')}>Book a transfer</a>
+        <a href={u('/#rates')}>Flat rates</a>
+        <a href={u('/#fleet')}>Our fleet</a>
+        <a href={u('/guide')}>Travel guide</a>
+        <a href={u('/#faq')}>FAQ</a>
       </div>
       <div class="foot-col">
         <h4>Popular routes</h4>
-        <a href="/quito-airport-to-norte">UIO → Quito Norte</a>
-        <a href="/quito-airport-to-cumbaya">UIO → Cumbayá</a>
-        <a href="/quito-airport-to-mitad">UIO → Mitad del Mundo</a>
-        <a href="/quito-airport-to-otavalo">UIO → Otavalo</a>
+        <a href={u('/quito-airport-to-norte')}>UIO → Quito Norte</a>
+        <a href={u('/quito-airport-to-cumbaya')}>UIO → Cumbayá</a>
+        <a href={u('/quito-airport-to-mitad')}>UIO → Mitad del Mundo</a>
+        <a href={u('/quito-airport-to-otavalo')}>UIO → Otavalo</a>
       </div>
       <div class="foot-col">
         <h4>Contact</h4>
@@ -35,9 +36,9 @@ const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
     <div class="foot-bottom">
       <span>© {year} {SITE.name}. All prices in USD.</span>
       <span>
-        <a href="/terms">Terms</a> ·
-        <a href="/privacy">Privacy</a> ·
-        <a href="/cancellation">Cancellation policy</a>
+        <a href={u('/terms')}>Terms</a> ·
+        <a href={u('/privacy')}>Privacy</a> ·
+        <a href={u('/cancellation')}>Cancellation policy</a>
       </span>
     </div>
   </div>

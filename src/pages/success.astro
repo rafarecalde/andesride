@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, DISCLOSURE } from '../config';
+import { u } from '../lib/url';
 // Payment-return page (live mode redirects here after hosted checkout).
 const ref = Astro.url.searchParams.get('ref') ?? '';
 ---
@@ -13,7 +14,7 @@ const ref = Astro.url.searchParams.get('ref') ?? '';
         <p>A confirmation and driver details are on the way to your email. We'll track your flight and be waiting at arrivals.</p>
         {ref && <div class="ref">{ref}</div>}
         <p class="disclosure" style="text-align:left">{DISCLOSURE}</p>
-        <div style="margin-top:18px"><a class="btn btn-outline" href="/">Back to home</a></div>
+        <div style="margin-top:18px"><a class="btn btn-outline" href={u('/')}>Back to home</a></div>
       </div>
     </div>
   </section>

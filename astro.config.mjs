@@ -3,20 +3,52 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AndesRide is built AS andesride.com (root paths) so the day DNS is pointed
-// nothing needs to change. You preview it locally right now with `npm run dev`
-// (the domain is irrelevant for local dev).
+// PREVIEW vs PRODUCTION
 //
-// When you DON'T yet own the domain and want a public preview on GitHub Pages
-// *project* hosting (https://<user>.github.io/andesride/), switch to:
-//     site: 'https://<user>.github.io',
-//     base: '/andesride',
-// and the build will rewrite all asset/link paths under /andesride. Flip back
-// to the two lines below once the custom domain is live (and add public/CNAME).
+// This is currently configured for a GitHub Pages PROJECT preview, served under
+// a subpath: https://rafarecalde.github.io/andesride/  (base '/andesride').
+//
+// When the custom domain andesride.com is live, flip to root hosting — change
+// these two lines and add public/CNAME:
+//     site: 'https://andesride.com',
+//     base: '/',
+// All internal links go through u() (src/lib/url.ts) and markdown links are
+// base-prefixed automatically, so the flip needs no other edits.
 // ─────────────────────────────────────────────────────────────────────────────
+const SITE = 'https://rafarecalde.github.io';
+const BASE = '/andesride';
+
+// Base-aware rewrite of internal links inside markdown (href/src starting with
+// "/"). No-op when BASE is '/'. Avoids a unist dependency by recursing manually.
+function rehypeBase() {
+  const base = BASE === '/' ? '' : BASE;
+  if (!base) return () => {};
+  const fix = (node) => {
+    if (node.type === 'element' && node.properties) {
+      for (const attr of ['href', 'src']) {
+        const v = node.properties[attr];
+        if (
+          typeof v === 'string' &&
+          v.startsWith('/') &&
+          !v.startsWith('//') &&
+          v !== base &&
+          !v.startsWith(base + '/')
+        ) {
+          node.properties[attr] = base + v;
+        }
+      }
+    }
+    (node.children || []).forEach(fix);
+  };
+  return (tree) => fix(tree);
+}
+
 export default defineConfig({
-  site: 'https://andesride.com',
-  base: '/',
+  site: SITE,
+  base: BASE,
   trailingSlash: 'ignore',
   integrations: [sitemap()],
+  markdown: {
+    rehypePlugins: [rehypeBase],
+  },
 });

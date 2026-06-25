@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
 import { SITE } from '../config';
+import { u } from '../lib/url';
 import rates from '../data/rates.json';
 
 export function getStaticPaths() {
@@ -37,7 +38,7 @@ const schema = {
 >
   <header class="page-hero">
     <div class="wrap">
-      <div class="crumbs"><a href="/">Home</a> · <a href="/#rates">Rates</a> · {zone.name}</div>
+      <div class="crumbs"><a href={u('/')}>Home</a> · <a href={u('/#rates')}>Rates</a> · {zone.name}</div>
       <span class="eyebrow">Private transfer · UIO</span>
       <h1>Quito Airport to {zone.name}</h1>
       <p class="meta">{zone.sub} — flat-rate, flight-tracked, door-to-door.</p>
@@ -81,8 +82,8 @@ const schema = {
         airport-authorized carrier is already expecting you when you land.
       </p>
       <p>
-        Prefer to compare every area first? See the <a href="/#rates">full flat-rate table</a> or read our
-        <a href="/guide">Quito airport travel guide</a>.
+        Prefer to compare every area first? See the <a href={u('/#rates')}>full flat-rate table</a> or read our
+        <a href={u('/guide')}>Quito airport travel guide</a>.
       </p>
     </div>
 
