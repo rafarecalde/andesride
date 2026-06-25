@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { title, description, category, publishDate } = post.data;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<a class="pcard reveal" href={`/guide/${post.slug}`}>
+  <div class="pc-body">
+    <span class="pc-cat">{category}</span>
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <span class="pc-more">Read the guide →</span>
+    <span class="pc-date">{fmt(publishDate)}</span>
+  </div>
+</a>

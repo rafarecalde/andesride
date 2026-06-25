@@ -1,0 +1,430 @@
+---
+import rates from '../data/rates.json';
+import { SITE, DISCLOSURE } from '../config';
+import { imageFor, REPRESENTATIVE_CAPTION } from '../lib/fleet';
+import { Image } from 'astro:assets';
+
+const { zones, vehicles, extras } = rates;
+const isLive = SITE.paymentsMode === 'live';
+
+// Data handed to the client script — the widget reads rates from here, never
+// from hardcoded values (single source of truth = rates.json).
+const widgetData = JSON.stringify({ zones, vehicles, extras });
+
+const vehIcons: Record<string, string> = {
+  sedan: '<path d="M3 13l2-5a3 3 0 013-2h8a3 3 0 013 2l2 5"/><path d="M2 13h20v4H2zM6 17v2M18 17v2"/><circle cx="7" cy="13" r="1.4"/><circle cx="17" cy="13" r="1.4"/>',
+  suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
+  van: '<path d="M3 7h11l4 4h3v6H3z"/><path d="M3 17v2M19 17v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/><path d="M7 7v4M11 7v4"/>',
+};
+---
+<div class="booker reveal" id="book">
+  <div class="bk-head">
+    <div class="h-l">
+      <svg viewBox="0 0 24 24"><path d="M3 16l6-2 5-9 2 1-2 8 5-1 1 2-16 5z"/></svg>
+      <span class="ti" id="bkTitle">Book your transfer</span>
+    </div>
+    <div class="bk-steps"><i class="on" id="dot0"></i><i id="dot1"></i><i id="dot2"></i></div>
+  </div>
+  <div class="bk-body">
+
+    <!-- STEP 1: TRIP -->
+    <div class="step on" id="step0">
+      <div class="seg" role="group" aria-label="Direction">
+        <button type="button" class="on" data-dir="from"><svg viewBox="0 0 24 24"><path d="M2 12h16M12 5l7 7-7 7"/><path d="M21 4v16"/></svg> From UIO</button>
+        <button type="button" data-dir="to"><svg viewBox="0 0 24 24"><path d="M22 12H6M12 5l-7 7 7 7"/><path d="M3 4v16"/></svg> To UIO</button>
+      </div>
+
+      <div class="fld">
+        <label id="zoneLabel" for="zone">Drop-off area (in &amp; around Quito)</label>
+        <select class="ctrl" id="zone">
+          <option value="" disabled selected>Choose your area…</option>
+          {zones.map((z) => <option value={z.key}>{z.name}</option>)}
+        </select>
+        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">Estimated drive time shows once you pick an area</span></div>
+      </div>
+
+      <div class="fld-row">
+        <div class="fld"><label for="date">Pick-up date</label><input class="ctrl" type="date" id="date"></div>
+        <div class="fld"><label for="time">Pick-up time</label><input class="ctrl" type="time" id="time" value="09:00"></div>
+      </div>
+      <div class="fld"><label for="pax">Passengers</label>
+        <select class="ctrl" id="pax">
+          {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => <option selected={n === 3}>{n}</option>)}
+        </select>
+      </div>
+
+      <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:6px;display:block">Choose your vehicle</label>
+      <div class="veh" id="veh">
+        {vehicles.map((v, idx) => {
+          const photo = imageFor(v.key);
+          return (
+            <label class={`veh-opt${idx === 0 ? ' sel' : ''}`} data-veh={v.key} tabindex="0" role="button" aria-pressed={idx === 0 ? 'true' : 'false'}>
+              <span class="vi">
+                {photo
+                  ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={92} height={76} />
+                  : <svg viewBox="0 0 24 24" set:html={vehIcons[v.key]} />}
+              </span>
+              <span class="vmid"><span class="vn">{v.name}</span><span class="vmeta">Up to {v.maxPax} passengers · {v.bags} bags</span></span>
+              <span class="vp"><span id={`p-${v.key}`}>$—</span><small>flat</small></span>
+            </label>
+          );
+        })}
+      </div>
+      <div class="veh-cap">{REPRESENTATIVE_CAPTION}</div>
+
+      <div class="total-bar">
+        <div class="tl">Total <b id="t0">$—</b></div>
+        <div class="tg"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Flat rate, all-in</div>
+      </div>
+      <button class="btn btn-amber" style="width:100%" id="toStep1">Continue</button>
+    </div>
+
+    <!-- STEP 2: EXTRAS + DETAILS -->
+    <div class="step" id="step1">
+      <div class="xtras" style="margin-bottom:16px">
+        <div class="xtra">
+          <span class="xi"><svg viewBox="0 0 24 24"><path d="M3 7h6l3 3 3-3h6"/><path d="M7 7v10M17 7v10"/></svg></span>
+          <span class="xt"><span class="xn">Round trip</span><span class="xd">Add the return ride and save the second booking</span></span>
+          <label class="switch"><input type="checkbox" id="rt" aria-label="Round trip"><span class="sl"></span></label>
+        </div>
+        <div id="rtFields" style="display:none">
+          <div class="fld-row">
+            <div class="fld"><label for="rdate">Return date</label><input class="ctrl" type="date" id="rdate"></div>
+            <div class="fld"><label for="rtime">Return time</label><input class="ctrl" type="time" id="rtime" value="09:00"></div>
+          </div>
+        </div>
+        <div class="xtra">
+          <span class="xi"><svg viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 9V6h6v3"/></svg></span>
+          <span class="xt"><span class="xn">Child seat</span><span class="xd">${extras.childSeat} each</span></span>
+          <span class="qty"><button type="button" id="childMinus" aria-label="Fewer child seats">−</button><span id="childN">0</span><button type="button" id="childPlus" aria-label="More child seats">+</button></span>
+        </div>
+        <div class="xtra">
+          <span class="xi"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 00-8-8z"/></svg></span>
+          <span class="xt"><span class="xn">Extra stop</span><span class="xd">One additional pickup or stop · ${extras.extraStop}</span></span>
+          <label class="switch"><input type="checkbox" id="stop" aria-label="Extra stop"><span class="sl"></span></label>
+        </div>
+        <div class="xtra">
+          <span class="xi"><svg viewBox="0 0 24 24"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7"/></svg></span>
+          <span class="xt"><span class="xn">Meet &amp; greet + flight tracking</span><span class="xd">Driver waits at arrivals with a name sign</span></span>
+          <span class="xp free">Included</span>
+        </div>
+      </div>
+
+      <div class="fld"><label for="flight">Flight number <span style="color:var(--slate-light);text-transform:none;letter-spacing:0">(so we track your arrival)</span></label><input class="ctrl" id="flight" placeholder="e.g. AV 0918"></div>
+      <div class="fld"><label for="name">Lead passenger name</label><input class="ctrl" id="name" placeholder="Full name" autocomplete="name"></div>
+      <div class="fld-row">
+        <div class="fld"><label for="email">Email</label><input class="ctrl" type="email" id="email" placeholder="you@email.com" autocomplete="email"></div>
+        <div class="fld"><label for="phone">Mobile / WhatsApp</label><input class="ctrl" id="phone" placeholder="+1 305 …" autocomplete="tel"></div>
+      </div>
+
+      <p class="disclosure">{DISCLOSURE}</p>
+
+      <div class="total-bar"><div class="tl">Total <b id="t1">$—</b></div><div class="tg"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Free cancel up to {SITE.cancelFreeHours}h</div></div>
+      <div class="bk-actions">
+        <button class="btn btn-ghost back" id="back1">Back</button>
+        <button class="btn btn-amber" id="toStep2">Review &amp; pay</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: REVIEW + PAY -->
+    <div class="step" id="step2">
+      <div class="summary" id="summary"></div>
+
+      <label class="policy">
+        <input type="checkbox" id="policy">
+        <span>I understand cancellation is free up to {SITE.cancelFreeHours} hours before pickup. Within {SITE.cancelFreeHours} hours, or for a no-show, the booking is non-refundable because the carrier has been committed.</span>
+      </label>
+
+      {isLive ? (
+        <>
+          <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:8px;display:block">Pay securely</label>
+          <div class="fld cardfield"><label for="cc">Card number</label><input class="ctrl" id="cc" placeholder="1234 5678 9012 3456" inputmode="numeric"></div>
+          <div class="pay-row">
+            <div class="fld"><label for="exp">Expiry</label><input class="ctrl" id="exp" placeholder="MM / YY"></div>
+            <div class="fld"><label for="cvc">CVC</label><input class="ctrl" id="cvc" placeholder="123" inputmode="numeric"></div>
+          </div>
+        </>
+      ) : null}
+
+      <div id="payErr" class="route-hint" style="color:#d9534f;display:none;margin-bottom:10px"></div>
+      <div class="bk-actions">
+        <button class="btn btn-ghost back" id="back2">Back</button>
+        <button class="btn btn-amber" id="payBtn">Pay <span id="payAmt">$—</span> now</button>
+      </div>
+      <div class="secure-note">
+        <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+        Secure checkout · Prices in USD{isLive ? '' : ' · Demo mode — no real charge'}
+      </div>
+      <p class="disclosure">{DISCLOSURE}</p>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div class="step" id="step3">
+      <div class="confirm">
+        <div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+        <h3>You're booked!</h3>
+        <p>A confirmation and driver details are on the way to your email. We'll track your flight and be waiting at arrivals.</p>
+        <div class="ref" id="bref">AR-UIO-000000</div>
+        <p class="disclosure" style="text-align:left">{DISCLOSURE}</p>
+        <div style="margin-top:18px"><button class="btn btn-outline" id="again">Book another transfer</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="application/json" id="ratesData" set:html={widgetData}></script>
+</div>
+
+<script>
+  import { createCheckout } from '../lib/payments';
+
+  type Zone = { key: string; name: string; sub: string; eta: string; sedan: number; suv: number; van: number };
+  type Extras = { childSeat: number; extraStop: number };
+  const data = JSON.parse(document.getElementById('ratesData')!.textContent || '{}');
+  const ZONES: Zone[] = data.zones;
+  const EXTRAS: Extras = data.extras;
+  const VEHNAME: Record<string, string> = Object.fromEntries(
+    (data.vehicles as { key: string; name: string }[]).map((v) => [v.key, v.name]),
+  );
+  const VEH_KEYS = (data.vehicles as { key: string }[]).map((v) => v.key);
+
+  const state = { dir: 'from', zone: '', veh: VEH_KEYS[0], child: 0, stop: false, rt: false, step: 0 };
+
+  const $ = (id: string) => document.getElementById(id)!;
+  const zoneSel = $('zone') as HTMLSelectElement;
+
+  const zone = () => ZONES.find((x) => x.key === state.zone);
+  const basePrice = () => {
+    const z = zone();
+    return z ? (z[state.veh as 'sedan' | 'suv' | 'van'] as number) : null;
+  };
+  const total = () => {
+    const b = basePrice();
+    if (b === null) return null;
+    let t = b * (state.rt ? 2 : 1);
+    t += state.child * EXTRAS.childSeat;
+    if (state.stop) t += EXTRAS.extraStop * (state.rt ? 2 : 1);
+    return t;
+  };
+  const money = (n: number | null) => (n === null ? '$—' : '$' + n);
+
+  function setDir(d: string) {
+    state.dir = d;
+    document.querySelectorAll<HTMLButtonElement>('.seg button').forEach((b) =>
+      b.classList.toggle('on', b.dataset.dir === d),
+    );
+    $('zoneLabel').textContent =
+      d === 'from' ? 'Drop-off area (in & around Quito)' : 'Pick-up area (in & around Quito)';
+    recalc();
+  }
+  function setVeh(v: string) {
+    state.veh = v;
+    document.querySelectorAll<HTMLElement>('.veh-opt').forEach((o) => {
+      const on = o.dataset.veh === v;
+      o.classList.toggle('sel', on);
+      o.setAttribute('aria-pressed', String(on));
+    });
+    recalc();
+  }
+  function recalc() {
+    state.zone = zoneSel.value;
+    state.stop = ($('stop') as HTMLInputElement)?.checked ?? false;
+    const z = zone();
+    VEH_KEYS.forEach((v) => {
+      $('p-' + v).textContent = z ? '$' + (z[v as 'sedan' | 'suv' | 'van'] as number) : '$—';
+    });
+    $('etaHint').textContent = z
+      ? 'Estimated drive time · ' + z.eta
+      : 'Estimated drive time shows once you pick an area';
+    const t = total();
+    ['t0', 't1'].forEach((id) => ($(id).textContent = money(t)));
+    $('payAmt').textContent = money(t);
+  }
+
+  function showStep(n: number) {
+    state.step = n;
+    for (let i = 0; i < 4; i++) $('step' + i).classList.toggle('on', i === n);
+    for (let i = 0; i < 3; i++) $('dot' + i).classList.toggle('on', i <= Math.min(n, 2));
+    const titles = ['Book your transfer', 'Add-ons & details', 'Review & pay', 'Booking confirmed'];
+    $('bkTitle').textContent = titles[n];
+    document.querySelector('.booker')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function go(n: number) {
+    if (n >= 1 && !state.zone) {
+      zoneSel.focus();
+      zoneSel.classList.add('field-err');
+      return;
+    }
+    zoneSel.classList.remove('field-err');
+    if (n === 2) buildSummary();
+    showStep(n);
+  }
+
+  function buildSummary() {
+    const z = zone()!;
+    const b = basePrice()!;
+    const route = state.dir === 'from' ? 'UIO → ' + z.name : z.name + ' → UIO';
+    const d = ($('date') as HTMLInputElement).value;
+    const tm = ($('time') as HTMLInputElement).value;
+    const rows: [string, string][] = [];
+    rows.push(['Route', route]);
+    rows.push(['When', (d || 'Date TBC') + (tm ? ' · ' + tm : '')]);
+    rows.push([VEHNAME[state.veh] + ' · ' + ($('pax') as HTMLSelectElement).value + ' pax', '$' + b]);
+    if (state.rt) {
+      const rd = ($('rdate') as HTMLInputElement).value;
+      const rtm = ($('rtime') as HTMLInputElement).value;
+      rows.push(['Return ride' + (rd ? ' · ' + rd + (rtm ? ' ' + rtm : '') : ''), '$' + b]);
+    }
+    if (state.child) rows.push(['Child seat × ' + state.child, '$' + state.child * EXTRAS.childSeat]);
+    if (state.stop) rows.push(['Extra stop' + (state.rt ? ' × 2' : ''), '$' + EXTRAS.extraStop * (state.rt ? 2 : 1)]);
+    rows.push(['Meet & greet + flight tracking', 'Included']);
+    let html = rows
+      .map((r) => `<div class="sline"><span class="k">${r[0]}</span><span class="v">${r[1]}</span></div>`)
+      .join('');
+    html += `<div class="sline rt tot"><span class="k">Total (USD)</span><span class="v">${money(total())}</span></div>`;
+    $('summary').innerHTML = html;
+  }
+
+  async function pay() {
+    const err = $('payErr');
+    const name = ($('name') as HTMLInputElement).value.trim();
+    const email = ($('email') as HTMLInputElement).value.trim();
+    const phone = ($('phone') as HTMLInputElement).value.trim();
+    const policy = ($('policy') as HTMLInputElement).checked;
+    const show = (m: string) => {
+      err.textContent = m;
+      err.style.display = 'flex';
+    };
+    if (!name || !email || !phone) return show('Please add your name, email, and mobile number (step 2).');
+    if (!/.+@.+\..+/.test(email)) return show('Please enter a valid email address.');
+    if (!policy) return show('Please accept the cancellation policy to continue.');
+    err.style.display = 'none';
+
+    const btn = $('payBtn') as HTMLButtonElement;
+    const label = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    const z = zone()!;
+    const result = await createCheckout({
+      amountUSD: total()!,
+      metadata: {
+        route: state.dir === 'from' ? 'UIO->' + z.key : z.key + '->UIO',
+        vehicle: state.veh,
+        pax: ($('pax') as HTMLSelectElement).value,
+        date: ($('date') as HTMLInputElement).value,
+        time: ($('time') as HTMLInputElement).value,
+        roundTrip: state.rt,
+        childSeats: state.child,
+        extraStop: state.stop,
+        flight: ($('flight') as HTMLInputElement).value.trim(),
+        name,
+        email,
+        phone,
+        cancellationAccepted: true,
+      },
+    });
+
+    if (!result.ok) {
+      btn.disabled = false;
+      btn.innerHTML = label;
+      return show(result.error || 'Payment could not be started. Please try again.');
+    }
+    if (result.checkoutUrl) {
+      window.location.href = result.checkoutUrl; // live → hosted checkout
+      return;
+    }
+    $('bref').textContent = result.reference;
+    btn.disabled = false;
+    btn.innerHTML = label;
+    showStep(3);
+  }
+
+  function reset() {
+    state.child = 0;
+    state.stop = false;
+    state.rt = false;
+    $('childN').textContent = '0';
+    const rt = $('rt') as HTMLInputElement;
+    if (rt) {
+      rt.checked = false;
+      $('rtFields').style.display = 'none';
+    }
+    const stop = $('stop') as HTMLInputElement;
+    if (stop) stop.checked = false;
+    const policy = $('policy') as HTMLInputElement;
+    if (policy) policy.checked = false;
+    recalc();
+    showStep(0);
+  }
+
+  // ── wire up ────────────────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.seg button').forEach((b) =>
+    b.addEventListener('click', () => setDir(b.dataset.dir!)),
+  );
+  document.querySelectorAll<HTMLElement>('.veh-opt').forEach((o) => {
+    const pick = () => setVeh(o.dataset.veh!);
+    o.addEventListener('click', pick);
+    o.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+        e.preventDefault();
+        pick();
+      }
+    });
+  });
+  zoneSel.addEventListener('change', recalc);
+  ($('pax') as HTMLSelectElement).addEventListener('change', recalc);
+  $('toStep1').addEventListener('click', () => go(1));
+  $('back1').addEventListener('click', () => go(0));
+  $('toStep2').addEventListener('click', () => go(2));
+  $('back2').addEventListener('click', () => go(1));
+  $('payBtn').addEventListener('click', pay);
+  $('again').addEventListener('click', reset);
+  $('childMinus').addEventListener('click', () => {
+    state.child = Math.max(0, state.child - 1);
+    $('childN').textContent = String(state.child);
+    recalc();
+  });
+  $('childPlus').addEventListener('click', () => {
+    state.child = Math.min(3, state.child + 1);
+    $('childN').textContent = String(state.child);
+    recalc();
+  });
+  $('rt').addEventListener('change', () => {
+    state.rt = ($('rt') as HTMLInputElement).checked;
+    $('rtFields').style.display = state.rt ? 'block' : 'none';
+    recalc();
+  });
+  $('stop').addEventListener('change', recalc);
+
+  // Live card-field niceties (only present in live mode).
+  const cc = $('cc') as HTMLInputElement | null;
+  cc?.addEventListener('input', (e) => {
+    const t = e.target as HTMLInputElement;
+    t.value = t.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+  });
+  const exp = $('exp') as HTMLInputElement | null;
+  exp?.addEventListener('input', (e) => {
+    const t = e.target as HTMLInputElement;
+    let v = t.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length > 2) v = v.slice(0, 2) + ' / ' + v.slice(2);
+    t.value = v;
+  });
+
+  // Default date = today.
+  ($('date') as HTMLInputElement).value = new Date().toISOString().slice(0, 10);
+
+  // Global prefill hook (used by the rates table + deep-links).
+  (window as any).andesPrefill = (key: string) => {
+    zoneSel.value = key;
+    recalc();
+    $('book').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  // Deep-link: /?zone=otavalo#book preselects the zone.
+  const qsZone = new URLSearchParams(location.search).get('zone');
+  if (qsZone && ZONES.some((z) => z.key === qsZone)) {
+    zoneSel.value = qsZone;
+  }
+
+  recalc();
+</script>

@@ -1,0 +1,19 @@
+{
+  "name": "andesride",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AndesRide — flat-rate private airport transfers to/from Quito (UIO), US-facing booking site + SEO blog.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.6.1",
+    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/rss": "^4.0.11"
+  }
+}

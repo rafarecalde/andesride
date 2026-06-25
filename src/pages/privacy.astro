@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config';
+---
+<BaseLayout title={`Privacy Policy | ${SITE.name}`} description="AndesRide privacy policy." path="/privacy">
+  <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Privacy policy</h1></div></header>
+  <div class="wrap"><div class="prose">
+    <p><em>Template — have local counsel review before launch.</em></p>
+    <h2>What we collect</h2>
+    <p>To fulfil a booking we collect the details you enter: lead passenger name, email, mobile/WhatsApp number, flight number, route, date/time, vehicle, and the add-ons you select. Payment is processed by our payment provider; we do not store full card numbers.</p>
+    <h2>How we use it</h2>
+    <p>We use your information to confirm and deliver your transfer, to coordinate the assigned carrier, to track your flight, and to contact you about your booking. We share only what's necessary with the carrier providing your ride.</p>
+    <h2>Payment processing</h2>
+    <p>Card payments are handled by a third-party payment processor under their own terms and security standards. AndesRide receives a confirmation and booking metadata, not your card details.</p>
+    <h2>Your choices</h2>
+    <p>To access, correct, or delete your information, contact {SITE.email}.</p>
+    <h2>Analytics &amp; cookies</h2>
+    <p>If analytics are enabled, this section will describe what is collected and how to opt out. Add your analytics/cookie disclosure here before launch.</p>
+    <h2>Contact</h2>
+    <p>{SITE.email}</p>
+  </div></div>
+</BaseLayout>

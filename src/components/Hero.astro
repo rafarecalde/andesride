@@ -1,0 +1,33 @@
+---
+import { SITE } from '../config';
+import Booker from './Booker.astro';
+---
+<section class="hero" id="top">
+  <div class="hero-ridge" aria-hidden="true">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path d="M0 230 L160 150 L300 210 L460 110 L620 200 L780 120 L940 200 L1120 130 L1280 200 L1440 150 L1440 320 L0 320Z" fill="#DCEEF0"/>
+      <path d="M0 280 L220 210 L420 260 L620 200 L860 270 L1080 210 L1300 270 L1440 230 L1440 320 L0 320Z" fill="#CBE6E9"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Quito Airport (UIO) — Tababela</span>
+        <h1>Private airport transfers in Quito, at one <span class="hl">flat rate</span></h1>
+        <p class="hero-sub">Book a private ride to or from Mariscal Sucre International Airport (UIO). Fixed price, no surge, flight tracking, and a driver waiting with your name.</p>
+        <div class="hero-usps">
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Flat rate confirmed before you pay — no meter, no surprises</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> We track your flight — free wait time if you're delayed</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Meet &amp; greet at arrivals with a name sign, included</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Licensed, vetted, English-speaking drivers</div>
+        </div>
+        <div class="hero-rating">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="rt"><b>{SITE.ratingValue}</b>/5 · trusted by {Number(SITE.ratingCount).toLocaleString()}+ travelers</span>
+        </div>
+      </div>
+
+      <Booker />
+    </div>
+  </div>
+</section>

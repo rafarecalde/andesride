@@ -1,0 +1,19 @@
+# build output
+dist/
+.output/
+
+# deps
+node_modules/
+
+# astro
+.astro/
+
+# env / secrets — NEVER commit payment keys
+.env
+.env.*
+!.env.example
+
+# os / editor
+.DS_Store
+*.log
+.vscode/

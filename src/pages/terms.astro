@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, DISCLOSURE } from '../config';
+---
+<BaseLayout title={`Terms of Service | ${SITE.name}`} description="AndesRide terms of service." path="/terms">
+  <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Terms of service</h1></div></header>
+  <div class="wrap"><div class="prose">
+    <p><em>Template — have local counsel review before launch.</em></p>
+    <h2>Who we are</h2>
+    <p>{DISCLOSURE} By booking, you agree these terms govern your use of the platform and the transfer service coordinated through it.</p>
+    <h2>Bookings &amp; pricing</h2>
+    <p>Prices are shown in US dollars (USD) and are flat per area, confirmed before payment. The fare covers the vehicle, driver, tolls, parking, meet &amp; greet, and flight tracking. Add-ons (round trip, child seats, extra stops) are itemized at checkout.</p>
+    <h2>Payment</h2>
+    <p>The fare is collected at the time of booking as the carrier's booking and payment channel. Your booking is confirmed once payment is received and you are issued a reference number.</p>
+    <h2>Cancellations</h2>
+    <p>See our <a href="/cancellation">cancellation &amp; refund policy</a>. In short: free cancellation up to {SITE.cancelFreeHours} hours before pickup; within {SITE.cancelFreeHours} hours or no-show is non-refundable.</p>
+    <h2>The ride</h2>
+    <p>Rides are provided by independent, licensed, airport-authorized carriers. You agree to provide accurate pickup details and a valid flight number where applicable, and to be ready at the scheduled pickup time.</p>
+    <h2>Liability</h2>
+    <p>To the extent permitted by law, AndesRide acts as a booking intermediary. Nothing here limits any rights you have under applicable consumer law.</p>
+    <h2>Contact</h2>
+    <p>Questions: {SITE.email} · {SITE.whatsapp}.</p>
+  </div></div>
+</BaseLayout>

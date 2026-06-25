@@ -1,0 +1,21 @@
+---
+interface Props {
+  heading?: string;
+  text?: string;
+  /** Zone key to preselect in the widget (deep-links to /#book?zone=…). */
+  zone?: string;
+  label?: string;
+}
+const {
+  heading = 'Book your UIO airport transfer',
+  text = 'One flat USD price, a flight-tracked pickup, and a driver waiting with your name. Free cancellation up to 24 hours before.',
+  zone,
+  label = 'Book your transfer',
+} = Astro.props;
+const href = zone ? `/?zone=${zone}#book` : '/#book';
+---
+<aside class="cta-block">
+  <h3>{heading}</h3>
+  <p>{text}</p>
+  <a href={href} class="btn btn-amber">{label}</a>
+</aside>

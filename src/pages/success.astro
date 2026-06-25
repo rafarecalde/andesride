@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, DISCLOSURE } from '../config';
+// Payment-return page (live mode redirects here after hosted checkout).
+const ref = Astro.url.searchParams.get('ref') ?? '';
+---
+<BaseLayout title={`Booking confirmed | ${SITE.name}`} description="Your AndesRide airport transfer is confirmed." path="/success">
+  <section>
+    <div class="wrap" style="max-width:640px">
+      <div class="confirm" style="border:1px solid var(--line);border-radius:20px;padding:40px 28px;box-shadow:var(--shadow-md)">
+        <div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+        <h3>You're booked!</h3>
+        <p>A confirmation and driver details are on the way to your email. We'll track your flight and be waiting at arrivals.</p>
+        {ref && <div class="ref">{ref}</div>}
+        <p class="disclosure" style="text-align:left">{DISCLOSURE}</p>
+        <div style="margin-top:18px"><a class="btn btn-outline" href="/">Back to home</a></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

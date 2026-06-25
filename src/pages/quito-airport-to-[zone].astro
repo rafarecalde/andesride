@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingCta from '../components/BookingCta.astro';
+import { SITE } from '../config';
+import rates from '../data/rates.json';
+
+export function getStaticPaths() {
+  return rates.zones.map((zone) => ({ params: { zone: zone.key }, props: { zone } }));
+}
+
+const { zone } = Astro.props;
+const path = `/quito-airport-to-${zone.key}`;
+const vehicles = rates.vehicles;
+const priceFor = (key: string) => zone[key as 'sedan' | 'suv' | 'van'] as number;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Private airport transfer',
+  name: `Quito Airport (UIO) to ${zone.name}`,
+  description: `Flat-rate private transfer between Quito airport (UIO) and ${zone.name}. From $${zone.sedan} USD, ${zone.eta} drive, flight tracking and meet & greet included.`,
+  provider: { '@type': 'Organization', name: SITE.name, url: SITE.domain },
+  areaServed: { '@type': 'City', name: 'Quito, Ecuador' },
+  offers: vehicles.map((v) => ({
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    price: priceFor(v.key),
+    name: `${v.name} (up to ${v.maxPax} passengers)`,
+  })),
+};
+---
+<BaseLayout
+  title={`Quito Airport to ${zone.name} — Flat-Rate Transfer (UIO) | ${SITE.name}`}
+  description={`Private transfer from Quito airport (UIO) to ${zone.name}: flat USD price from $${zone.sedan}, about ${zone.eta}, flight tracking and meet & greet included. Book online.`}
+  path={path}
+  schema={schema}
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="/">Home</a> · <a href="/#rates">Rates</a> · {zone.name}</div>
+      <span class="eyebrow">Private transfer · UIO</span>
+      <h1>Quito Airport to {zone.name}</h1>
+      <p class="meta">{zone.sub} — flat-rate, flight-tracked, door-to-door.</p>
+    </div>
+  </header>
+
+  <div class="wrap" style="padding:40px 0 64px">
+    <div class="route-facts">
+      <div class="rfact"><div class="k">From (Sedan)</div><div class="v">${zone.sedan} <small>USD</small></div></div>
+      <div class="rfact"><div class="k">Drive time</div><div class="v" style="font-size:1.2rem">{zone.eta}</div></div>
+      <div class="rfact"><div class="k">Direction</div><div class="v" style="font-size:1.2rem">To &amp; from UIO</div></div>
+    </div>
+
+    <div class="rates">
+      <table>
+        <thead>
+          <tr><th>Vehicle</th><th class="num">Capacity</th><th class="num">Flat price (one-way)</th></tr>
+        </thead>
+        <tbody>
+          {vehicles.map((v) => (
+            <tr>
+              <td class="zone">{v.name}</td>
+              <td class="num">up to {v.maxPax} · {v.bags} bags</td>
+              <td class="num">${priceFor(v.key)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="rates-note" style="margin-top:16px">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+      One fixed USD price, confirmed before you pay. Round trips, child seats, and extra stops are added at checkout.
+    </div>
+
+    <div class="prose" style="padding:36px 0 0">
+      <h2>Your transfer between UIO and {zone.name}</h2>
+      <p>
+        {zone.name} is roughly {zone.eta} from Mariscal Sucre International Airport (UIO). Your driver tracks
+        your flight, waits at arrivals with a name sign, and takes you straight to the door for one flat rate —
+        no meter, no surge, no airport-surcharge surprise. Booking ahead means a vetted, licensed,
+        airport-authorized carrier is already expecting you when you land.
+      </p>
+      <p>
+        Prefer to compare every area first? See the <a href="/#rates">full flat-rate table</a> or read our
+        <a href="/guide">Quito airport travel guide</a>.
+      </p>
+    </div>
+
+    <BookingCta
+      zone={zone.key}
+      heading={`Book your UIO ↔ ${zone.name} transfer`}
+      text={`Flat price from $${zone.sedan} USD, ${zone.eta}, flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`}
+    />
+  </div>
+</BaseLayout>

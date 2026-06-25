@@ -1,0 +1,49 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import BookingCta from '../components/BookingCta.astro';
+import { SITE } from '../config';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { title, description, category, publishDate, updatedDate, tags } = post.data;
+const path = `/guide/${post.slug}`;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  about: category,
+  keywords: tags.join(', '),
+  datePublished: publishDate.toISOString(),
+  ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+  mainEntityOfPage: new URL(path, SITE.domain).href,
+  author: { '@type': 'Organization', name: SITE.name },
+  publisher: { '@type': 'Organization', name: SITE.name },
+};
+---
+<BaseLayout title={`${title} | ${SITE.name}`} description={description} path={path} ogType="article" schema={articleSchema}>
+  <article>
+    <header class="page-hero">
+      <div class="wrap">
+        <div class="crumbs"><a href="/">Home</a> · <a href="/guide">Travel guide</a></div>
+        <span class="eyebrow">{category}</span>
+        <h1>{title}</h1>
+        <div class="meta">
+          {fmt(publishDate)}{updatedDate ? ` · Updated ${fmt(updatedDate)}` : ''}
+        </div>
+      </div>
+    </header>
+    <div class="wrap">
+      <div class="prose">
+        <slot />
+      </div>
+      <BookingCta />
+    </div>
+  </article>
+</BaseLayout>

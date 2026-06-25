@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import rates from '../data/rates.json';
+import { imageFor, REPRESENTATIVE_CAPTION } from '../lib/fleet';
+
+const { vehicles, zones } = rates;
+const fromPrice = (key: string) =>
+  Math.min(...zones.map((z) => z[key as 'sedan' | 'suv' | 'van'] as number));
+
+// Inline placeholder car silhouettes (used until real photos are dropped in).
+const placeholders: Record<string, string> = {
+  sedan: '<path d="M4 22l4-9a5 5 0 014.5-3h23A5 5 0 0140 13l5 9"/><path d="M2 22h60v6H2zM12 28v3M52 28v3"/><circle cx="14" cy="22" r="2.5"/><circle cx="50" cy="22" r="2.5"/>',
+  suv: '<path d="M3 23l3-11a5 5 0 014.8-3.5h26A5 5 0 0142 12l5 11"/><path d="M2 23h60v6H2zM12 29v3M52 29v3"/><circle cx="14" cy="23" r="2.6"/><circle cx="50" cy="23" r="2.6"/>',
+  van: '<path d="M4 7h30l10 9h7v11H4z"/><path d="M12 27v3M52 27v3"/><circle cx="14" cy="27" r="2.6"/><circle cx="50" cy="27" r="2.6"/><path d="M14 7v9M24 7v9"/>',
+};
+---
+<section id="fleet" class="alt">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The fleet</span><h2 class="section-title">Pick the right vehicle for your group</h2></div>
+    <div class="fleet">
+      {vehicles.map((v) => {
+        const photo = imageFor(v.key);
+        return (
+          <div class="fc reveal">
+            <div class="fimg">
+              {photo
+                ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={520} height={360} />
+                : <svg viewBox="0 0 64 32" set:html={placeholders[v.key]} />}
+            </div>
+            <h3>{v.name}</h3>
+            <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags</div>
+            <div class="from">from <b>${fromPrice(v.key)}</b> one-way</div>
+            <div class="repnote">{REPRESENTATIVE_CAPTION}</div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

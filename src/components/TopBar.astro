@@ -1,0 +1,21 @@
+---
+import { SITE } from '../config';
+const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
+const telLink = `tel:${SITE.phone.replace(/[^0-9+]/g, '')}`;
+---
+<div class="topbar">
+  <div class="wrap">
+    <div class="tb-l">
+      <span class="pill">✓ Flat rate guaranteed</span> &nbsp; Free cancellation up to {SITE.cancelFreeHours}h ·
+      Flight tracking included · Prices in USD
+    </div>
+    <div class="tb-r">
+      <a href={waLink} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>WhatsApp
+      </a>
+      <a href={telLink}>
+        <svg viewBox="0 0 24 24"><path d="M4 5h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 7a2 2 0 010-2z"/></svg>{SITE.phone}
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import TopBar from '../components/TopBar.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  ogType?: 'website' | 'article';
+  image?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+const { title, description, path, ogType, image, schema } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} path={path} ogType={ogType} image={image} />
+    {schema && <JsonLd schema={schema} />}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <TopBar />
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Scroll-reveal — respects prefers-reduced-motion.
+      if (
+        !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        'IntersectionObserver' in window
+      ) {
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            }),
+          { threshold: 0.12 },
+        );
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+      }
+    </script>
+  </body>
+</html>

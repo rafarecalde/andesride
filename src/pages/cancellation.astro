@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, DISCLOSURE } from '../config';
+---
+<BaseLayout title={`Cancellation Policy | ${SITE.name}`} description="AndesRide cancellation and refund policy for Quito airport transfers." path="/cancellation">
+  <header class="page-hero"><div class="wrap"><span class="eyebrow">Policy</span><h1>Cancellation &amp; refund policy</h1></div></header>
+  <div class="wrap"><div class="prose">
+    <p><em>Template — have local counsel review before launch.</em></p>
+    <h2>Free cancellation</h2>
+    <p>You may cancel a booking free of charge up to <strong>{SITE.cancelFreeHours} hours</strong> before the scheduled pickup time for a full refund of the fare paid.</p>
+    <h2>Within {SITE.cancelFreeHours} hours &amp; no-shows</h2>
+    <p>Cancellations made within {SITE.cancelFreeHours} hours of the scheduled pickup, and no-shows, are <strong>non-refundable</strong>, because the carrier has already been committed to your ride.</p>
+    <h2>Flight delays</h2>
+    <p>We track your flight using the flight number provided at booking and adjust your pickup automatically. Wait time caused by flight delays is included at no extra charge.</p>
+    <h2>Changes</h2>
+    <p>To change a pickup time or location, reply to your confirmation email or message us on WhatsApp at {SITE.whatsapp}. We'll accommodate changes where the carrier's availability allows.</p>
+    <h2>How to cancel</h2>
+    <p>Reply to your confirmation email or contact us at {SITE.email}. Refunds are issued to the original payment method.</p>
+    <p class="disclosure">{DISCLOSURE}</p>
+  </div></div>
+</BaseLayout>
