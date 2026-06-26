@@ -3,13 +3,24 @@ import BaseLayout from './BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
 import { SITE } from '../config';
 import { u } from '../lib/url';
+import rates from '../data/rates.json';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   post: CollectionEntry<'blog'>;
 }
 const { post } = Astro.props;
-const { title, description, category, publishDate, updatedDate, tags } = post.data;
+const { title, description, category, publishDate, updatedDate, tags, ctaZone } = post.data;
+
+// When a post names a zone, deep-link its CTA to that route with the flat price.
+const zone = ctaZone ? rates.zones.find((z) => z.key === ctaZone) : undefined;
+const ctaProps = zone
+  ? {
+      zone: zone.key,
+      heading: `Book your UIO ↔ ${zone.name} transfer`,
+      text: `Flat USD price from $${zone.sedan}, about ${zone.eta}, with flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`,
+    }
+  : {};
 const path = `/guide/${post.slug}`;
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -44,7 +55,7 @@ const articleSchema = {
       <div class="prose">
         <slot />
       </div>
-      <BookingCta />
+      <BookingCta {...ctaProps} />
     </div>
   </article>
 </BaseLayout>

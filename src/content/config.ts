@@ -11,6 +11,9 @@ const blog = defineCollection({
     heroImage: z.string().optional(),
     draft: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    // Optional: a rates.json zone key. When set, the post's end CTA deep-links to
+    // the booking widget with that zone preselected and shows its flat price.
+    ctaZone: z.string().optional(),
   }),
 });
 
