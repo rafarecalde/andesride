@@ -24,4 +24,4 @@ export function imageFor(key: string): ImageMetadata | undefined {
 }
 
 export const REPRESENTATIVE_CAPTION =
-  'Representative vehicle / professional chauffeured service — actual model may vary';
+  'Representative chauffeured luxury SUV — cabin and licensed driver. Actual model may vary.';

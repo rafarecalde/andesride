@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import rates from '../data/rates.json';
 import { imageFor, REPRESENTATIVE_CAPTION } from '../lib/fleet';
 
@@ -15,7 +14,7 @@ const placeholders: Record<string, string> = {
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">The vehicle</span>
-      <h2 class="section-title">A luxury SUV and a licensed driver</h2>
+      <h2 class="section-title">Luxury SUV and a licensed driver</h2>
       <p class="lede">Every prepaid transfer is the same product: a luxury SUV with a licensed, airport-authorized driver. Sedans and vans are not on the booking path.</p>
     </div>
     <div class={`fleet${vehicles.length === 1 ? ' solo' : ''}`}>
@@ -25,13 +24,15 @@ const placeholders: Record<string, string> = {
           <div class="fc reveal">
             <div class={`fimg${photo ? '' : ' is-placeholder'}`}>
               {photo
-                ? <Image src={photo} alt={`${v.name} — representative vehicle / professional chauffeured service`} width={1200} height={800} quality={88} />
+                ? <img src={photo.src} alt={`${v.name} with licensed chauffeur — representative service`} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
                 : <><svg viewBox="0 0 64 32" set:html={placeholders[v.key] || placeholders.suv} /><span class="fimg-badge">Sample image</span></>}
             </div>
-            <h3>{v.name}</h3>
-            <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>
-            <div class="from">from <b>${fromPrice}</b> prepaid, one-way</div>
-            <div class="repnote">{REPRESENTATIVE_CAPTION}</div>
+            <div class="fc-copy">
+              <h3>{v.name}</h3>
+              <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>
+              <div class="from">From <b>${fromPrice}</b> prepaid, one-way</div>
+              <div class="repnote">{REPRESENTATIVE_CAPTION}</div>
+            </div>
           </div>
         );
       })}
