@@ -24,6 +24,10 @@ export const SITE = {
 
   cancelFreeHours: 24,
 
+  // First bookable pickup is today + minLeadDays (local calendar days).
+  // Today and the next (minLeadDays - 1) days are blocked in the booker.
+  minLeadDays: 3,
+
   // Social proof — PLACEHOLDER until real reviews exist (README).
   // Do not surface these as live counts in UI or JSON-LD until they are verified.
   ratingValue: '',

@@ -1,5 +1,6 @@
 // Owner-supplied stills. Never replace with generated lookalikes.
-// Sources live in src/assets/_source/ (chauffeur-owner, uio-terminal, route-map).
+// Sources live in src/assets/_source/ (meet-greet, door-holder,
+// cumbaya-valley, chauffeur-owner, uio-terminal, route-map).
 import type { ImageMetadata } from 'astro';
 
 function pick(
@@ -10,6 +11,18 @@ function pick(
   return (webp ?? entries[0])?.[1]?.default;
 }
 
+const meetGreet = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/_source/meet-greet.{webp,avif,png,jpg,jpeg}',
+  { eager: true },
+);
+const doorHolder = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/_source/door-holder.{webp,avif,png,jpg,jpeg}',
+  { eager: true },
+);
+const cumbayaValley = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/_source/cumbaya-valley.{webp,avif,png,jpg,jpeg}',
+  { eager: true },
+);
 const chauffeur = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/_source/chauffeur-owner.{webp,avif,png,jpg,jpeg}',
   { eager: true },
@@ -23,6 +36,9 @@ const routeMap = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 );
 
+export const meetGreetPhoto = pick(meetGreet);
+export const doorHolderPhoto = pick(doorHolder);
+export const cumbayaValleyPhoto = pick(cumbayaValley);
 export const chauffeurPhoto = pick(chauffeur);
 export const terminalPhoto = pick(terminal);
 export const routeMapPhoto = pick(routeMap);

@@ -1,14 +1,17 @@
 ---
 import rates from '../data/rates.json';
+import { doorHolderPhoto } from '../lib/photos';
 import { imageFor, REPRESENTATIVE_CAPTION } from '../lib/fleet';
 
 const { vehicles, zones } = rates;
 const fromPrice = Math.min(...zones.map((z) => z.price));
 
-// Inline placeholder car silhouettes (used until real photos are dropped in).
 const placeholders: Record<string, string> = {
   suv: '<path d="M3 23l3-11a5 5 0 014.8-3.5h26A5 5 0 0142 12l5 11"/><path d="M2 23h60v6H2zM12 29v3M52 29v3"/><circle cx="14" cy="23" r="2.6"/><circle cx="50" cy="23" r="2.6"/>',
 };
+
+const CURB_CAPTION =
+  'Licensed chauffeur at the UIO curb — we hold the door. Actual vehicle model may vary.';
 ---
 <section id="fleet" class="alt">
   <div class="wrap">
@@ -19,19 +22,20 @@ const placeholders: Record<string, string> = {
     </div>
     <div class={`fleet${vehicles.length === 1 ? ' solo' : ''}`}>
       {vehicles.map((v) => {
-        const photo = imageFor(v.key);
+        const photo = doorHolderPhoto ?? imageFor(v.key);
+        const usingDoor = !!doorHolderPhoto;
         return (
           <div class="fc reveal">
             <div class={`fimg${photo ? '' : ' is-placeholder'}`}>
               {photo
-                ? <img src={photo.src} alt={`${v.name} with licensed chauffeur — representative service`} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+                ? <img src={photo.src} alt={usingDoor ? `${v.name} — chauffeur holds the door at UIO Arrivals` : `${v.name} with licensed chauffeur — representative service`} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
                 : <><svg viewBox="0 0 64 32" set:html={placeholders[v.key] || placeholders.suv} /><span class="fimg-badge">Sample image</span></>}
             </div>
             <div class="fc-copy">
               <h3>{v.name}</h3>
               <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>
               <div class="from">From <b>${fromPrice}</b> prepaid, one-way</div>
-              <div class="repnote">{REPRESENTATIVE_CAPTION}</div>
+              <div class="repnote">{usingDoor ? CURB_CAPTION : REPRESENTATIVE_CAPTION}</div>
             </div>
           </div>
         );

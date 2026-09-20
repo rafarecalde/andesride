@@ -24,7 +24,7 @@ It's a solid option for budget travelers arriving in daylight, traveling light, 
 A private transfer is the opposite trade-off: more money, far less friction.
 
 - **Door-to-door** to your exact hotel, no second leg.
-- A **prepaid USD price** fixed before you fly — $50 to Wyndham Quito Airport, $75 to Cumbayá, $100 anywhere in Quito. See the [rates](/#rates).
+- A **prepaid USD price** fixed before you fly — $50 to Wyndham Quito Airport, $75 anywhere in Cumbayá, $100 anywhere in Quito. See the [rates](/#rates).
 - A vetted driver **waiting at arrivals** with your name, whenever you land, because we track your flight.
 
 ## Cost vs. everything else

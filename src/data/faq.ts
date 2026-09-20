@@ -5,15 +5,15 @@ import { DISCLOSURE } from '../config';
 export const FAQ: { q: string; a: string }[] = [
   {
     q: 'What are the prepaid flat rates?',
-    a: 'Three one-way luxury-SUV rates from Quito airport (UIO), paid up front in USD: $50 to Wyndham Quito Airport (the airport-area hotel in Tababela), $75 to Cumbayá, and $100 to anywhere in Quito city. The city rate covers hotels and addresses across town — including Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and a city-center Wyndham if that is where you are staying (it is not the airport hotel). No meter, no surge, no airport surcharge.',
+    a: 'Three one-way luxury-SUV rates from Quito airport (UIO), paid up front in USD: $50 to Wyndham Quito Airport (the airport-area hotel in Tababela), $75 to anywhere in Cumbayá, and $100 to anywhere in Quito city. The city rate covers hotels and addresses across town — including Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and a city-center Wyndham if that is where you are staying (it is not the airport hotel). No meter, no surge, no airport surcharge.',
   },
   {
     q: 'Is the $50 Wyndham rate the airport hotel or a hotel in the city?',
-    a: 'The $50 rate is only Wyndham Quito Airport in Tababela, next to UIO. Cumbayá is the $75 valley rate. Any other Quito address — including Hyatt, Oro Verde, Swissôtel, Casa Gangotena, or a distinct city Wyndham — is the $100 anywhere-in-Quito rate.',
+    a: 'The $50 rate is only Wyndham Quito Airport in Tababela, next to UIO. Anywhere in Cumbayá is the $75 valley rate. Any other Quito address — including Hyatt, Oro Verde, Swissôtel, Casa Gangotena, or a distinct city Wyndham — is the $100 anywhere-in-Quito rate.',
   },
   {
-    q: 'What does the $75 Cumbayá rate cover?',
-    a: 'The $75 rate is a prepaid one-way luxury SUV between UIO and Cumbayá (Valle de Tumbaco), typically 25–35 minutes. It is not the $100 Quito-city product and not the $50 airport-hotel product. Addresses in Quito city stay on the $100 rate.',
+    q: 'What does the $75 anywhere-in-Cumbayá rate cover?',
+    a: 'The $75 rate is a prepaid one-way luxury SUV between UIO and anywhere in Cumbayá (Valle de Tumbaco), typically 25–35 minutes. It is not the $100 Quito-city product and not the $50 airport-hotel product. Addresses in Quito city stay on the $100 rate.',
   },
   {
     q: 'What vehicle do you use?',
@@ -45,6 +45,10 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Do you go beyond Quito city?',
-    a: 'The published prepaid rates are UIO → Wyndham Quito Airport ($50), UIO → Cumbayá ($75), and UIO → anywhere in Quito city ($100). Destinations beyond those three — Mitad del Mundo, Otavalo, Mindo, Papallacta, and similar — are quoted on request. Message us rather than guessing a city rate.',
+    a: 'The published prepaid rates are UIO → Wyndham Quito Airport ($50), UIO → anywhere in Cumbayá ($75), and UIO → anywhere in Quito city ($100). Destinations beyond those three — Mitad del Mundo, Otavalo, Mindo, Papallacta, and similar — are quoted on request. Message us rather than guessing a city rate.',
+  },
+  {
+    q: 'How far in advance do I need to book?',
+    a: 'At least 3 calendar days. The booker greys out today and the next two days; the earliest pickup is three days from today. That lead time is how we confirm a licensed, airport-authorized driver. Same-day and next-day pickups are not offered.',
   },
 ];

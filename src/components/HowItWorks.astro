@@ -1,12 +1,27 @@
 ---
+import { doorHolderPhoto } from '../lib/photos';
 ---
 <section id="how">
   <div class="wrap">
-      <div class="sec-head"><span class="eyebrow">How it works</span><h2 class="section-title">Booked in minutes, prepaid before you land</h2></div>
+      <div class="sec-head"><span class="eyebrow">How it works</span><h2 class="section-title">Booked in minutes, prepaid before you land</h2>
+      <p class="lede">Not the cheapest curb fare — a licensed driver waiting with your name, the door held open. Built for late US arrivals as much as for noon.</p></div>
     <div class="steps3">
-      <div class="s3 reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 16l6-2 5-9 2 1-2 8 5-1 1 2-16 5z"/></svg></div><h3>1 · Book &amp; pay up front</h3><p>Pick Wyndham Quito Airport ($50), Cumbayá ($75), or anywhere in Quito ($100). Pay the prepaid luxury-SUV rate in USD.</p></div>
+      <div class="s3 reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 16l6-2 5-9 2 1-2 8 5-1 1 2-16 5z"/></svg></div><h3>1 · Book &amp; pay up front</h3><p>Pick Wyndham Quito Airport ($50), anywhere in Cumbayá ($75), or anywhere in Quito ($100). Pay the prepaid luxury-SUV rate in USD.</p></div>
       <div class="s3 reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M16 3h5v5M21 3l-9 9M8 21H3v-5M3 21l9-9"/></svg></div><h3>2 · We track your flight</h3><p>Your licensed driver monitors arrivals and adjusts for delays — no extra charge for waiting.</p></div>
       <div class="s3 reveal"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/></svg></div><h3>3 · Meet &amp; ride</h3><p>Your driver greets you with a name sign and takes you to the door in a luxury SUV. Fixed price, no meter.</p></div>
     </div>
+    {doorHolderPhoto ? (
+      <figure class="curb-photo">
+        <img
+          src={doorHolderPhoto.src}
+          alt="Licensed chauffeur holding open the SUV door at UIO Arrivals for a passenger with luggage"
+          width={doorHolderPhoto.width}
+          height={doorHolderPhoto.height}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Your driver holds the door at UIO Arrivals.</figcaption>
+      </figure>
+    ) : null}
   </div>
 </section>
