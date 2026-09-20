@@ -31,7 +31,7 @@ export async function onRequestPost({ request, env }) {
     //     price_data: {
     //       currency: 'usd',
     //       unit_amount: Math.round(amountUSD * 100),
-    //       product_data: { name: `AndesRide transfer ${reference}` },
+    //       product_data: { name: `Quito Airport Transfer ${reference}` },
     //     },
     //   }],
     //   success_url: `${env.SUCCESS_URL}?ref=${reference}`,

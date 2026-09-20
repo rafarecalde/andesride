@@ -12,6 +12,7 @@ import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
 import { SITE } from '../config';
 import { u } from '../lib/url';
+import { publicUrl } from '../lib/publicUrl';
 import { FAQ } from '../data/faq';
 import rates from '../data/rates.json';
 
@@ -22,19 +23,20 @@ const latest = (await getCollection('blog', ({ data }) => !data.draft))
 const prices = rates.zones.map((z) => z.price);
 const low = Math.min(...prices);
 const high = Math.max(...prices);
+const origin = publicUrl('/', Astro.site);
 
 const taxiSchema = {
   '@context': 'https://schema.org',
   '@type': ['TaxiService', 'LocalBusiness'],
   name: SITE.name,
-  url: SITE.domain,
+  url: origin,
   description: SITE.tagline,
-  telephone: SITE.phone,
-  email: SITE.email,
+  ...(SITE.phone ? { telephone: SITE.phone } : {}),
+  ...(SITE.email ? { email: SITE.email } : {}),
   areaServed: { '@type': 'City', name: 'Quito, Ecuador' },
   priceRange: `$${low}–$${high} USD`,
   currenciesAccepted: 'USD',
-  provider: { '@type': 'Organization', name: SITE.name, url: SITE.domain },
+  provider: { '@type': 'Organization', name: SITE.name, url: origin },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Quito airport (UIO) prepaid luxury-SUV transfers',
@@ -65,7 +67,7 @@ const faqSchema = {
 };
 ---
 <BaseLayout
-  title={`${SITE.name} — Quito Airport Transfers (UIO) | Prepaid Luxury SUV`}
+  title={`${SITE.name} | Prepaid luxury SUV from UIO`}
   description="Prepaid luxury-SUV airport transfers from Quito (UIO). $50 to Wyndham Quito Airport, $100 anywhere in Quito city — Hyatt, Oro Verde, Swissôtel, Casa Gangotena. Licensed driver, pay up front."
   path="/"
   schema={[taxiSchema, faqSchema]}

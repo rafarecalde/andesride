@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
 import { SITE } from '../config';
 import { u } from '../lib/url';
+import { publicUrl } from '../lib/publicUrl';
 import rates from '../data/rates.json';
 
 export function getStaticPaths() {
@@ -20,7 +21,7 @@ const schema = {
   serviceType: 'Private airport transfer',
   name: `Quito Airport (UIO) to ${zone.name}`,
   description: `Prepaid luxury-SUV transfer between Quito airport (UIO) and ${zone.name}. $${zone.price} USD, ${zone.eta} drive, flight tracking and meet & greet included.`,
-  provider: { '@type': 'Organization', name: SITE.name, url: SITE.domain },
+  provider: { '@type': 'Organization', name: SITE.name, url: publicUrl('/', Astro.site) },
   areaServed: { '@type': 'City', name: 'Quito, Ecuador' },
   offers: {
     '@type': 'Offer',

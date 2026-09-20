@@ -16,6 +16,6 @@ Ecuador regulates commercial passenger transport, and the airport has its own ru
 
 A pre-booked, licensed transfer means a vetted driver, a vehicle that's insured to carry you, a fixed price set in advance, and accountability if something isn't right. That's the certainty premium — and it's the whole point of booking ahead instead of gambling at the curb.
 
-## How AndesRide works
+## How Quito Airport Transfer works
 
-AndesRide is a booking platform; your ride is provided by independent, licensed, airport-authorized carriers we coordinate. You get one fixed USD price, a flight-tracked pickup, and a driver waiting with your name — booked before you ever land.
+Quito Airport Transfer is a booking platform; your ride is provided by independent, licensed, airport-authorized carriers we coordinate. You get one prepaid USD price, a flight-tracked pickup, and a licensed driver waiting with your name — booked before you ever land.

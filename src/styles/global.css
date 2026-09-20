@@ -1,7 +1,7 @@
 /* ===========================================================================
-   AndesRide — global styles. Design tokens + components ported faithfully from
-   the reference mockup (quito-airport-transfers.html). Teal primary, amber
-   pay/CTA, Plus Jakarta Sans + Inter, Andes-ridge motif.
+   Quito Airport Transfer — global styles. Design tokens + components ported
+   faithfully from the reference mockup (quito-airport-transfers.html). Teal
+   primary, amber pay/CTA, Plus Jakarta Sans + Inter, Andes-ridge motif.
    =========================================================================== */
 :root{
   --ink:#0F1C2E;--ink-2:#22344B;--slate:#56657C;--slate-light:#8A98AD;
@@ -56,7 +56,7 @@ header.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);bac
 .brand{display:flex;align-items:center;gap:.6rem;}
 .brand .mk{width:38px;height:38px;}
 .brand .nm{line-height:1;}
-.brand .nm .t1{font-family:var(--display);font-weight:800;font-size:1.08rem;color:var(--ink);letter-spacing:-.02em;}
+.brand .nm .t1{font-family:var(--display);font-weight:800;font-size:.95rem;color:var(--ink);letter-spacing:-.02em;}
 .brand .nm .t2{font-size:.62rem;letter-spacing:.1em;color:var(--slate-light);text-transform:uppercase;margin-top:3px;font-weight:600;}
 .nav-links{display:flex;gap:1.7rem;align-items:center;}
 .nav-links a{font-size:.92rem;font-weight:500;color:var(--slate);}

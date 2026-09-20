@@ -8,7 +8,7 @@ const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <div class="name">{SITE.name} <span>Quito Airport Transfers · UIO</span></div>
+        <div class="name">{SITE.name} <span>{SITE.descriptor}</span></div>
         <p>Prepaid luxury-SUV airport transfers to and from Mariscal Sucre International Airport (UIO), Quito, Ecuador.</p>
         <p class="foot-disc">{DISCLOSURE}</p>
       </div>
@@ -28,7 +28,9 @@ const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
       <div class="foot-col">
         <h4>Contact</h4>
         <span class="li"><b>WhatsApp</b><br><a href={waLink} target="_blank" rel="noopener">{SITE.whatsapp}</a></span>
-        <span class="li"><b>Email</b><br><a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+        {SITE.email ? (
+          <span class="li"><b>Email</b><br><a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+        ) : null}
       </div>
     </div>
     <div class="foot-bottom">

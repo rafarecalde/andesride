@@ -1,9 +1,13 @@
-# AndesRide — Quito (UIO) Airport Transfers
+# Quito Airport Transfer — UIO prepaid luxury SUV
 
-A fast, premium, **US-facing** airport-transfer booking site for Quito's Mariscal
-Sucre International Airport (UIO): prepaid luxury-SUV flat USD pricing, an online
+A **US-facing** airport-transfer booking site for Quito's Mariscal Sucre
+International Airport (UIO): prepaid luxury-SUV flat USD pricing, an online
 booking widget, and a markdown blog as the SEO engine. Built with **Astro**,
 deploys to **GitHub Pages**.
+
+The GitHub repo remains `rafarecalde/andesride`; the public brand is
+**Quito Airport Transfer**. Do not use `andesride.com` — that domain belongs to
+an unrelated Chilean brand.
 
 ---
 
@@ -107,7 +111,7 @@ and in the sitemap. A booking CTA is appended to every post automatically.
 ## Payments (mock now → live later)
 
 Payments ship in **mock** mode: the widget runs end-to-end and shows a clean
-simulated confirmation (`AR-UIO-######`) — never a broken card form. To go live:
+simulated confirmation (`UIO-######`) — never a broken card form. To go live:
 
 1. **Stand up a US entity + Stripe.** Stripe doesn't operate in Ecuador; since the
    site is US-facing and USD-priced, the recommended path is **Stripe Checkout in
@@ -132,19 +136,21 @@ step, and confirmation.
 2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. Push to `main` — `.github/workflows/deploy.yml` builds and deploys.
 
-### Custom domain (when you own andesride.com)
+### Custom domain (when you own one)
 
-The site is already built **as** `andesride.com` (root paths). When the domain is
-yours:
+Leave `SITE.domain` blank in `src/config.ts` until a real domain is yours.
+`andesride.com` is **not** available for this product.
 
-1. Add a file `public/CNAME` containing just `andesride.com`.
+When you have a domain:
+
+1. Add a file `public/CNAME` containing just `YOUR_DOMAIN`.
 2. Point DNS at GitHub Pages (A records / `CNAME` per GitHub's docs).
-3. That's it — `astro.config.mjs` already has `site: 'https://andesride.com'`.
+3. In `astro.config.mjs` set `site: 'https://YOUR_DOMAIN'` and `base: '/'`.
+4. Set `SITE.domain` and `SITE.email` in `src/config.ts`.
 
-**Want a public preview before owning the domain?** Deploy to the project path:
-in `astro.config.mjs` set `site: 'https://<user>.github.io'` and `base:
-'/andesride'` (and the matching `with:` in the workflow). Flip back to the
-custom-domain values above once the domain is live.
+**Public preview without a custom domain:** this repo already deploys as a
+GitHub Pages project at `https://rafarecalde.github.io/andesride/` (`base:
+'/andesride'`). That path is the repo name, not the brand.
 
 ## Owner TODOs
 
@@ -154,8 +160,9 @@ custom-domain values above once the domain is live.
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
-5. Set real **domain, email, WhatsApp/phone** in `src/config.ts`; decide where
-   bookings land (operator email / Google Sheet / Airtable) in the function.
+5. Choose a **domain** (not andesride.com) and set `SITE.domain` + `SITE.email`
+   in `src/config.ts`; decide where bookings land (operator email / Google Sheet /
+   Airtable) in the function. WhatsApp/phone are still placeholders.
 6. Replace **placeholder reviews/ratings** (`src/components/Reviews.astro`,
    `ratingValue`/`ratingCount` in `src/config.ts`) with real, verifiable ones.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).

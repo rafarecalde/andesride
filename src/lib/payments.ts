@@ -23,17 +23,17 @@ export interface CheckoutInput {
 export interface CheckoutResult {
   ok: boolean;
   mode: 'mock' | 'live';
-  reference: string;              // AR-UIO-######
+  reference: string;              // UIO-######
   checkoutUrl?: string;           // present in live mode → redirect the customer here
   error?: string;
 }
 
 function makeReference(): string {
-  // AR-UIO-###### — 6 digits. crypto.getRandomValues for an unbiased value.
+  // UIO-###### — 6 digits. crypto.getRandomValues for an unbiased value.
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
   const n = 100000 + (buf[0] % 900000);
-  return `AR-UIO-${n}`;
+  return `UIO-${n}`;
 }
 
 export async function createCheckout(input: CheckoutInput): Promise<CheckoutResult> {

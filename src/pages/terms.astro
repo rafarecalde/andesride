@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, DISCLOSURE } from '../config';
 import { u } from '../lib/url';
 ---
-<BaseLayout title={`Terms of Service | ${SITE.name}`} description="AndesRide terms of service." path="/terms">
+<BaseLayout title={`Terms of Service | ${SITE.name}`} description="Quito Airport Transfer terms of service." path="/terms">
   <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Terms of service</h1></div></header>
   <div class="wrap"><div class="prose">
     <p><em>Template — have local counsel review before launch.</em></p>
@@ -18,8 +18,8 @@ import { u } from '../lib/url';
     <h2>The ride</h2>
     <p>Rides are provided by independent, licensed, airport-authorized carriers. You agree to provide accurate pickup details and a valid flight number where applicable, and to be ready at the scheduled pickup time.</p>
     <h2>Liability</h2>
-    <p>To the extent permitted by law, AndesRide acts as a booking intermediary. Nothing here limits any rights you have under applicable consumer law.</p>
+    <p>To the extent permitted by law, {SITE.name} acts as a booking intermediary. Nothing here limits any rights you have under applicable consumer law.</p>
     <h2>Contact</h2>
-    <p>Questions: {SITE.email} · {SITE.whatsapp}.</p>
+    <p>Questions: {SITE.email ? `${SITE.email} · ` : ''}{SITE.whatsapp}.</p>
   </div></div>
 </BaseLayout>
