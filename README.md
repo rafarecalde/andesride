@@ -79,11 +79,14 @@ total = zone.price × (roundTrip ? 2 : 1)
 ## Adding the hero image
 
 The homepage hero is **paper, not a photo wallpaper**. It opens with eyebrow, h1,
-short sub, and the three price rows, then the owner meet-and-greet still
+short sub, and the three price rows, then a **large** owner meet-and-greet still
 `src/assets/_source/meet-greet.webp` (chauffeur with name-sign tablet at UIO
-arrivals) as a contained, captioned figure. Do not lead the page with that photo
-alone. The cabin chauffeur still `src/assets/_source/chauffeur-owner.webp` is
-kept for fleet, not repeated in the hero. The terminal exterior
+arrivals) as a contained, captioned figure filling the copy column. Do not lead
+the page with that photo alone. The curb still
+`src/assets/_source/door-holder.webp` (chauffeur holding the SUV door at Arrivals)
+is the How-it-works / fleet “driver opens the door” image — prefer it over the
+older cabin portrait for that job. The cabin still
+`src/assets/_source/chauffeur-owner.webp` is a fallback only. The terminal exterior
 `src/assets/_source/uio-terminal.webp` is a smaller place photo in How far. The
 Cumbayá still `src/assets/_source/cumbaya-valley.webp` sits on the Cumbayá rate
 card, How far, and `/quito-airport-to-cumbaya`. The route map
@@ -92,11 +95,10 @@ feeds How far. Do not replace owner stills with generated lookalikes.
 
 ## Adding fleet photos
 
-The fleet panel prefers `src/assets/fleet/suv.webp` (a cabin-forward crop of
-the same owner still: `1760:1100:160:90` scaled to 1600 wide) and falls back
-to `src/assets/_source/chauffeur-owner.webp`. Caption:
-**"Representative chauffeured luxury SUV — cabin and licensed driver. Actual
-model may vary."** Drop a vehicle-specific exterior `suv.webp` when you have one.
+The fleet panel prefers the owner curb still `src/assets/_source/door-holder.webp`
+(chauffeur holding the door at UIO Arrivals) over the older cabin portrait.
+Caption: **"Licensed chauffeur at the UIO curb — we hold the door. Actual vehicle
+model may vary."** Do not generate an exterior stand-in.
 
 ## Adding a blog post
 
@@ -165,8 +167,8 @@ When DNS is pointed at GitHub Pages:
 
 1. **Source licensed, UIO-authorized carriers/drivers** — the launch gate. Local
    counsel to confirm the intermediary structure + carrier agreement.
-2. Optionally replace the representative chauffeur still with a vehicle-specific
-   luxury SUV photo when you have one. Do not generate an exterior.
+2. Optionally replace the curb still with a vehicle-specific luxury SUV photo
+   when you have one. Do not generate an exterior.
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 anywhere in Cumbayá / $100 anywhere in Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.

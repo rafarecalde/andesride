@@ -31,20 +31,21 @@ const { zones } = rates;
           <li>Prepaid in USD</li>
           <li>Flight tracking</li>
         </ul>
-        {meetGreetPhoto ? (
-          <figure class="hero-meet">
-            <img
-              src={meetGreetPhoto.src}
-              alt="Licensed chauffeur at UIO arrivals holding a name-sign tablet for Sra. Martínez"
-              width={meetGreetPhoto.width}
-              height={meetGreetPhoto.height}
-              decoding="async"
-              fetchpriority="high"
-            />
-            <figcaption>Name-sign meet &amp; greet at UIO arrivals. Your driver is waiting when you land.</figcaption>
-          </figure>
-        ) : null}
       </div>
+
+      {meetGreetPhoto ? (
+        <figure class="hero-meet">
+          <img
+            src={meetGreetPhoto.src}
+            alt="Licensed chauffeur at UIO arrivals holding a name-sign tablet for Sra. Martínez"
+            width={meetGreetPhoto.width}
+            height={meetGreetPhoto.height}
+            decoding="async"
+            fetchpriority="high"
+          />
+          <figcaption>Name-sign meet &amp; greet at UIO arrivals.</figcaption>
+        </figure>
+      ) : null}
 
       <Booker />
     </div>
