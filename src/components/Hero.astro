@@ -1,30 +1,61 @@
 ---
-import { u } from '../lib/url';
-import { heroPhoto } from '../lib/hero';
+import rates from '../data/rates.json';
+import { chauffeurPhoto, terminalPhoto } from '../lib/photos';
 import Booker from './Booker.astro';
+
+const { zones } = rates;
 ---
-<section class:list={['hero', heroPhoto && 'has-photo']} id="top">
-  <div class="hero-bg" aria-hidden="true">
-    {heroPhoto
-      ? <img src={heroPhoto.src} alt="" width={heroPhoto.width} height={heroPhoto.height} decoding="async" fetchpriority="high" />
-      : <img src={u('/hero-quito-placeholder.svg')} alt="" />}
-  </div>
-  <div class="hero-overlay" aria-hidden="true"></div>
+<section class="hero" id="top">
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
+        {terminalPhoto ? (
+          <figure class="hero-place">
+            <img
+              src={terminalPhoto.src}
+              alt="Mariscal Sucre International Airport (UIO) terminal, Tababela"
+              width={terminalPhoto.width}
+              height={terminalPhoto.height}
+              decoding="async"
+              fetchpriority="high"
+            />
+            <figcaption>Mariscal Sucre International Airport (UIO), Tababela</figcaption>
+          </figure>
+        ) : null}
         <span class="eyebrow">Quito Airport Transfer · UIO</span>
         <h1>Prepaid luxury SUV from UIO</h1>
-        <p class="hero-sub">Licensed driver. $50 to Wyndham Quito Airport, $100 anywhere in Quito — Hyatt, Oro Verde, Swissôtel, Casa Gangotena.</p>
+        <p class="hero-sub">Three flat rates from Mariscal Sucre. Licensed driver. Pay in USD before you land.</p>
         <div class="hero-prices" aria-label="Prepaid flat rates">
-          <div class="hp"><b>$50</b><span>Wyndham Quito Airport</span></div>
-          <div class="hp"><b>$100</b><span>Anywhere in Quito</span></div>
+          {zones.map((z) => (
+            <div class="hp">
+              <b>${z.price}</b>
+              <div class="hp-txt">
+                <span class="hp-name">{z.name}</span>
+                <span class="hp-sub">{z.sub} · {z.eta}</span>
+                {z.key === 'quito' && z.examples?.length ? (
+                  <span class="hp-ex">{z.examples.join(' · ')}</span>
+                ) : null}
+              </div>
+            </div>
+          ))}
         </div>
         <ul class="hero-trust">
           <li>Licensed driver</li>
           <li>Prepaid in USD</li>
           <li>Flight tracking</li>
         </ul>
+        {chauffeurPhoto ? (
+          <figure class="hero-portrait">
+            <img
+              src={chauffeurPhoto.src}
+              alt="Licensed chauffeur in the cabin — representative service"
+              width={chauffeurPhoto.width}
+              height={chauffeurPhoto.height}
+              decoding="async"
+            />
+            <figcaption>Licensed chauffeur. Representative cabin — actual vehicle model may vary.</figcaption>
+          </figure>
+        ) : null}
       </div>
 
       <Booker />

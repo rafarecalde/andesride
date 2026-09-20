@@ -60,7 +60,7 @@ export default defineConfig({
     '/quito-airport-to-norte': withBase('/quito-airport-to-quito'),
     '/quito-airport-to-centro': withBase('/quito-airport-to-quito'),
     '/quito-airport-to-sur': withBase('/quito-airport-to-quito'),
-    '/quito-airport-to-cumbaya': withBase('/'),
+    // /quito-airport-to-cumbaya is a live prepaid product page now (see rates.json).
     '/quito-airport-to-mitad': withBase('/'),
     '/quito-airport-to-papallacta': withBase('/'),
     '/quito-airport-to-otavalo': withBase('/'),

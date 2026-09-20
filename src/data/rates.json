@@ -12,7 +12,17 @@
       "sub": "Tababela · airport-area hotel",
       "eta": "10–15 min",
       "price": 50,
-      "examples": ["Wyndham Quito Airport"]
+      "examples": ["Wyndham Quito Airport"],
+      "note": "Tababela airport hotel only — not a hotel in Quito city."
+    },
+    {
+      "key": "cumbaya",
+      "name": "Cumbayá",
+      "sub": "Valle de Tumbaco · valley town",
+      "eta": "25–35 min",
+      "price": 75,
+      "examples": ["Cumbayá"],
+      "note": "Valley town between UIO and Quito. Not the $100 city rate."
     },
     {
       "key": "quito",
@@ -20,7 +30,8 @@
       "sub": "City hotels and addresses",
       "eta": "40–60 min",
       "price": 100,
-      "examples": ["Hyatt", "Oro Verde", "Swissôtel", "Casa Gangotena"]
+      "examples": ["Hyatt", "Oro Verde", "Swissôtel", "Casa Gangotena"],
+      "note": "Any city hotel or address, including a city-center Wyndham if that is where you are staying."
     }
   ]
 }

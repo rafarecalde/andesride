@@ -8,7 +8,7 @@ const suv = vehicles[0];
     <div class="sec-head">
       <span class="eyebrow">Prepaid flat rates</span>
       <h2 class="section-title">Quito airport transfer prices (UIO)</h2>
-      <p class="lede">Two prepaid luxury-SUV rates, in USD, paid up front. One-way airport pickups are the product — no meter, no surge, no airport surcharge.</p>
+      <p class="lede">Three prepaid luxury-SUV rates, in USD, paid up front. One-way airport pickups are the product — no meter, no surge, no airport surcharge.</p>
     </div>
     <div class="rate-board">
       {zones.map((z) => (
@@ -22,11 +22,7 @@ const suv = vehicles[0];
                 {z.examples.map((h) => <li>{h}</li>)}
               </ul>
             ) : null}
-            {z.key === 'quito' ? (
-              <p class="rate-card-note">Any city hotel or address, including a city-center Wyndham if that is where you are staying.</p>
-            ) : (
-              <p class="rate-card-note">Tababela airport hotel only — not a hotel in Quito city.</p>
-            )}
+            {z.note ? <p class="rate-card-note">{z.note}</p> : null}
           </div>
           <div class="rate-aside">
             <div class="rate-card-price">${z.price} <small>USD · one-way</small></div>
@@ -37,7 +33,7 @@ const suv = vehicles[0];
     </div>
     <div class="rates-note">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      Round trips are twice the one-way rate. Child seats and extra stops are added at checkout. Destinations outside Quito city are quoted on request.
+      Round trips are twice the one-way rate. Child seats and extra stops are added at checkout. Destinations beyond these three products — Mitad del Mundo, Otavalo, Mindo, Papallacta — are quoted on request.
     </div>
   </div>
 </section>

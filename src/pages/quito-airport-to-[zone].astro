@@ -14,6 +14,7 @@ const { zone } = Astro.props;
 const path = `/quito-airport-to-${zone.key}`;
 const suv = rates.vehicles[0];
 const isCity = zone.key === 'quito';
+const isCumbaya = zone.key === 'cumbaya';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -85,19 +86,31 @@ const schema = {
             {zone.name} is roughly {zone.eta} from Mariscal Sucre International Airport (UIO). This $100 prepaid
             rate is for a luxury SUV with a licensed driver to any hotel or address in Quito city — including
             Hyatt, Oro Verde, Swissôtel (Swiss hotel), Casa Gangotena, and a city-center Wyndham if that is where
-            you are staying. It is not the airport-area Wyndham in Tababela (that is the $50 product).
+            you are staying. It is not the airport-area Wyndham in Tababela ($50) and not Cumbayá ($75).
           </p>
           <p>
             Your driver tracks your flight, waits at arrivals with a name sign, and takes you straight to the
             door. Pay up front — no meter, no surge, no airport-surcharge surprise.
           </p>
         </>
+      ) : isCumbaya ? (
+        <>
+          <p>
+            Cumbayá sits in the Valle de Tumbaco, typically {zone.eta} from UIO — on the valley path between
+            the airport and Quito. This $75 prepaid rate is for a luxury SUV with a licensed driver to Cumbayá.
+            It is not the $50 airport-hotel product and not the $100 anywhere-in-Quito city rate.
+          </p>
+          <p>
+            Your driver tracks your flight, waits at arrivals with a name sign, and takes you to the door.
+            Pay the flat rate up front.
+          </p>
+        </>
       ) : (
         <>
           <p>
             Wyndham Quito Airport is the airport-area hotel in Tababela, typically {zone.eta} from arrivals.
-            This $50 prepaid rate is only for that hotel — not a Wyndham (or any other hotel) in Quito city,
-            which is the $100 anywhere-in-Quito product.
+            This $50 prepaid rate is only for that hotel — not Cumbayá ($75) and not a Wyndham (or any other
+            hotel) in Quito city, which is the $100 anywhere-in-Quito product.
           </p>
           <p>
             A licensed driver in a luxury SUV tracks your flight, waits at arrivals with a name sign, and takes
@@ -106,7 +119,7 @@ const schema = {
         </>
       )}
       <p>
-        Compare both prepaid rates on the <a href={u('/#rates')}>rates page</a> or read our
+        Compare the three prepaid rates on the <a href={u('/#rates')}>rates page</a> or read our
         <a href={u('/guide')}>Quito airport travel guide</a>.
       </p>
     </div>

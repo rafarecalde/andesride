@@ -4,6 +4,7 @@ description: "Cumbayá and Tumbaco are the leafy valley suburbs between Quito an
 category: "Neighborhoods"
 publishDate: 2026-03-21
 tags: ["Cumbaya", "Tumbaco", "Quito airport", "Valle de Tumbaco", "transfer"]
+ctaZone: "cumbaya"
 ---
 
 If you want a calmer, warmer, and closer base than central Quito — especially handy near the airport — the **Valle de Tumbaco** is the local secret. Cumbayá and Tumbaco sit lower than the city, so the climate is milder and the pace is more relaxed.
@@ -22,7 +23,7 @@ It's also the gateway toward Papallacta and the eastern mountains.
 
 This is the **closest populated valley to the airport** — typically only around 25–35 minutes from **UIO**, since both sit on the eastern side of the metro area. That makes Cumbayá a smart choice if you have an early flight, a short stay, or simply don't want to climb all the way up to central Quito after landing.
 
-Cumbayá is outside the two prepaid products (airport hotel vs. Quito city), so [ask for a quote](/#book) rather than using the $100 city rate. Published prepaid rates are on the [rates page](/#rates).
+Cumbayá is its own prepaid product: **$75** one-way in a luxury SUV. See [Quito airport to Cumbayá](/quito-airport-to-cumbaya) or compare all three rates on the [rates page](/#rates). It is not the $100 city rate.
 
 ## Tips
 
