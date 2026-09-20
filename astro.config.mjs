@@ -17,6 +17,7 @@ import sitemap from '@astrojs/sitemap';
 // ─────────────────────────────────────────────────────────────────────────────
 const SITE = 'https://rafarecalde.github.io';
 const BASE = '/andesride';
+const withBase = (path) => (BASE === '/' ? path : `${BASE}${path === '/' ? '/' : path}`);
 
 // Base-aware rewrite of internal links inside markdown (href/src starting with
 // "/"). No-op when BASE is '/'. Avoids a unist dependency by recursing manually.
@@ -52,14 +53,14 @@ export default defineConfig({
     rehypePlugins: [rehypeBase],
   },
   redirects: {
-    '/quito-airport-to-puembo': '/quito-airport-to-wyndham-airport',
-    '/quito-airport-to-norte': '/quito-airport-to-quito',
-    '/quito-airport-to-centro': '/quito-airport-to-quito',
-    '/quito-airport-to-sur': '/quito-airport-to-quito',
-    '/quito-airport-to-cumbaya': '/',
-    '/quito-airport-to-mitad': '/',
-    '/quito-airport-to-papallacta': '/',
-    '/quito-airport-to-otavalo': '/',
-    '/quito-airport-to-mindo': '/',
+    '/quito-airport-to-puembo': withBase('/quito-airport-to-wyndham-airport'),
+    '/quito-airport-to-norte': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-centro': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-sur': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-cumbaya': withBase('/'),
+    '/quito-airport-to-mitad': withBase('/'),
+    '/quito-airport-to-papallacta': withBase('/'),
+    '/quito-airport-to-otavalo': withBase('/'),
+    '/quito-airport-to-mindo': withBase('/'),
   },
 });
