@@ -10,7 +10,10 @@ export function publicOrigin(site?: URL | string | undefined): string {
 
 export function publicUrl(path: string, site?: URL | string | undefined): string {
   const origin = publicOrigin(site);
-  const rel = u(path.startsWith('/') ? path : `/${path}`);
-  if (!origin) return rel;
-  return new URL(rel, origin).href;
+  const p = path.startsWith('/') ? path : `/${path}`;
+  if (!origin) return SITE.domain ? p : u(p);
+  // When SITE.domain is set, canonical URLs are root-hosted on that domain
+  // (no GitHub Pages /andesride prefix). In-page links still use u().
+  if (SITE.domain) return new URL(p, origin).href;
+  return new URL(u(p), origin).href;
 }

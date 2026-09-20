@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-# Public sitemap for the GitHub Pages preview. Point this at YOUR_DOMAIN
-# once a custom domain is live. Do not use andesride.com.
-Sitemap: https://rafarecalde.github.io/andesride/sitemap-index.xml
+# Canonical sitemap on the chosen domain. DNS may not be pointed yet.
+# Do not use andesride.com.
+Sitemap: https://quitoairporttransfers.com/sitemap-index.xml

@@ -5,12 +5,11 @@ export const SITE = {
   name: 'Quito Airport Transfer',
   descriptor: 'Prepaid luxury SUV · UIO',
   tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
-  // Public origin for canonical / OG / JSON-LD. Leave blank until a real domain
-  // is owned. Canonical URLs then fall back to the Astro `site` (GitHub Pages).
-  // Do not set andesride.com — that domain belongs to an unrelated Chilean brand.
-  domain: '',
-  // Set when a domain is chosen (e.g. book@YOUR_DOMAIN). Omit from the UI until then.
-  email: '',
+  // Chosen public origin. Domain may not be registered or DNS-pointed yet;
+  // canonical / OG / JSON-LD still target it so the build is launch-ready.
+  // Do not use andesride.com — that domain belongs to an unrelated Chilean brand.
+  domain: 'https://quitoairporttransfers.com',
+  email: 'book@quitoairporttransfers.com',
   whatsapp: '+593 99 000 0000',
   phone: '+593 99 000 0000',
 
@@ -19,7 +18,7 @@ export const SITE = {
   payProvider: 'stripe' as 'stripe' | 'payphone' | 'kushki' | 'pagoplux' | 'dlocal',
 
   // URL of the deployed serverless checkout function (used only in "live" mode).
-  // e.g. 'https://YOUR_PROJECT-pay.<you>.workers.dev'  — leave blank for mock.
+  // e.g. 'https://quitoairporttransfers-pay.<you>.workers.dev'  — leave blank for mock.
   paymentApiBase: '',
 
   cancelFreeHours: 24,

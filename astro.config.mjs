@@ -9,10 +9,12 @@ import sitemap from '@astrojs/sitemap';
 // a subpath: https://rafarecalde.github.io/andesride/  (base '/andesride').
 // The GitHub repo path stays andesride; that is not the public brand.
 //
-// When you own a custom domain, flip to root hosting — change these two lines
-// and add public/CNAME. Do not use andesride.com (unrelated Chilean brand):
-//     site: 'https://YOUR_DOMAIN',
+// Intended production host is https://quitoairporttransfers.com (SITE.domain).
+// Domain may not be registered or DNS-pointed yet — keep this GitHub Pages
+// project preview until it is, then flip:
+//     site: 'https://quitoairporttransfers.com',
 //     base: '/',
+// and add public/CNAME. Do not use andesride.com (unrelated Chilean brand).
 // All internal links go through u() (src/lib/url.ts) and markdown links are
 // base-prefixed automatically, so the flip needs no other edits.
 // ─────────────────────────────────────────────────────────────────────────────
