@@ -85,20 +85,21 @@ The homepage hero is **paper, not a photo wallpaper**. It opens with eyebrow, h1
 short sub, and the three price rows, then a **large** owner meet-and-greet still
 `src/assets/_source/meet-greet.webp` (chauffeur with name-sign tablet at UIO
 arrivals) as a contained, captioned figure filling the copy column. Do not lead
-the page with that photo alone. Do not use `door-holder.*` in components (broken
-crop). The cabin still
+the page with that photo alone. Do not use `door-holder.*` or
+`cumbaya-valley.*` in components — both files are the broken curb/door still
+(top-left crop artifact), not a valley landscape. The cabin still
 `src/assets/_source/chauffeur-owner.webp` is the fleet / booker representative
 photo. The terminal exterior
 `src/assets/_source/uio-terminal.webp` is a smaller place photo in How far. The
-Cumbayá still `src/assets/_source/cumbaya-valley.webp` sits on the Cumbayá rate
-card, How far, and `/quito-airport-to-cumbaya`. The route map
+route map
 `src/assets/_source/route-map.webp` (UIO ↔ Old Town; Cumbayá on the path) also
 feeds How far. Do not replace owner stills with generated lookalikes.
 
 ## Adding fleet photos
 
 The fleet panel uses the cabin portrait `src/assets/_source/chauffeur-owner.webp`
-(or a vehicle file in `src/assets/fleet/`). Do not wire `door-holder.*` back in.
+(or a vehicle file in `src/assets/fleet/`). Do not wire `door-holder.*` or
+`cumbaya-valley.*` back in.
 Caption: **"Representative chauffeur and cabin — we do not show a stock SUV
 exterior. Actual model may vary."** Do not generate an exterior stand-in.
 
