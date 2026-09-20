@@ -21,7 +21,7 @@ It rewards an overnight (or two), though determined travelers do visit in a long
 
 Baños is a longer haul — several hours south of Quito via Ambato — so comfort matters. A **private flat-rate transfer** from **Quito airport (UIO)** or the city means one fixed price for the whole journey, no bus changes with luggage, and a driver who handles the route while you watch the Andes roll by. It's also a natural choice if you're connecting onward into the Amazon.
 
-Baños sits beyond the standard zones on our [rates table](/#rates), so [contact us for a flat quote](/#book) for the door-to-door price.
+Baños sits beyond the prepaid UIO products on our [rates page](/#rates), so [contact us for a quote](/#book) for the door-to-door price.
 
 ## Tips
 

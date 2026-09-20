@@ -4,7 +4,6 @@ description: "Mitad del Mundo lets you straddle the equator just outside Quito. 
 category: "Destinations"
 publishDate: 2026-02-28
 tags: ["Mitad del Mundo", "equator", "Quito airport", "day trip", "transfer"]
-ctaZone: "mitad"
 ---
 
 Few photos are as fun to send home as one foot in each hemisphere. Mitad del Mundo — "the Middle of the World" — is an easy, iconic half-day from Quito.
@@ -19,7 +18,7 @@ With a little more time, pair it with the nearby **Pululahua crater** — a lush
 
 Mitad del Mundo sits on the north side of the Quito area, about an hour's drive. From **UIO airport** in the eastern valley, that means a cross-region trip — straightforward with a private driver, more of a puzzle by public transport. A **flat-rate transfer** gives you a fixed price, a driver who knows the route, and the option to add Pululahua as an **extra stop**.
 
-See the fare on the [Quito airport to Mitad del Mundo](/quito-airport-to-mitad) page, or the full [rates table](/#rates).
+Mitad del Mundo sits outside Quito city, so it is quoted on request — not the $100 anywhere-in-Quito prepaid rate. See the published products on the [rates page](/#rates), or [ask for a quote](/#book).
 
 ## Tips
 

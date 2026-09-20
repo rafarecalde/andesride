@@ -4,7 +4,7 @@ description: "A long layover at Quito airport (UIO) is enough to see real Ecuado
 category: "Airport tips"
 publishDate: 2026-05-23
 tags: ["Quito airport", "layover", "UIO", "things to do", "transfer"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 A long layover in Quito doesn't have to mean staring at a departures board. The airport is far from the city, but with a pre-booked driver you can turn dead time into a real glimpse of Ecuador — and still make your onward flight.
@@ -42,4 +42,4 @@ Now a real day trip is on the table:
 - Remember the **altitude** (2,850 m in the city) — go easy if you've been flying for hours.
 - Book the transfer **round trip** so the same driver returns you to the terminal on schedule.
 
-See the city fare on the [Quito Centro / La Mariscal](/quito-airport-to-centro) page, or compare every area on the [rates table](/#rates).
+See the prepaid $100 city fare on the [anywhere in Quito](/quito-airport-to-quito) page, or the $50 airport-hotel rate if you stay at [Wyndham Quito Airport](/quito-airport-to-wyndham-airport).

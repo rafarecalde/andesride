@@ -4,7 +4,6 @@ description: "Papallacta's thermal pools are the perfect first or last stop in E
 category: "Destinations"
 publishDate: 2026-03-07
 tags: ["Papallacta", "hot springs", "Quito airport", "thermal pools", "transfer"]
-ctaZone: "papallacta"
 ---
 
 After a long-haul flight, almost nothing beats sinking into a steaming, mineral-rich thermal pool with the páramo rising around you. Papallacta is that place — and it's one of the smartest trips to book for your **arrival or departure day**.
@@ -19,7 +18,7 @@ It's a soak-and-relax destination: bring a book, plan a long lunch (the local tr
 
 Papallacta lies east of Quito, and from **UIO airport** — already on the eastern side of the valley — it's a scenic climb into the mountains. Because it sits at altitude on a winding road, a **private flat-rate transfer** is the easy call: a fixed price, a driver comfortable with the high-mountain route, and flight tracking if you're heading there straight off a flight.
 
-See the price on the [Quito airport to Papallacta](/quito-airport-to-papallacta) page or the full [rates table](/#rates).
+Papallacta is outside Quito city, so [ask for a quote](/#book) rather than using the prepaid city rate. Published airport-hotel and Quito-city rates are on the [rates page](/#rates).
 
 ## Tips
 

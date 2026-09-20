@@ -11,43 +11,43 @@ export function getStaticPaths() {
 
 const { zone } = Astro.props;
 const path = `/quito-airport-to-${zone.key}`;
-const vehicles = rates.vehicles;
-const priceFor = (key: string) => zone[key as 'sedan' | 'suv' | 'van'] as number;
+const suv = rates.vehicles[0];
+const isCity = zone.key === 'quito';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'Private airport transfer',
   name: `Quito Airport (UIO) to ${zone.name}`,
-  description: `Flat-rate private transfer between Quito airport (UIO) and ${zone.name}. From $${zone.sedan} USD, ${zone.eta} drive, flight tracking and meet & greet included.`,
+  description: `Prepaid luxury-SUV transfer between Quito airport (UIO) and ${zone.name}. $${zone.price} USD, ${zone.eta} drive, flight tracking and meet & greet included.`,
   provider: { '@type': 'Organization', name: SITE.name, url: SITE.domain },
   areaServed: { '@type': 'City', name: 'Quito, Ecuador' },
-  offers: vehicles.map((v) => ({
+  offers: {
     '@type': 'Offer',
     priceCurrency: 'USD',
-    price: priceFor(v.key),
-    name: `${v.name} (up to ${v.maxPax} passengers)`,
-  })),
+    price: zone.price,
+    name: `${suv.name} (up to ${suv.maxPax} passengers)`,
+  },
 };
 ---
 <BaseLayout
-  title={`Quito Airport to ${zone.name} — Flat-Rate Transfer (UIO) | ${SITE.name}`}
-  description={`Private transfer from Quito airport (UIO) to ${zone.name}: flat USD price from $${zone.sedan}, about ${zone.eta}, flight tracking and meet & greet included. Book online.`}
+  title={`Quito Airport to ${zone.name} — Prepaid Luxury SUV (UIO) | ${SITE.name}`}
+  description={`Prepaid luxury SUV from Quito airport (UIO) to ${zone.name}: $${zone.price} USD, about ${zone.eta}, licensed driver, flight tracking and meet & greet included. Pay up front.`}
   path={path}
   schema={schema}
 >
   <header class="page-hero">
     <div class="wrap">
       <div class="crumbs"><a href={u('/')}>Home</a> · <a href={u('/#rates')}>Rates</a> · {zone.name}</div>
-      <span class="eyebrow">Private transfer · UIO</span>
+      <span class="eyebrow">Prepaid luxury SUV · UIO</span>
       <h1>Quito Airport to {zone.name}</h1>
-      <p class="meta">{zone.sub} — flat-rate, flight-tracked, door-to-door.</p>
+      <p class="meta">{zone.sub} — one prepaid flat rate, flight-tracked, door-to-door.</p>
     </div>
   </header>
 
   <div class="wrap" style="padding:40px 0 64px">
     <div class="route-facts">
-      <div class="rfact"><div class="k">From (Sedan)</div><div class="v">${zone.sedan} <small>USD</small></div></div>
+      <div class="rfact"><div class="k">Prepaid (luxury SUV)</div><div class="v">${zone.price} <small>USD</small></div></div>
       <div class="rfact"><div class="k">Drive time</div><div class="v" style="font-size:1.2rem">{zone.eta}</div></div>
       <div class="rfact"><div class="k">Direction</div><div class="v" style="font-size:1.2rem">To &amp; from UIO</div></div>
     </div>
@@ -55,34 +55,57 @@ const schema = {
     <div class="rates">
       <table>
         <thead>
-          <tr><th>Vehicle</th><th class="num">Capacity</th><th class="num">Flat price (one-way)</th></tr>
+          <tr><th>Vehicle</th><th class="num">Capacity</th><th class="num">Prepaid price (one-way)</th></tr>
         </thead>
         <tbody>
-          {vehicles.map((v) => (
-            <tr>
-              <td class="zone">{v.name}</td>
-              <td class="num">up to {v.maxPax} · {v.bags} bags</td>
-              <td class="num">${priceFor(v.key)}</td>
-            </tr>
-          ))}
+          <tr>
+            <td class="zone">{suv.name}<small>Licensed, airport-authorized driver</small></td>
+            <td class="num">up to {suv.maxPax} · {suv.bags} bags</td>
+            <td class="num">${zone.price}</td>
+          </tr>
         </tbody>
       </table>
     </div>
+    {zone.examples?.length ? (
+      <ul class="hotel-list" style="margin-top:16px">
+        {zone.examples.map((h) => <li>{h}</li>)}
+      </ul>
+    ) : null}
     <div class="rates-note" style="margin-top:16px">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      One fixed USD price, confirmed before you pay. Round trips, child seats, and extra stops are added at checkout.
+      One prepaid USD price, confirmed before you pay. Round trips, child seats, and extra stops are added at checkout.
     </div>
 
     <div class="prose" style="padding:36px 0 0">
       <h2>Your transfer between UIO and {zone.name}</h2>
+      {isCity ? (
+        <>
+          <p>
+            {zone.name} is roughly {zone.eta} from Mariscal Sucre International Airport (UIO). This $100 prepaid
+            rate is for a luxury SUV with a licensed driver to any hotel or address in Quito city — including
+            Hyatt, Oro Verde, Swissôtel (Swiss hotel), Casa Gangotena, and a city-center Wyndham if that is where
+            you are staying. It is not the airport-area Wyndham in Tababela (that is the $50 product).
+          </p>
+          <p>
+            Your driver tracks your flight, waits at arrivals with a name sign, and takes you straight to the
+            door. Pay up front — no meter, no surge, no airport-surcharge surprise.
+          </p>
+        </>
+      ) : (
+        <>
+          <p>
+            Wyndham Quito Airport is the airport-area hotel in Tababela, typically {zone.eta} from arrivals.
+            This $50 prepaid rate is only for that hotel — not a Wyndham (or any other hotel) in Quito city,
+            which is the $100 anywhere-in-Quito product.
+          </p>
+          <p>
+            A licensed driver in a luxury SUV tracks your flight, waits at arrivals with a name sign, and takes
+            you to the hotel door. Pay the flat rate up front.
+          </p>
+        </>
+      )}
       <p>
-        {zone.name} is roughly {zone.eta} from Mariscal Sucre International Airport (UIO). Your driver tracks
-        your flight, waits at arrivals with a name sign, and takes you straight to the door for one flat rate —
-        no meter, no surge, no airport-surcharge surprise. Booking ahead means a vetted, licensed,
-        airport-authorized carrier is already expecting you when you land.
-      </p>
-      <p>
-        Prefer to compare every area first? See the <a href={u('/#rates')}>full flat-rate table</a> or read our
+        Compare both prepaid rates on the <a href={u('/#rates')}>rates page</a> or read our
         <a href={u('/guide')}>Quito airport travel guide</a>.
       </p>
     </div>
@@ -90,7 +113,7 @@ const schema = {
     <BookingCta
       zone={zone.key}
       heading={`Book your UIO ↔ ${zone.name} transfer`}
-      text={`Flat price from $${zone.sedan} USD, ${zone.eta}, flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`}
+      text={`Prepaid luxury SUV · $${zone.price} USD · ${zone.eta}. Flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`}
     />
   </div>
 </BaseLayout>

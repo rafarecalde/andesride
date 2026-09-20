@@ -24,7 +24,7 @@ If you're doing a **long, self-paced road trip** across multiple regions and you
 For most trips based in Quito with day trips out, **per-trip private transfers** are simpler:
 
 - **No driving, parking, or navigation** — you arrive relaxed and free to look out the window.
-- A **flat USD price per route**, set before you go — see the [rates table](/#rates).
+- A **prepaid USD price** for the airport-to-hotel leg — see the [rates](/#rates).
 - A driver who **knows the mountain roads** and handles them for you.
 - No car sitting idle (and racking up parking) on the days you don't need it.
 

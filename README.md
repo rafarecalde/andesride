@@ -1,9 +1,9 @@
 # AndesRide — Quito (UIO) Airport Transfers
 
 A fast, premium, **US-facing** airport-transfer booking site for Quito's Mariscal
-Sucre International Airport (UIO): flat USD pricing, an online booking widget, and
-a markdown blog as the SEO engine. Built with **Astro**, deploys to **GitHub
-Pages**.
+Sucre International Airport (UIO): prepaid luxury-SUV flat USD pricing, an online
+booking widget, and a markdown blog as the SEO engine. Built with **Astro**,
+deploys to **GitHub Pages**.
 
 ---
 
@@ -52,11 +52,19 @@ functions/               # serverless payment + webhook stub (deployed SEPARATEL
 ## Editing rates (nothing is hardcoded)
 
 All prices, zones, vehicles, and add-on costs live in **`src/data/rates.json`**.
-The booking widget, the rates table, the fleet cards, and every route landing
-page read from it. Edit one file and everything updates. Price math:
+The booking widget, the rates cards, the fleet card, and every route landing
+page read from it. Edit one file and everything updates.
+
+Published product (luxury SUV only):
+
+- **$50** one-way — UIO ↔ **Wyndham Quito Airport** (Tababela / airport-area hotel)
+- **$100** one-way — UIO ↔ **anywhere in Quito city** (Hyatt, Oro Verde, Swissôtel,
+  Casa Gangotena, and any other city address)
+
+Price math:
 
 ```
-total = vehicleRate × (roundTrip ? 2 : 1)
+total = zone.price × (roundTrip ? 2 : 1)
       + childSeat × qty
       + (extraStop ? extraStop × (roundTrip ? 2 : 1) : 0)
 ```
@@ -71,11 +79,11 @@ change. A light wash keeps the headline readable over any photo.
 
 ## Adding fleet photos
 
-Drop representative photos into `src/assets/fleet/` named exactly
-`sedan.webp`, `suv.webp`, `van.webp` (WebP preferred; PNG/JPG also work). They're
-picked up automatically via `astro:assets` — no code change. Until then, neutral
-placeholders show with the caption **"Representative vehicle — actual model may
-vary."** Recommended: landscape ~16:10 / 3:2, ≥1200×800, clean neutral background.
+Drop a representative photo into `src/assets/fleet/` named exactly
+`suv.webp` (WebP preferred; PNG/JPG also work). It's picked up automatically via
+`astro:assets` — no code change. Until then, a neutral placeholder shows with the
+caption **"Representative vehicle — actual model may vary."** Recommended:
+landscape ~16:10 / 3:2, ≥1200×800, clean neutral background.
 (Optional: a logo, an Andes/Quito hero image, and a custom favicon.)
 
 ## Adding a blog post
@@ -142,8 +150,8 @@ custom-domain values above once the domain is live.
 
 1. **Source licensed, UIO-authorized carriers/drivers** — the launch gate. Local
    counsel to confirm the intermediary structure + carrier agreement.
-2. Send **vehicle photos** (Sedan / SUV / Van, representative) → `src/assets/fleet/`.
-3. Confirm **final rates** in `src/data/rates.json` (premium US-facing values set).
+2. Send a **luxury SUV photo** (representative) → `src/assets/fleet/suv.webp`.
+3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
 5. Set real **domain, email, WhatsApp/phone** in `src/config.ts`; decide where
@@ -151,17 +159,18 @@ custom-domain values above once the domain is live.
 6. Replace **placeholder reviews/ratings** (`src/components/Reviews.astro`,
    `ratingValue`/`ratingCount` in `src/config.ts`) with real, verifiable ones.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
-8. Write the **next 3 blog posts** (route angles: UIO ↔ Cumbayá / Mitad del Mundo
-   / Otavalo, "every option compared", altitude tips).
+8. Keep destination guides (Cumbayá, Otavalo, etc.) as quote-on-request;
+   prepaid bookable products stay airport-hotel vs. Quito city.
 
 ## What's included
 
 - Booking widget (3 steps + confirmation), live USD pricing from `rates.json`,
   round trip, child seats, extra stops, validation, **mock** payment + reference.
-- Blog: `/guide` index, 5 seed posts with booking CTAs, 3 latest on the home page,
+- Blog: `/guide` index, seed posts with booking CTAs, 3 latest on the home page,
   `rss.xml`, sitemap, JSON-LD (`Article`, `FAQPage`, `TaxiService`/`LocalBusiness`,
   `Service`/`Offer` with prices).
-- Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`.
+- Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`
+  (Wyndham Quito Airport + anywhere in Quito).
 - Legal: `/terms`, `/privacy`, `/cancellation` (templates for counsel review).
 - Responsive (980 / 760 breakpoints), reduced-motion, keyboard-operable widget +
   menu, AA-minded contrast.

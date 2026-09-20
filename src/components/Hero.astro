@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE } from '../config';
 import { u } from '../lib/url';
 import { heroPhoto } from '../lib/hero';
 import Booker from './Booker.astro';
@@ -16,17 +15,13 @@ import Booker from './Booker.astro';
     <div class="hero-grid">
       <div class="hero-copy">
         <span class="eyebrow">Quito Airport (UIO) — Tababela</span>
-        <h1>Private airport transfers in Quito, at one <span class="hl">flat rate</span></h1>
-        <p class="hero-sub">Book a private ride to or from Mariscal Sucre International Airport (UIO). Fixed price, no surge, flight tracking, and a driver waiting with your name.</p>
+        <h1>Prepaid luxury SUV from UIO — <span class="hl">$50</span> or <span class="hl">$100</span></h1>
+        <p class="hero-sub">A licensed driver in a luxury SUV. Pay the flat rate up front: $50 to Wyndham Quito Airport, $100 anywhere in Quito city — including Hyatt, Oro Verde, Swissôtel, and Casa Gangotena.</p>
         <div class="hero-usps">
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Flat rate confirmed before you pay — no meter, no surprises</div>
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> We track your flight — free wait time if you're delayed</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Prepaid flat rate in USD — no meter, no surprises</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Luxury SUV with a licensed, airport-authorized driver</div>
+          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> We track your flight — wait time included if you're delayed</div>
           <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Meet &amp; greet at arrivals with a name sign, included</div>
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Licensed, vetted, English-speaking drivers</div>
-        </div>
-        <div class="hero-rating">
-          <span class="stars" aria-hidden="true">★★★★★</span>
-          <span class="rt"><b>{SITE.ratingValue}</b>/5 · trusted by {Number(SITE.ratingCount).toLocaleString()}+ travelers</span>
         </div>
       </div>
 

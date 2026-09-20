@@ -4,7 +4,7 @@ description: "Wondering whether rideshare and taxis are safe in Quito — especi
 category: "Costs & options"
 publishDate: 2026-06-14
 tags: ["safety", "Uber", "Quito", "Quito airport", "rideshare"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 Safety is a fair question to ask before you land somewhere new, and Quito is no exception. Here's a practical, non-alarmist take on getting around — and on arrival in particular.
@@ -31,4 +31,4 @@ The single biggest safety upgrade for arrival is removing the curbside lottery e
 
 ## Bottom line
 
-Quito is very visitable, and rideshare isn't inherently unsafe — but the arrival is when uncertainty is highest and good options are thinnest, especially [late at night](/guide/arriving-quito-airport-late-at-night). Pre-booking a licensed transfer is the simplest way to make your first hour in Ecuador a non-event. Compare [every option](/guide/getting-from-quito-airport-to-city) or see the [flat rates](/#rates).
+Quito is very visitable, and rideshare isn't inherently unsafe — but the arrival is when uncertainty is highest and good options are thinnest, especially [late at night](/guide/arriving-quito-airport-late-at-night). Pre-booking a licensed luxury-SUV transfer is the simplest way to make your first hour in Ecuador a non-event. Compare [every option](/guide/getting-from-quito-airport-to-city) or see the [prepaid rates](/#rates).

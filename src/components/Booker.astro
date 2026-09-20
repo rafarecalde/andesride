@@ -6,15 +6,14 @@ import { Image } from 'astro:assets';
 
 const { zones, vehicles, extras } = rates;
 const isLive = SITE.paymentsMode === 'live';
+const suv = vehicles[0];
 
 // Data handed to the client script — the widget reads rates from here, never
 // from hardcoded values (single source of truth = rates.json).
 const widgetData = JSON.stringify({ zones, vehicles, extras });
 
 const vehIcons: Record<string, string> = {
-  sedan: '<path d="M3 13l2-5a3 3 0 013-2h8a3 3 0 013 2l2 5"/><path d="M2 13h20v4H2zM6 17v2M18 17v2"/><circle cx="7" cy="13" r="1.4"/><circle cx="17" cy="13" r="1.4"/>',
   suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
-  van: '<path d="M3 7h11l4 4h3v6H3z"/><path d="M3 17v2M19 17v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/><path d="M7 7v4M11 7v4"/>',
 };
 ---
 <div class="booker reveal" id="book">
@@ -35,12 +34,13 @@ const vehIcons: Record<string, string> = {
       </div>
 
       <div class="fld">
-        <label id="zoneLabel" for="zone">Drop-off area (in &amp; around Quito)</label>
+        <label id="zoneLabel" for="zone">Drop-off (prepaid luxury SUV)</label>
         <select class="ctrl" id="zone">
-          <option value="" disabled selected>Choose your area…</option>
-          {zones.map((z) => <option value={z.key}>{z.name}</option>)}
+          <option value="" disabled selected>Choose your destination…</option>
+          {zones.map((z) => <option value={z.key}>{z.name} — ${z.price}</option>)}
         </select>
-        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">Estimated drive time shows once you pick an area</span></div>
+        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">$50 Wyndham Quito Airport · $100 anywhere in Quito</span></div>
+        <div class="hotel-hint" id="hotelHint" hidden></div>
       </div>
 
       <div class="fld-row">
@@ -49,24 +49,24 @@ const vehIcons: Record<string, string> = {
       </div>
       <div class="fld"><label for="pax">Passengers</label>
         <select class="ctrl" id="pax">
-          {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => <option selected={n === 3}>{n}</option>)}
+          {Array.from({ length: suv.maxPax }, (_, i) => i + 1).map((n) => <option selected={n === 2}>{n}</option>)}
         </select>
       </div>
 
-      <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:6px;display:block">Choose your vehicle</label>
+      <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:6px;display:block">Your vehicle</label>
       <div class="veh" id="veh">
-        {vehicles.map((v, idx) => {
+        {vehicles.map((v) => {
           const photo = imageFor(v.key);
           return (
-            <label class={`veh-opt${idx === 0 ? ' sel' : ''}`} data-veh={v.key} tabindex="0" role="button" aria-pressed={idx === 0 ? 'true' : 'false'}>
+            <div class="veh-opt sel solo" data-veh={v.key}>
               <span class="vi">
                 {photo
                   ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={92} height={76} />
-                  : <svg viewBox="0 0 24 24" set:html={vehIcons[v.key]} />}
+                  : <svg viewBox="0 0 24 24" set:html={vehIcons[v.key] || vehIcons.suv} />}
               </span>
-              <span class="vmid"><span class="vn">{v.name}</span><span class="vmeta">Up to {v.maxPax} passengers · {v.bags} bags</span></span>
-              <span class="vp"><span id={`p-${v.key}`}>$—</span><small>flat</small></span>
-            </label>
+              <span class="vmid"><span class="vn">{v.name}</span><span class="vmeta">Licensed driver · up to {v.maxPax} passengers · {v.bags} bags</span></span>
+              <span class="vp"><span id={`p-${v.key}`}>$—</span><small>prepaid</small></span>
+            </div>
           );
         })}
       </div>
@@ -74,7 +74,7 @@ const vehIcons: Record<string, string> = {
 
       <div class="total-bar">
         <div class="tl">Total <b id="t0">$—</b></div>
-        <div class="tg"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Flat rate, all-in</div>
+        <div class="tg"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Prepaid flat rate</div>
       </div>
       <button class="btn btn-amber" style="width:100%" id="toStep1">Continue</button>
     </div>
@@ -84,7 +84,7 @@ const vehIcons: Record<string, string> = {
       <div class="xtras" style="margin-bottom:16px">
         <div class="xtra">
           <span class="xi"><svg viewBox="0 0 24 24"><path d="M3 7h6l3 3 3-3h6"/><path d="M7 7v10M17 7v10"/></svg></span>
-          <span class="xt"><span class="xn">Round trip</span><span class="xd">Add the return ride and save the second booking</span></span>
+          <span class="xt"><span class="xn">Round trip</span><span class="xd">Return ride at the same prepaid rate</span></span>
           <label class="switch"><input type="checkbox" id="rt" aria-label="Round trip"><span class="sl"></span></label>
         </div>
         <div id="rtFields" style="display:none">
@@ -149,11 +149,11 @@ const vehIcons: Record<string, string> = {
       <div id="payErr" class="route-hint" style="color:#d9534f;display:none;margin-bottom:10px"></div>
       <div class="bk-actions">
         <button class="btn btn-ghost back" id="back2">Back</button>
-        <button class="btn btn-amber" id="payBtn">Pay <span id="payAmt">$—</span> now</button>
+        <button class="btn btn-amber" id="payBtn">Pay <span id="payAmt">$—</span> up front</button>
       </div>
       <div class="secure-note">
         <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
-        Secure checkout · Prices in USD{isLive ? '' : ' · Demo mode — no real charge'}
+        Prepaid in USD{isLive ? '' : ' · Demo mode — no real charge'}
       </div>
       <p class="disclosure">{DISCLOSURE}</p>
     </div>
@@ -178,7 +178,7 @@ const vehIcons: Record<string, string> = {
 <script>
   import { createCheckout } from '../lib/payments';
 
-  type Zone = { key: string; name: string; sub: string; eta: string; sedan: number; suv: number; van: number };
+  type Zone = { key: string; name: string; sub: string; eta: string; price: number; examples?: string[] };
   type Extras = { childSeat: number; extraStop: number };
   const data = JSON.parse(document.getElementById('ratesData')!.textContent || '{}');
   const ZONES: Zone[] = data.zones;
@@ -194,10 +194,7 @@ const vehIcons: Record<string, string> = {
   const zoneSel = $('zone') as HTMLSelectElement;
 
   const zone = () => ZONES.find((x) => x.key === state.zone);
-  const basePrice = () => {
-    const z = zone();
-    return z ? (z[state.veh as 'sedan' | 'suv' | 'van'] as number) : null;
-  };
+  const basePrice = () => zone()?.price ?? null;
   const total = () => {
     const b = basePrice();
     if (b === null) return null;
@@ -214,16 +211,7 @@ const vehIcons: Record<string, string> = {
       b.classList.toggle('on', b.dataset.dir === d),
     );
     $('zoneLabel').textContent =
-      d === 'from' ? 'Drop-off area (in & around Quito)' : 'Pick-up area (in & around Quito)';
-    recalc();
-  }
-  function setVeh(v: string) {
-    state.veh = v;
-    document.querySelectorAll<HTMLElement>('.veh-opt').forEach((o) => {
-      const on = o.dataset.veh === v;
-      o.classList.toggle('sel', on);
-      o.setAttribute('aria-pressed', String(on));
-    });
+      d === 'from' ? 'Drop-off (prepaid luxury SUV)' : 'Pick-up (prepaid luxury SUV)';
     recalc();
   }
   function recalc() {
@@ -231,11 +219,28 @@ const vehIcons: Record<string, string> = {
     state.stop = ($('stop') as HTMLInputElement)?.checked ?? false;
     const z = zone();
     VEH_KEYS.forEach((v) => {
-      $('p-' + v).textContent = z ? '$' + (z[v as 'sedan' | 'suv' | 'van'] as number) : '$—';
+      const el = $('p-' + v);
+      if (el) el.textContent = z ? '$' + z.price : '$—';
     });
-    $('etaHint').textContent = z
-      ? 'Estimated drive time · ' + z.eta
-      : 'Estimated drive time shows once you pick an area';
+    const hint = $('etaHint');
+    const hotels = $('hotelHint');
+    if (!z) {
+      hint.textContent = '$50 Wyndham Quito Airport · $100 anywhere in Quito';
+      hotels.hidden = true;
+      hotels.textContent = '';
+    } else {
+      hint.textContent = 'Estimated drive time · ' + z.eta;
+      if (z.examples && z.examples.length) {
+        hotels.hidden = false;
+        hotels.textContent =
+          z.key === 'quito'
+            ? 'Includes Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and any other city address. A city-center Wyndham (not the airport hotel) is this $100 rate too.'
+            : 'Airport-area hotel in Tababela — not a city-center Wyndham.';
+      } else {
+        hotels.hidden = true;
+        hotels.textContent = '';
+      }
+    }
     const t = total();
     ['t0', 't1'].forEach((id) => ($(id).textContent = money(t)));
     $('payAmt').textContent = money(t);
@@ -245,7 +250,7 @@ const vehIcons: Record<string, string> = {
     state.step = n;
     for (let i = 0; i < 4; i++) $('step' + i).classList.toggle('on', i === n);
     for (let i = 0; i < 3; i++) $('dot' + i).classList.toggle('on', i <= Math.min(n, 2));
-    const titles = ['Book your transfer', 'Add-ons & details', 'Review & pay', 'Booking confirmed'];
+    const titles = ['Book your transfer', 'Add-ons & details', 'Review & pay up front', 'Booking confirmed'];
     $('bkTitle').textContent = titles[n];
     document.querySelector('.booker')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -281,7 +286,7 @@ const vehIcons: Record<string, string> = {
     let html = rows
       .map((r) => `<div class="sline"><span class="k">${r[0]}</span><span class="v">${r[1]}</span></div>`)
       .join('');
-    html += `<div class="sline rt tot"><span class="k">Total (USD)</span><span class="v">${money(total())}</span></div>`;
+    html += `<div class="sline rt tot"><span class="k">Prepaid total (USD)</span><span class="v">${money(total())}</span></div>`;
     $('summary').innerHTML = html;
   }
 
@@ -362,16 +367,6 @@ const vehIcons: Record<string, string> = {
   document.querySelectorAll<HTMLButtonElement>('.seg button').forEach((b) =>
     b.addEventListener('click', () => setDir(b.dataset.dir!)),
   );
-  document.querySelectorAll<HTMLElement>('.veh-opt').forEach((o) => {
-    const pick = () => setVeh(o.dataset.veh!);
-    o.addEventListener('click', pick);
-    o.addEventListener('keydown', (e) => {
-      if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
-        e.preventDefault();
-        pick();
-      }
-    });
-  });
   zoneSel.addEventListener('change', recalc);
   ($('pax') as HTMLSelectElement).addEventListener('change', recalc);
   $('toStep1').addEventListener('click', () => go(1));
@@ -420,7 +415,7 @@ const vehIcons: Record<string, string> = {
     recalc();
     $('book').scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
-  // Deep-link: /?zone=otavalo#book preselects the zone.
+  // Deep-link: /?zone=quito#book preselects the zone.
   const qsZone = new URLSearchParams(location.search).get('zone');
   if (qsZone && ZONES.some((z) => z.key === qsZone)) {
     zoneSel.value = qsZone;

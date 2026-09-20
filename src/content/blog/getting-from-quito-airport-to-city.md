@@ -4,7 +4,7 @@ description: "Bus, taxi, rideshare, or private transfer? Here's an honest compar
 category: "Costs & options"
 publishDate: 2026-05-28
 tags: ["Quito airport", "UIO", "transport", "cost", "comparison"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 Quito's airport (UIO) sits about 45–60 minutes from the city in Tababela, so "how do I actually get to my hotel?" is the first real decision of any trip. Here's every option, honestly compared.
@@ -22,7 +22,7 @@ Quito's airport (UIO) sits about 45–60 minutes from the city in Tababela, so "
 ## How to choose
 
 - **On a tight budget, traveling light, arriving in daylight?** The bus can work.
-- **Want certainty, arriving at night, carrying luggage, or traveling as a family?** A private transfer is the easy call — see the [flat-rate table](/#rates).
+- **Want certainty, arriving at night, carrying luggage, or traveling as a family?** A prepaid luxury-SUV transfer is the easy call — **$100** anywhere in Quito city, **$50** to Wyndham Quito Airport. See the [rates](/#rates).
 - **Comfortable with apps and some uncertainty?** Rideshare can be cheaper off-peak, if pickup is allowed when you land.
 
 ## The honest summary

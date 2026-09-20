@@ -4,7 +4,7 @@ description: "Thinking of taking an Uber from Quito airport (UIO)? Here's how ri
 category: "Costs & options"
 publishDate: 2026-06-02
 tags: ["Uber", "rideshare", "Quito airport", "UIO", "cost"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 "Can I just take an Uber from Quito airport?" is one of the most-searched travel questions about UIO — and the answer is a frustrating *it depends*. Here's the real picture.
@@ -26,7 +26,7 @@ Off-peak, in daylight, with working data and light luggage, a rideshare into the
 
 A private transfer removes every one of those variables. A vetted, **airport-authorized** driver is already waiting at arrivals with your name, the **price is fixed in USD before you fly**, and your flight is tracked so a delay doesn't matter. ([Why licensed, airport-authorized drivers matter.](/guide/why-licensed-airport-drivers-matter-quito))
 
-See the flat fares on the [rates table](/#rates), or compare [every option into the city](/guide/getting-from-quito-airport-to-city). If you do use an app, read [is Uber safe in Quito](/guide/is-uber-safe-in-quito) first.
+See the prepaid fares on the [rates page](/#rates), or compare [every option into the city](/guide/getting-from-quito-airport-to-city). If you do use an app, read [is Uber safe in Quito](/guide/is-uber-safe-in-quito) first.
 
 ## Bottom line
 

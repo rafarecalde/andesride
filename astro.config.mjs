@@ -51,4 +51,15 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [rehypeBase],
   },
+  redirects: {
+    '/quito-airport-to-puembo': '/quito-airport-to-wyndham-airport',
+    '/quito-airport-to-norte': '/quito-airport-to-quito',
+    '/quito-airport-to-centro': '/quito-airport-to-quito',
+    '/quito-airport-to-sur': '/quito-airport-to-quito',
+    '/quito-airport-to-cumbaya': '/',
+    '/quito-airport-to-mitad': '/',
+    '/quito-airport-to-papallacta': '/',
+    '/quito-airport-to-otavalo': '/',
+    '/quito-airport-to-mindo': '/',
+  },
 });

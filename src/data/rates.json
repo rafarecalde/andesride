@@ -3,19 +3,24 @@
   "airport": { "code": "UIO", "name": "Mariscal Sucre International Airport" },
   "extras": { "childSeat": 8, "extraStop": 15 },
   "vehicles": [
-    { "key": "sedan", "name": "Sedan", "maxPax": 3, "bags": 2, "image": "fleet/sedan.webp" },
-    { "key": "suv",   "name": "SUV",   "maxPax": 5, "bags": 4, "image": "fleet/suv.webp" },
-    { "key": "van",   "name": "Van",   "maxPax": 8, "bags": 8, "image": "fleet/van.webp" }
+    { "key": "suv", "name": "Luxury SUV", "maxPax": 5, "bags": 4, "image": "fleet/suv.webp" }
   ],
   "zones": [
-    { "key": "puembo",     "name": "Puembo · Pifo · Tababela",        "sub": "Closest to the airport",            "eta": "10–15 min", "sedan": 39,  "suv": 55,  "van": 79 },
-    { "key": "cumbaya",    "name": "Cumbayá · Tumbaco",               "sub": "Valle de Tumbaco",                  "eta": "25–35 min", "sedan": 45,  "suv": 65,  "van": 89 },
-    { "key": "norte",      "name": "Quito Norte",                     "sub": "La Carolina, González Suárez",      "eta": "~45 min",   "sedan": 55,  "suv": 75,  "van": 99 },
-    { "key": "centro",     "name": "Quito Centro / La Mariscal",      "sub": "Centro Histórico, Mariscal",        "eta": "~50 min",   "sedan": 59,  "suv": 79,  "van": 105 },
-    { "key": "sur",        "name": "Quito Sur · Quitumbe",            "sub": "Southern Quito",                    "eta": "~1 hr",     "sedan": 69,  "suv": 89,  "van": 119 },
-    { "key": "mitad",      "name": "Mitad del Mundo",                 "sub": "San Antonio de Pichincha",          "eta": "~1 hr",     "sedan": 69,  "suv": 89,  "van": 119 },
-    { "key": "papallacta", "name": "Papallacta",                      "sub": "Hot springs",                       "eta": "~1 hr",     "sedan": 110, "suv": 140, "van": 180 },
-    { "key": "otavalo",    "name": "Otavalo",                         "sub": "Imbabura",                          "eta": "~2 hr",     "sedan": 135, "suv": 170, "van": 220 },
-    { "key": "mindo",      "name": "Mindo",                           "sub": "Cloud forest",                      "eta": "~2.5 hr",   "sedan": 145, "suv": 180, "van": 235 }
+    {
+      "key": "wyndham-airport",
+      "name": "Wyndham Quito Airport",
+      "sub": "Tababela · airport-area hotel",
+      "eta": "10–15 min",
+      "price": 50,
+      "examples": ["Wyndham Quito Airport"]
+    },
+    {
+      "key": "quito",
+      "name": "Anywhere in Quito",
+      "sub": "City hotels and addresses",
+      "eta": "40–60 min",
+      "price": 100,
+      "examples": ["Hyatt", "Oro Verde", "Swissôtel", "Casa Gangotena"]
+    }
   ]
 }

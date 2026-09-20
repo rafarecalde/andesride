@@ -23,4 +23,4 @@ With a transfer booked in advance, a vetted driver is already waiting at arrival
 - Have your hotel address written down in Spanish.
 - Don't accept rides from people approaching you inside the terminal.
 
-A fixed-price, flight-tracked transfer is the single easiest thing to get right before a late arrival. See [our flat UIO rates](/#rates) or read [how meet & greet works at arrivals](/guide/dont-arrive-to-an-empty-airport).
+A prepaid, flight-tracked luxury-SUV transfer is the single easiest thing to get right before a late arrival. See [our UIO rates](/#rates) or read [how meet & greet works at arrivals](/guide/dont-arrive-to-an-empty-airport).

@@ -4,7 +4,7 @@ description: "Early flight or a long layover at Quito airport? Staying in Tababe
 category: "Airport tips"
 publishDate: 2026-05-09
 tags: ["Quito airport", "Tababela", "Puembo", "hotels", "layover", "transfer"]
-ctaZone: "puembo"
+ctaZone: "wyndham-airport"
 ---
 
 Quito's airport (UIO) sits out in Tababela, a good 45–60 minutes from the city. If you have a pre-dawn departure or a short connection, that distance is the enemy — which is why staying close to the airport is one of the best moves a traveler can make.
@@ -23,7 +23,7 @@ It's not where you'll spend a whole vacation, but for the night before or after 
 
 This is the **closest zone to the airport** — typically just 10–15 minutes from arrivals. A private transfer means that even on a red-eye, a vetted driver is waiting with your name and has you at your hotel in minutes. With a **flat rate** there are no late-night surcharges, and we **track your flight** so the driver is there whenever you actually land.
 
-See the fare on the [Quito airport to Puembo · Pifo · Tababela](/quito-airport-to-puembo) page or the [rates table](/#rates).
+See the prepaid $50 fare on the [Quito airport to Wyndham Quito Airport](/quito-airport-to-wyndham-airport) page or the [rates](/#rates).
 
 ## Tips
 

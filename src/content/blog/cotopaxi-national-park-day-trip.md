@@ -22,7 +22,7 @@ The volcano itself rises to nearly 5,900 m, and even the visitor areas are very 
 
 The park is a longer drive from **UIO** — across and south of the metro area, then up into the highlands. For a trip like this, a **private flat-rate transfer** is ideal: a fixed price for a long mountain day, a driver who knows the access roads, and the flexibility to time your visit around the clearest morning skies.
 
-Cotopaxi isn't one of the standard zones on our [rates table](/#rates), so [message us for a flat quote](/#book) and we'll set a fixed price for the day.
+Cotopaxi isn't one of the prepaid published products on our [rates page](/#rates), so [message us for a quote](/#book) and we'll set a fixed price for the day.
 
 ## Tips
 

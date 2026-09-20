@@ -4,7 +4,7 @@ description: "A flat-rate private transfer or a regular airport taxi from Quito 
 category: "Costs & options"
 publishDate: 2026-06-06
 tags: ["private transfer", "taxi", "Quito airport", "UIO", "comparison"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 The two most common ways into Quito from the airport are a regular taxi and a pre-booked private transfer. They look similar on the surface — a car and a driver — but the experience and the math are quite different.
@@ -27,7 +27,7 @@ The two most common ways into Quito from the airport are a regular taxi and a pr
 ## Who each one suits
 
 - **Choose a taxi** if you're on a tight budget, traveling light, arriving in daylight, and comfortable negotiating.
-- **Choose a private transfer** if you're arriving at night, carrying luggage, traveling as a family, value a fixed price, or simply want the arrival handled. See the [flat-rate table](/#rates).
+- **Choose a private transfer** if you're arriving at night, carrying luggage, traveling as a family, value a fixed price, or simply want the arrival handled. See the [prepaid rates](/#rates).
 
 ## The verdict
 

@@ -4,7 +4,7 @@
 export const SITE = {
   name: 'AndesRide',
   descriptor: 'Quito Airport Transfers — UIO',
-  tagline: 'Private, flat-rate airport transfers to and from Quito (UIO).',
+  tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
   domain: 'https://andesride.com',
   email: 'book@andesride.com',
   whatsapp: '+593 99 000 0000',
@@ -21,6 +21,7 @@ export const SITE = {
   cancelFreeHours: 24,
 
   // Social proof shown on the site — PLACEHOLDER until real reviews exist (README).
+  // Do not surface these as live counts in UI or JSON-LD until they are verified.
   ratingValue: '4.9',
   ratingCount: '1200',
 };

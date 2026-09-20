@@ -4,7 +4,7 @@ description: "The TelefériQo cable car lifts you to sweeping views over Quito a
 category: "Destinations"
 publishDate: 2026-04-25
 tags: ["Teleferico", "Pichincha", "Quito", "viewpoint", "hiking", "transfer"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 For the best panorama of Quito — the city stretching for miles along its high valley — head up the **TelefériQo**, one of the highest aerial cable cars in the world.
@@ -23,7 +23,7 @@ Even if you just ride up and back, the altitude jump is dramatic — go slowly a
 
 The cable-car base is on the **west side of Quito**, so from **UIO** in the eastern valley it's a drive across the city. A private transfer takes you straight there or to your hotel first; a **flat rate** means no meter through Quito traffic, and your driver can wait or collect you afterward.
 
-It falls within our [Quito Centro / La Mariscal](/quito-airport-to-centro) route — see that page for the fare, or the [rates table](/#rates).
+It falls within the prepaid $100 [anywhere in Quito](/quito-airport-to-quito) rate — see that page, or the [rates](/#rates).
 
 ## Tips
 

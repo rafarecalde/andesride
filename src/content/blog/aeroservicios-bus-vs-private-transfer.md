@@ -4,7 +4,7 @@ description: "The Quito airport shuttle bus is the cheapest way into the city �
 category: "Costs & options"
 publishDate: 2026-06-10
 tags: ["Quito airport", "airport bus", "Aeroservicios", "UIO", "budget"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 If you're watching every dollar, the official Quito airport shuttle bus is the budget champion. But "cheapest" and "best for your trip" aren't always the same thing. Here's the honest comparison.
@@ -24,7 +24,7 @@ It's a solid option for budget travelers arriving in daylight, traveling light, 
 A private transfer is the opposite trade-off: more money, far less friction.
 
 - **Door-to-door** to your exact hotel, no second leg.
-- A **flat USD price** fixed before you fly — see the [rates table](/#rates).
+- A **prepaid USD price** fixed before you fly — $50 to Wyndham Quito Airport, $100 anywhere in Quito. See the [rates](/#rates).
 - A vetted driver **waiting at arrivals** with your name, whenever you land, because we track your flight.
 
 ## Cost vs. everything else

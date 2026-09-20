@@ -1,16 +1,17 @@
 ---
-import { SITE } from '../config';
-// PLACEHOLDER reviews — replace with real, verifiable testimonials before launch
-// (see README "Owner TODOs"). Keep the count/rating in sync with src/config.ts.
+// PLACEHOLDER copy — replace with real, verifiable testimonials before launch
+// (see README "Owner TODOs"). Do not treat these as live review counts.
 const reviews = [
-  { stars: 5, body: 'Driver was waiting with my name despite a 2-hour delay. Fixed price, spotless SUV, easy ride to Cumbayá. Booked the return on the spot.', initials: 'SK', name: 'Sarah K.', loc: 'United States' },
-  { stars: 5, body: 'So much less stressful than figuring out a taxi at midnight. Paid online, got a confirmation, driver texted on WhatsApp. Exactly as promised.', initials: 'MR', name: 'Marc R.', loc: 'Canada' },
-  { stars: 5, body: 'Used the van for our family of six to Otavalo. Flat rate was fair and clear up front. Professional, on time, English-speaking driver.', initials: 'JL', name: 'Julia L.', loc: 'United Kingdom' },
+  { stars: 5, body: 'Driver was waiting with my name despite a delay. Prepaid the $50 airport-hotel rate, easy ride to Wyndham Quito Airport in a luxury SUV.', initials: 'SK', name: 'S.K.', loc: 'United States' },
+  { stars: 5, body: 'Booked the $100 city rate to Swissôtel, paid up front, and skipped the taxi negotiation after a late landing. Licensed driver, clear price.', initials: 'MR', name: 'M.R.', loc: 'Canada' },
+  { stars: 5, body: 'Family of four to Casa Gangotena. Luxury SUV had the bags, child seat was ready, and the prepaid rate was exactly what we paid.', initials: 'JL', name: 'J.L.', loc: 'United Kingdom' },
 ];
 ---
 <section id="reviews">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">★★★★★ {SITE.ratingValue} / 5</span><h2 class="section-title">Travelers land relaxed</h2></div>
+    <div class="sec-head"><span class="eyebrow">What arrival can look like</span><h2 class="section-title">A prepaid SUV, a licensed driver, a name sign</h2>
+      <p class="lede">Illustrative notes — we will replace these with verified guest quotes before launch.</p>
+    </div>
     <div class="rev-grid">
       {reviews.map((r) => (
         <div class="rev reveal">
