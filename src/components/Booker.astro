@@ -7,10 +7,13 @@ import { Image } from 'astro:assets';
 const { zones, vehicles, extras } = rates;
 const isLive = SITE.paymentsMode === 'live';
 const suv = vehicles[0];
+// Hard product cap: SUV seats 4 passengers (driver is the 5th occupant).
+const MAX_PAX = 4;
+const paxChoices = Math.min(suv.maxPax, MAX_PAX);
 
 // Data handed to the client script — the widget reads rates from here, never
 // from hardcoded values (single source of truth = rates.json).
-const widgetData = JSON.stringify({ zones, vehicles, extras, minLeadDays: SITE.minLeadDays });
+const widgetData = JSON.stringify({ zones, vehicles, extras, minLeadDays: SITE.minLeadDays, maxPax: paxChoices });
 
 const vehIcons: Record<string, string> = {
   suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
@@ -50,9 +53,10 @@ const vehIcons: Record<string, string> = {
       <p class="date-hint" id="dateHint">We book at least 3 days ahead so your driver is confirmed.</p>
       <div class="fld"><label for="pax">Passengers</label>
         <select class="ctrl" id="pax">
-          {Array.from({ length: suv.maxPax }, (_, i) => i + 1).map((n) => <option selected={n === 2}>{n}</option>)}
+          {Array.from({ length: paxChoices }, (_, i) => i + 1).map((n) => <option value={n} selected={n === 2}>{n}</option>)}
         </select>
       </div>
+      <p class="date-hint" id="paxHint">This vehicle seats 4 passengers.</p>
 
       <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:6px;display:block">Your vehicle</label>
       <div class="veh" id="veh">
@@ -185,6 +189,12 @@ const vehIcons: Record<string, string> = {
   const ZONES: Zone[] = data.zones;
   const EXTRAS: Extras = data.extras;
   const MIN_LEAD: number = typeof data.minLeadDays === 'number' ? data.minLeadDays : 3;
+  const HARD_MAX_PAX = 4;
+  const MAX_PAX: number = Math.min(
+    typeof data.maxPax === 'number' ? data.maxPax : HARD_MAX_PAX,
+    HARD_MAX_PAX,
+  );
+  const PAX_OVER_MSG = 'This vehicle seats 4 passengers.';
   const VEHNAME: Record<string, string> = Object.fromEntries(
     (data.vehicles as { key: string; name: string }[]).map((v) => [v.key, v.name]),
   );
@@ -197,6 +207,8 @@ const vehIcons: Record<string, string> = {
   const dateEl = $('date') as HTMLInputElement;
   const rdateEl = $('rdate') as HTMLInputElement;
   const dateHint = $('dateHint');
+  const paxEl = $('pax') as HTMLSelectElement;
+  const paxHint = $('paxHint');
 
   function localYmd(d: Date) {
     const y = d.getFullYear();
@@ -216,6 +228,35 @@ const vehIcons: Record<string, string> = {
   function setDateHint(msg: string, err = false) {
     dateHint.textContent = msg;
     dateHint.classList.toggle('is-err', err);
+  }
+  function paxCount() {
+    const n = parseInt(paxEl.value, 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function setPaxHint(err: boolean) {
+    paxHint.textContent = PAX_OVER_MSG;
+    paxHint.classList.toggle('is-err', err);
+    paxEl.classList.toggle('field-err', err);
+  }
+  function paxOk() {
+    const n = paxCount();
+    return n >= 1 && n <= MAX_PAX;
+  }
+  // Drop injected options above 4, clamp a too-high value, and surface a clear
+  // message if the control somehow went over the SUV passenger limit.
+  function enforcePax() {
+    const over = paxCount() > MAX_PAX;
+    Array.from(paxEl.options).forEach((opt) => {
+      const n = parseInt(opt.value, 10);
+      if (Number.isFinite(n) && n > MAX_PAX) opt.remove();
+    });
+    if (over) {
+      paxEl.value = String(MAX_PAX);
+      setPaxHint(true);
+      return false;
+    }
+    setPaxHint(false);
+    return paxOk();
   }
   function applyLeadMin() {
     dateEl.min = minPickup;
@@ -297,6 +338,10 @@ const vehIcons: Record<string, string> = {
     }
     zoneSel.classList.remove('field-err');
     if (n >= 1) {
+      if (!enforcePax()) {
+        paxEl.focus();
+        return;
+      }
       clampPickup();
       if (!pickupOk()) {
         dateEl.focus();
@@ -360,6 +405,11 @@ const vehIcons: Record<string, string> = {
       dateEl.focus();
       dateEl.classList.add('field-err');
       return show('Pickup must be at least 3 days from today so we can confirm your driver.');
+    }
+    if (!enforcePax()) {
+      showStep(0);
+      paxEl.focus();
+      return show(PAX_OVER_MSG);
     }
     err.style.display = 'none';
 
@@ -426,7 +476,10 @@ const vehIcons: Record<string, string> = {
     b.addEventListener('click', () => setDir(b.dataset.dir!)),
   );
   zoneSel.addEventListener('change', recalc);
-  ($('pax') as HTMLSelectElement).addEventListener('change', recalc);
+  paxEl.addEventListener('change', () => {
+    enforcePax();
+    recalc();
+  });
   dateEl.addEventListener('change', () => {
     clampPickup();
     dateEl.classList.remove('field-err');
@@ -480,6 +533,7 @@ const vehIcons: Record<string, string> = {
   dateEl.value = qsDate && qsDate >= minPickup ? qsDate : minPickup;
   clampPickup();
   setDateHint(LEAD_COPY, false);
+  enforcePax();
 
   // Global prefill hook (used by the rates table + deep-links).
   (window as any).andesPrefill = (key: string) => {

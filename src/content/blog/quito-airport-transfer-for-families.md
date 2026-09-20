@@ -18,7 +18,7 @@ Book a luxury SUV, add child seats when you book, and your licensed driver meets
 
 ## Family tips for UIO
 
-- The luxury SUV seats up to 5 passengers with room for bags.
+- The luxury SUV seats up to 4 passengers with room for bags.
 - Add child seats at checkout so they're installed and waiting.
 - Remember the altitude — a calm, direct ride to the hotel beats figuring out logistics tired.
 

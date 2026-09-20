@@ -85,11 +85,10 @@ The homepage hero is **paper, not a photo wallpaper**. It opens with eyebrow, h1
 short sub, and the three price rows, then a **large** owner meet-and-greet still
 `src/assets/_source/meet-greet.webp` (chauffeur with name-sign tablet at UIO
 arrivals) as a contained, captioned figure filling the copy column. Do not lead
-the page with that photo alone. The curb still
-`src/assets/_source/door-holder.webp` (chauffeur holding the SUV door at Arrivals)
-is the How-it-works / fleet “driver opens the door” image — prefer it over the
-older cabin portrait for that job. The cabin still
-`src/assets/_source/chauffeur-owner.webp` is a fallback only. The terminal exterior
+the page with that photo alone. Do not use `door-holder.*` in components (broken
+crop). The cabin still
+`src/assets/_source/chauffeur-owner.webp` is the fleet / booker representative
+photo. The terminal exterior
 `src/assets/_source/uio-terminal.webp` is a smaller place photo in How far. The
 Cumbayá still `src/assets/_source/cumbaya-valley.webp` sits on the Cumbayá rate
 card, How far, and `/quito-airport-to-cumbaya`. The route map
@@ -98,10 +97,10 @@ feeds How far. Do not replace owner stills with generated lookalikes.
 
 ## Adding fleet photos
 
-The fleet panel prefers the owner curb still `src/assets/_source/door-holder.webp`
-(chauffeur holding the door at UIO Arrivals) over the older cabin portrait.
-Caption: **"Licensed chauffeur at the UIO curb — we hold the door. Actual vehicle
-model may vary."** Do not generate an exterior stand-in.
+The fleet panel uses the cabin portrait `src/assets/_source/chauffeur-owner.webp`
+(or a vehicle file in `src/assets/fleet/`). Do not wire `door-holder.*` back in.
+Caption: **"Representative chauffeur and cabin — we do not show a stock SUV
+exterior. Actual model may vary."** Do not generate an exterior stand-in.
 
 ## Adding a blog post
 
