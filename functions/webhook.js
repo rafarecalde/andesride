@@ -81,7 +81,6 @@ export async function onRequestPost({ request, env }) {
     // 1. Email the CUSTOMER: reference, route, date/time, vehicle, total, policy.
     // 2. Email the OPERATOR (env.OPERATOR_EMAIL): the full booking record.
     // 3. Append the booking to a Sheet/Airtable (env.BOOKINGS_SHEET_WEBHOOK).
-    // 4. (Optional, config-flagged TODO) WhatsApp message to operator/customer.
     void booking;
 
     return new Response('ok', { status: 200 });

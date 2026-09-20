@@ -1,6 +1,5 @@
 ---
-import { SITE, hasPhone, hasWhatsApp } from '../config';
-const waLink = hasWhatsApp ? `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}` : '';
+import { SITE, hasPhone } from '../config';
 const telLink = hasPhone ? `tel:${SITE.phone.replace(/[^0-9+]/g, '')}` : '';
 ---
 <div class="topbar">
@@ -10,13 +9,11 @@ const telLink = hasPhone ? `tel:${SITE.phone.replace(/[^0-9+]/g, '')}` : '';
       $50 airport hotel · $75 anywhere in Cumbayá · $100 anywhere in Quito · USD
     </div>
     <div class="tb-r">
-      {hasWhatsApp ? (
-        <a href={waLink} target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>WhatsApp
+      {SITE.email ? (
+        <a href={`mailto:${SITE.email}`}>
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>{SITE.email}
         </a>
-      ) : (
-        <span class="tb-soon">WhatsApp · Coming soon</span>
-      )}
+      ) : null}
       {hasPhone ? (
         <a href={telLink}>
           <svg viewBox="0 0 24 24"><path d="M4 5h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 7a2 2 0 010-2z"/></svg>{SITE.phone}
