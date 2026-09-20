@@ -52,7 +52,7 @@ src/
   layouts/               # BaseLayout, BlogPost
   content/blog/*.md      # blog posts (the SEO engine)
   pages/                 # index, /guide, /quito-airport-to-[zone], /success, legal, rss
-functions/               # serverless payment + webhook stub (deployed SEPARATELY)
+functions/               # Cloudflare Worker: Stripe Checkout (deployed SEPARATELY)
 ```
 
 ## Editing rates (nothing is hardcoded)
@@ -130,13 +130,13 @@ simulated confirmation (`UIO-######`) — never a broken card form. To go live:
    site is US-facing and USD-priced, the recommended path is **Stripe Checkout in
    USD via a US entity**. (Local fallbacks — PayPhone / Kushki / PagoPlux /
    dLocal — slot behind the same interface for an Ecuadorian entity.)
-2. **Deploy the function in `/functions`** (Cloudflare Worker / Netlify / Vercel)
-   — a static Pages site can't hold secret keys. Wire your provider into
-   `functions/create-checkout.js` + `functions/webhook.js`. Set env vars in the
-   platform secret store (see `.env.example` and `functions/README.md`). **Never
-   commit keys.**
+2. **Deploy the Cloudflare Worker in `/functions`** with Wrangler — a static
+   Pages site can't hold secret keys. The worker calls Stripe's HTTP API (no
+   Node SDK). Set secrets/vars in Wrangler (see `.env.example` and
+   `functions/README.md`). **Never commit keys.**
 3. In `src/config.ts`, set `paymentsMode: 'live'` and `paymentApiBase` to the
-   deployed function URL.
+   **real** workers.dev URL Wrangler prints after deploy. Leave mock mode until
+   that URL exists.
 
 Merchant-of-record obligations are already wired: the cancellation policy is
 accepted at checkout (stored in booking metadata), and the
@@ -176,8 +176,8 @@ Remaining DNS step: point `uiotransfers.com` at GitHub Pages (A records /
 2. Optionally replace the curb still with a vehicle-specific luxury SUV photo
    when you have one. Do not generate an exterior.
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 anywhere in Cumbayá / $100 anywhere in Quito).
-4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
-   function's secret store; set `paymentsMode: 'live'`.
+4. Stand up the **US entity + Stripe**; deploy `/functions` with Wrangler
+   (`functions/README.md`); then set `paymentApiBase` + `paymentsMode: 'live'`.
 5. **Point DNS** for `uiotransfers.com` at GitHub Pages (already in
    `SITE.domain` / `SITE.email`, `astro.config.mjs` `site` + `base: '/'`, and
    `public/CNAME`). Then set the custom domain in repo Settings → Pages.

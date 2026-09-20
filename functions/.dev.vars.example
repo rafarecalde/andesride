@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npx wrangler dev` (that file is gitignored).
+# Use Stripe TEST keys only (sk_test_… / whsec_… from test-mode webhooks).
+STRIPE_SECRET_KEY=sk_test_replace_me
+STRIPE_WEBHOOK_SECRET=whsec_replace_me
