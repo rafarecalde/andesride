@@ -77,20 +77,19 @@ total = zone.price × (roundTrip ? 2 : 1)
 
 ## Adding the hero image
 
-The homepage hero uses the owner chauffeur / luxury-cabin photo at
-`src/assets/hero.webp` (WebP, 1920×1080, ~180 KB), re-encoded from
-`src/assets/_source/chauffeur-owner.webp`. A refined dark gradient keeps the
-**Quito Airport Transfer** headline and $50 / $100 rates readable without
-muddying the still. To swap the photo, replace that file (or drop
-`hero.{jpg,png,avif}`) — `src/lib/hero.ts` picks it up automatically. If no
-file is present, `public/hero-quito-placeholder.svg` is used.
+The homepage hero uses the **owner chauffeur / luxury-cabin still** at
+`src/assets/_source/chauffeur-owner.webp` (1920×1280 WebP). `src/lib/hero.ts`
+loads that file — do not replace it with a generated lookalike. A refined dark
+gradient keeps the **Quito Airport Transfer** headline and $50 / $100 rates
+readable without muddying the still. If the owner file is missing,
+`public/hero-quito-placeholder.svg` is used.
 
 ## Adding fleet photos
 
-The fleet card uses `src/assets/fleet/suv.webp` (a crop of the same chauffeur
-still) with the caption **"Representative vehicle / professional chauffeured
-service — actual model may vary."** Replace `suv.webp` with a vehicle-specific
-photo when you have one — `src/lib/fleet.ts` picks it up automatically.
+The fleet card prefers `src/assets/fleet/suv.webp` (a crop of the same owner
+still) and falls back to `src/assets/_source/chauffeur-owner.webp`. Caption:
+**"Representative vehicle / professional chauffeured service — actual model
+may vary."** Drop a vehicle-specific `suv.webp` when you have one.
 
 ## Adding a blog post
 
