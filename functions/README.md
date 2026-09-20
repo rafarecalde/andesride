@@ -42,11 +42,11 @@ entity and slot behind the same `create-checkout` contract.
 | --- | --- |
 | `STRIPE_SECRET_KEY` | Stripe secret key (live or test) |
 | `STRIPE_WEBHOOK_SECRET` | Verify webhook signatures |
-| `SUCCESS_URL` | e.g. `https://YOUR_DOMAIN/success` |
-| `CANCEL_URL` | e.g. `https://YOUR_DOMAIN/#book` |
+| `SUCCESS_URL` | e.g. `https://uiotransfer.com/success` |
+| `CANCEL_URL` | e.g. `https://uiotransfer.com/#book` |
 | `OPERATOR_EMAIL` | Where operator booking emails go |
 | `EMAIL_API_KEY` | Transactional email provider (Resend/Postmark/SES) |
 | `BOOKINGS_SHEET_WEBHOOK` | Google Sheet / Airtable append endpoint |
-| `ALLOWED_ORIGIN` | `https://YOUR_DOMAIN` (CORS) |
+| `ALLOWED_ORIGIN` | `https://uiotransfer.com` (CORS) |
 
 See `.env.example` in the project root for the full list.
