@@ -17,7 +17,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'What vehicle do you use?',
-    a: 'Every booking is a luxury SUV with a licensed, airport-authorized driver. It seats up to 4 passengers (driver extra) with room for about 4 bags. Actual model may vary; the class of vehicle does not.',
+    a: 'Every booking is a luxury SUV with a licensed, airport-authorized driver. Each vehicle seats up to 4 passengers (driver extra) with room for about 4 bags. Parties of 5–8 book a second SUV at twice the prepaid destination rate. Actual model may vary; the class of vehicle does not.',
   },
   {
     q: 'How does prepaid pricing work?',
