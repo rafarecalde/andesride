@@ -3,23 +3,24 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PREVIEW vs PRODUCTION
+// PRODUCTION HOST
 //
-// This is currently configured for a GitHub Pages PROJECT preview, served under
-// a subpath: https://rafarecalde.github.io/andesride/  (base '/andesride').
-// The GitHub repo path stays andesride; that is not the public brand.
+// Canonical site is https://uiotransfers.com (SITE.domain in src/config.ts).
+// GitHub Pages *project* sites with a custom domain are served at the domain
+// root, so `base` is '/'. The GitHub repo path remains andesride; that is
+// not the public brand.
 //
-// Intended production host is https://uiotransfer.com (SITE.domain).
-// Until DNS is live, keep this GitHub Pages project preview, then flip:
-//     site: 'https://uiotransfer.com',
-//     base: '/',
-// and add public/CNAME. Do not use andesride.com, quitoairporttransfers.com,
-// or transfersfromuio.com.
-// All internal links go through u() (src/lib/url.ts) and markdown links are
-// base-prefixed automatically, so the flip needs no other edits.
+// Implication: https://rafarecalde.github.io/andesride/ is no longer a
+// working asset base (paths would 404 under /andesride/). After the custom
+// domain is attached, GitHub Pages typically redirects that project URL to
+// uiotransfers.com. Until DNS propagates, use `npm run preview` locally.
+//
+// Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
+// All internal links go through u() (src/lib/url.ts); with base '/' that helper
+// is a no-op.
 // ─────────────────────────────────────────────────────────────────────────────
-const SITE = 'https://rafarecalde.github.io';
-const BASE = '/andesride';
+const SITE = 'https://uiotransfers.com';
+const BASE = '/';
 const withBase = (path) => (BASE === '/' ? path : `${BASE}${path === '/' ? '/' : path}`);
 
 // Base-aware rewrite of internal links inside markdown (href/src starting with

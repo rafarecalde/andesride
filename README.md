@@ -6,10 +6,10 @@ booking widget, and a markdown blog as the SEO engine. Built with **Astro**,
 deploys to **GitHub Pages**.
 
 The GitHub repo remains `rafarecalde/andesride`; the public brand is
-**Quito Airport Transfer**. The locked-in domain is **uiotransfer.com**
-(`SITE.domain` / `book@uiotransfer.com`), being bought separately on Namecheap
-and may not resolve yet. Do not use `andesride.com`,
-`quitoairporttransfers.com`, or `transfersfromuio.com`.
+**Quito Airport Transfer**. The locked-in domain is **uiotransfers.com**
+(plural — `SITE.domain` / `book@uiotransfers.com`). Do not use
+`uiotransfer.com` (singular), `andesride.com`, `quitoairporttransfers.com`,
+or `transfersfromuio.com`.
 
 ---
 
@@ -36,8 +36,8 @@ npm run build    # production build → dist/
 npm run preview  # serve the production build locally
 ```
 
-You can preview the entire site locally today even though the domain isn't live
-yet — the domain only matters for the deployed URL.
+You can preview the entire site locally with `npm run dev` / `npm run preview`.
+Production canonical URLs use **uiotransfers.com**.
 
 ## Project structure
 
@@ -149,22 +149,25 @@ step, and confirmation.
 2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. Push to `main` — `.github/workflows/deploy.yml` builds and deploys.
 
-### Custom domain (uiotransfer.com)
+### Custom domain (uiotransfers.com)
 
-`SITE.domain` is **https://uiotransfer.com** and the booking email placeholder is
-**book@uiotransfer.com**. Do not use `andesride.com`, `quitoairporttransfers.com`,
-or `transfersfromuio.com`.
+`SITE.domain` is **https://uiotransfers.com** and the booking email placeholder
+is **book@uiotransfers.com**. Do not use `andesride.com`,
+`quitoairporttransfers.com`, or `transfersfromuio.com`.
 
-Until DNS is live, this repo still deploys as a GitHub Pages project preview at
-`https://rafarecalde.github.io/andesride/` (`base: '/andesride'`). That path is
-the repo name, not the brand. In-page links stay base-aware; canonical URLs use
-uiotransfer.com at the root.
+`astro.config.mjs` is set to `site: 'https://uiotransfers.com'` and `base: '/'`.
+GitHub Pages project sites with a custom domain are served at the **domain
+root**, so assets and canonical URLs must not use the `/andesride/` project
+path. `public/CNAME` contains `uiotransfers.com` so Pages can verify the
+domain.
 
-When DNS is pointed at GitHub Pages:
+**github.io implication:** `https://rafarecalde.github.io/andesride/` is no
+longer a working preview URL (asset paths would 404 under `/andesride/`).
+Once DNS is attached, GitHub Pages typically redirects that project URL to
+`uiotransfers.com`. Until then, use `npm run preview` locally.
 
-1. Add a file `public/CNAME` containing just `uiotransfer.com`.
-2. Point DNS at GitHub Pages (A records / `CNAME` per GitHub's docs).
-3. In `astro.config.mjs` set `site: 'https://uiotransfer.com'` and `base: '/'`.
+Remaining DNS step: point `uiotransfers.com` at GitHub Pages (A records /
+`CNAME` per GitHub's docs) and set the custom domain in repo Settings → Pages.
 
 ## Owner TODOs
 
@@ -175,10 +178,11 @@ When DNS is pointed at GitHub Pages:
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 anywhere in Cumbayá / $100 anywhere in Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
-5. **Register / point DNS** for `uiotransfer.com` (already in `SITE.domain` /
-   `SITE.email`). Then add `public/CNAME` and flip `astro.config.mjs` to `site` +
-   `base: '/'`. WhatsApp/phone stay hidden until real numbers are set in
-   `src/config.ts` (placeholder digits are not shown).
+5. **Point DNS** for `uiotransfers.com` at GitHub Pages (already in
+   `SITE.domain` / `SITE.email`, `astro.config.mjs` `site` + `base: '/'`, and
+   `public/CNAME`). Then set the custom domain in repo Settings → Pages.
+   WhatsApp/phone stay hidden until real numbers are set in `src/config.ts`
+   (placeholder digits are not shown).
 6. The homepage uses a quiet trust strip (`src/components/Reviews.astro`) —
    licensed · prepaid · flight tracking — not sample reviews. Add real,
    verifiable quotes only when they exist.

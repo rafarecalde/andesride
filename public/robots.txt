@@ -3,4 +3,4 @@ Allow: /
 
 # Canonical sitemap on the chosen domain.
 # Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
-Sitemap: https://uiotransfer.com/sitemap-index.xml
+Sitemap: https://uiotransfers.com/sitemap-index.xml
