@@ -1,6 +1,8 @@
 // Owner-supplied stills. Never replace with generated lookalikes.
-// Sources live in src/assets/_source/ (meet-greet, door-holder,
-// cumbaya-valley, chauffeur-owner, uio-terminal, route-map).
+// Sources live in src/assets/_source/ (meet-greet, chauffeur-owner,
+// uio-terminal, route-map).
+// Unused (do not wire back in): door-holder.* and cumbaya-valley.* —
+// both are the broken curb/door still with a top-left crop artifact.
 import type { ImageMetadata } from 'astro';
 
 function pick(
@@ -13,14 +15,6 @@ function pick(
 
 const meetGreet = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/_source/meet-greet.{webp,avif,png,jpg,jpeg}',
-  { eager: true },
-);
-const doorHolder = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/_source/door-holder.{webp,avif,png,jpg,jpeg}',
-  { eager: true },
-);
-const cumbayaValley = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/_source/cumbaya-valley.{webp,avif,png,jpg,jpeg}',
   { eager: true },
 );
 const chauffeur = import.meta.glob<{ default: ImageMetadata }>(
@@ -37,8 +31,6 @@ const routeMap = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 export const meetGreetPhoto = pick(meetGreet);
-export const doorHolderPhoto = pick(doorHolder);
-export const cumbayaValleyPhoto = pick(cumbayaValley);
 export const chauffeurPhoto = pick(chauffeur);
 export const terminalPhoto = pick(terminal);
 export const routeMapPhoto = pick(routeMap);

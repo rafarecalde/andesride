@@ -4,7 +4,6 @@ import BookingCta from '../components/BookingCta.astro';
 import { SITE } from '../config';
 import { u } from '../lib/url';
 import { publicUrl } from '../lib/publicUrl';
-import { cumbayaValleyPhoto } from '../lib/photos';
 import rates from '../data/rates.json';
 
 export function getStaticPaths() {
@@ -49,19 +48,6 @@ const schema = {
   </header>
 
   <div class="wrap" style="padding:40px 0 64px">
-    {isCumbaya && cumbayaValleyPhoto ? (
-      <figure class="route-photo">
-        <img
-          src={cumbayaValleyPhoto.src}
-          alt="Cumbayá valley — prepaid luxury-SUV transfer from UIO"
-          width={cumbayaValleyPhoto.width}
-          height={cumbayaValleyPhoto.height}
-          decoding="async"
-        />
-        <figcaption>Anywhere in Cumbayá · Valle de Tumbaco · typically {zone.eta} from UIO</figcaption>
-      </figure>
-    ) : null}
-
     <div class="route-facts">
       <div class="rfact"><div class="k">Prepaid (luxury SUV)</div><div class="v">${zone.price} <small>USD</small></div></div>
       <div class="rfact"><div class="k">Drive time</div><div class="v" style="font-size:1.2rem">{zone.eta}</div></div>
@@ -89,7 +75,7 @@ const schema = {
     ) : null}
     <div class="rates-note" style="margin-top:16px">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      One prepaid USD price, confirmed before you pay. Round trips, child seats, and extra stops are added at checkout.
+      One prepaid USD price, confirmed before you pay. Round trips, child seats, and extra stops are added at checkout. Parties of 5–8 book a second SUV (destination rate × 2).
     </div>
 
     <div class="prose" style="padding:36px 0 0">

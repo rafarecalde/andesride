@@ -1,6 +1,6 @@
 ---
 import rates from '../data/rates.json';
-import { cumbayaValleyPhoto, routeMapPhoto, terminalPhoto } from '../lib/photos';
+import { routeMapPhoto, terminalPhoto } from '../lib/photos';
 import { u } from '../lib/url';
 
 const { zones } = rates;
@@ -25,21 +25,6 @@ const { zones } = rates;
         </ol>
       </div>
       <div class="howfar-media">
-        {cumbayaValleyPhoto ? (
-          <figure class="howfar-valley">
-            <img
-              src={cumbayaValleyPhoto.src}
-              alt="Cumbayá valley — the $75 prepaid hop between UIO and Quito city"
-              width={cumbayaValleyPhoto.width}
-              height={cumbayaValleyPhoto.height}
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>
-              Anywhere in Cumbayá · $75 · typically 25–35 min from UIO, on the valley path between the airport and the city.
-            </figcaption>
-          </figure>
-        ) : null}
         {terminalPhoto ? (
           <figure class="howfar-place">
             <img

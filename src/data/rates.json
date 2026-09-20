@@ -3,7 +3,7 @@
   "airport": { "code": "UIO", "name": "Mariscal Sucre International Airport" },
   "extras": { "childSeat": 8, "extraStop": 15 },
   "vehicles": [
-    { "key": "suv", "name": "Luxury SUV", "maxPax": 5, "bags": 4, "image": "fleet/suv.webp" }
+    { "key": "suv", "name": "Luxury SUV", "maxPax": 4, "bags": 4, "image": "fleet/suv.webp" }
   ],
   "zones": [
     {

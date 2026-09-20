@@ -6,11 +6,23 @@ import { Image } from 'astro:assets';
 
 const { zones, vehicles, extras } = rates;
 const isLive = SITE.paymentsMode === 'live';
-const suv = vehicles[0];
+// Per-vehicle cap: SUV seats 4 passengers (driver is the 5th occupant).
+// Parties of 5–8 book a second SUV at destination rate × 2.
+const PAX_PER_SUV = 4;
+const MAX_SUVS = 2;
+const PARTY_MAX = PAX_PER_SUV * MAX_SUVS;
 
 // Data handed to the client script — the widget reads rates from here, never
 // from hardcoded values (single source of truth = rates.json).
-const widgetData = JSON.stringify({ zones, vehicles, extras, minLeadDays: SITE.minLeadDays });
+const widgetData = JSON.stringify({
+  zones,
+  vehicles,
+  extras,
+  minLeadDays: SITE.minLeadDays,
+  paxPerSuv: PAX_PER_SUV,
+  maxSuvs: MAX_SUVS,
+  partyMax: PARTY_MAX,
+});
 
 const vehIcons: Record<string, string> = {
   suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
@@ -50,8 +62,13 @@ const vehIcons: Record<string, string> = {
       <p class="date-hint" id="dateHint">We book at least 3 days ahead so your driver is confirmed.</p>
       <div class="fld"><label for="pax">Passengers</label>
         <select class="ctrl" id="pax">
-          {Array.from({ length: suv.maxPax }, (_, i) => i + 1).map((n) => <option selected={n === 2}>{n}</option>)}
+          {Array.from({ length: PARTY_MAX }, (_, i) => i + 1).map((n) => <option value={n} selected={n === 2}>{n}</option>)}
         </select>
+      </div>
+      <p class="date-hint" id="paxHint">Each luxury SUV seats 4 passengers (driver extra).</p>
+      <div class="veh-upsell" id="vehUpsell" hidden>
+        <b>Needs 2 SUVs</b>
+        <span id="vehUpsellNote">Each vehicle seats 4 passengers · 4 bags. Prepaid destination rate × 2.</span>
       </div>
 
       <label style="font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:6px;display:block">Your vehicle</label>
@@ -65,8 +82,8 @@ const vehIcons: Record<string, string> = {
                   ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={104} height={80} quality={80} />
                   : <svg viewBox="0 0 24 24" set:html={vehIcons[v.key] || vehIcons.suv} />}
               </span>
-              <span class="vmid"><span class="vn">{v.name}</span><span class="vmeta">Licensed driver · up to {v.maxPax} passengers · {v.bags} bags</span></span>
-              <span class="vp"><span id={`p-${v.key}`}>$—</span><small>prepaid</small></span>
+              <span class="vmid"><span class="vn" id="vehName">{v.name}</span><span class="vmeta" id="vehMeta">Licensed driver · up to {v.maxPax} passengers · {v.bags} bags</span></span>
+              <span class="vp"><span id={`p-${v.key}`}>$—</span><small id="vehPriceNote">prepaid</small></span>
             </div>
           );
         })}
@@ -75,7 +92,7 @@ const vehIcons: Record<string, string> = {
 
       <div class="total-bar">
         <div class="tl">Total <b id="t0">$—</b></div>
-        <div class="tg"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Prepaid flat rate</div>
+        <div class="tg" id="tg0"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span id="tg0Label">Prepaid flat rate</span></div>
       </div>
       <button class="btn btn-amber" style="width:100%" id="toStep1">Continue</button>
     </div>
@@ -185,6 +202,8 @@ const vehIcons: Record<string, string> = {
   const ZONES: Zone[] = data.zones;
   const EXTRAS: Extras = data.extras;
   const MIN_LEAD: number = typeof data.minLeadDays === 'number' ? data.minLeadDays : 3;
+  const PAX_PER_SUV: number = typeof data.paxPerSuv === 'number' ? data.paxPerSuv : 4;
+  const PARTY_MAX: number = typeof data.partyMax === 'number' ? data.partyMax : 8;
   const VEHNAME: Record<string, string> = Object.fromEntries(
     (data.vehicles as { key: string; name: string }[]).map((v) => [v.key, v.name]),
   );
@@ -197,6 +216,8 @@ const vehIcons: Record<string, string> = {
   const dateEl = $('date') as HTMLInputElement;
   const rdateEl = $('rdate') as HTMLInputElement;
   const dateHint = $('dateHint');
+  const paxEl = $('pax') as HTMLSelectElement;
+  const paxHint = $('paxHint');
 
   function localYmd(d: Date) {
     const y = d.getFullYear();
@@ -217,6 +238,62 @@ const vehIcons: Record<string, string> = {
     dateHint.textContent = msg;
     dateHint.classList.toggle('is-err', err);
   }
+  function paxCount() {
+    const n = parseInt(paxEl.value, 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function vehicleCount() {
+    const n = paxCount();
+    if (n <= PAX_PER_SUV) return 1;
+    return 2;
+  }
+  function paxOk() {
+    const n = paxCount();
+    return n >= 1 && n <= PARTY_MAX;
+  }
+  function updatePaxUi() {
+    Array.from(paxEl.options).forEach((opt) => {
+      const n = parseInt(opt.value, 10);
+      if (Number.isFinite(n) && n > PARTY_MAX) opt.remove();
+    });
+    if (paxCount() > PARTY_MAX) {
+      paxEl.value = String(PARTY_MAX);
+    }
+    if (paxCount() < 1) paxEl.value = '2';
+    const n = paxCount();
+    const suvs = vehicleCount();
+    const upsell = $('vehUpsell');
+    const note = $('vehUpsellNote');
+    const nameEl = $('vehName');
+    const metaEl = $('vehMeta');
+    const priceNote = $('vehPriceNote');
+    if (suvs === 2) {
+      paxHint.textContent = 'Needs 2 SUVs — each seats 4 passengers / 4 bags.';
+      paxHint.classList.remove('is-err');
+      paxEl.classList.remove('field-err');
+      upsell.hidden = false;
+      const z = zone();
+      note.textContent = z
+        ? `Prepaid ${money(z.price * 2)} (2 × ${money(z.price)}). Each vehicle seats 4 passengers · 4 bags.`
+        : 'Prepaid destination rate × 2. Each vehicle seats 4 passengers · 4 bags.';
+      if (nameEl) nameEl.textContent = 'Needs 2 SUVs';
+      if (metaEl) metaEl.textContent = 'Each seats 4 passengers · 4 bags';
+      if (priceNote) priceNote.textContent = z ? `2 × $${z.price} prepaid` : 'prepaid × 2';
+      const tgLabel = $('tg0Label');
+      if (tgLabel) tgLabel.textContent = '2 SUVs prepaid';
+    } else {
+      paxHint.textContent = 'Each luxury SUV seats 4 passengers (driver extra).';
+      paxHint.classList.remove('is-err');
+      paxEl.classList.remove('field-err');
+      upsell.hidden = true;
+      if (nameEl) nameEl.textContent = VEHNAME[state.veh] || 'Luxury SUV';
+      if (metaEl) metaEl.textContent = `Licensed driver · up to ${PAX_PER_SUV} passengers · 4 bags`;
+      if (priceNote) priceNote.textContent = 'prepaid';
+      const tgLabel = $('tg0Label');
+      if (tgLabel) tgLabel.textContent = 'Prepaid flat rate';
+    }
+    return n >= 1 && n <= PARTY_MAX;
+  }
   function applyLeadMin() {
     dateEl.min = minPickup;
     rdateEl.min = dateEl.value && dateEl.value > minPickup ? dateEl.value : minPickup;
@@ -233,10 +310,15 @@ const vehIcons: Record<string, string> = {
 
   const zone = () => ZONES.find((x) => x.key === state.zone);
   const basePrice = () => zone()?.price ?? null;
-  const total = () => {
+  const vehicleFare = () => {
     const b = basePrice();
     if (b === null) return null;
-    let t = b * (state.rt ? 2 : 1);
+    return b * vehicleCount();
+  };
+  const total = () => {
+    const fare = vehicleFare();
+    if (fare === null) return null;
+    let t = fare * (state.rt ? 2 : 1);
     t += state.child * EXTRAS.childSeat;
     if (state.stop) t += EXTRAS.extraStop * (state.rt ? 2 : 1);
     return t;
@@ -258,7 +340,10 @@ const vehIcons: Record<string, string> = {
     const z = zone();
     VEH_KEYS.forEach((v) => {
       const el = $('p-' + v);
-      if (el) el.textContent = z ? '$' + z.price : '$—';
+      if (el) {
+        const fare = vehicleFare();
+        el.textContent = fare === null ? '$—' : '$' + fare;
+      }
     });
     const hint = $('etaHint');
     const hotels = $('hotelHint');
@@ -279,6 +364,7 @@ const vehIcons: Record<string, string> = {
     const t = total();
     ['t0', 't1'].forEach((id) => ($(id).textContent = money(t)));
     $('payAmt').textContent = money(t);
+    updatePaxUi();
   }
 
   function showStep(n: number) {
@@ -297,6 +383,7 @@ const vehIcons: Record<string, string> = {
     }
     zoneSel.classList.remove('field-err');
     if (n >= 1) {
+      updatePaxUi();
       clampPickup();
       if (!pickupOk()) {
         dateEl.focus();
@@ -319,17 +406,27 @@ const vehIcons: Record<string, string> = {
   function buildSummary() {
     const z = zone()!;
     const b = basePrice()!;
+    const suvs = vehicleCount();
+    const pax = String(paxCount());
+    const fare = b * suvs;
     const route = state.dir === 'from' ? 'UIO → ' + z.name : z.name + ' → UIO';
     const d = ($('date') as HTMLInputElement).value;
     const tm = ($('time') as HTMLInputElement).value;
     const rows: [string, string][] = [];
     rows.push(['Route', route]);
     rows.push(['When', (d || 'Date TBC') + (tm ? ' · ' + tm : '')]);
-    rows.push([VEHNAME[state.veh] + ' · ' + ($('pax') as HTMLSelectElement).value + ' pax', '$' + b]);
+    rows.push(['Vehicles', suvs === 2 ? '2 luxury SUVs' : '1 luxury SUV']);
+    rows.push(['Passengers', pax]);
+    if (suvs === 2) {
+      rows.push(['2 × ' + VEHNAME[state.veh] + ' · ' + pax + ' pax', '$' + fare]);
+      rows.push(['Each vehicle', 'up to 4 passengers · 4 bags']);
+    } else {
+      rows.push([VEHNAME[state.veh] + ' · ' + pax + ' pax', '$' + b]);
+    }
     if (state.rt) {
       const rd = ($('rdate') as HTMLInputElement).value;
       const rtm = ($('rtime') as HTMLInputElement).value;
-      rows.push(['Return ride' + (rd ? ' · ' + rd + (rtm ? ' ' + rtm : '') : ''), '$' + b]);
+      rows.push(['Return ride' + (rd ? ' · ' + rd + (rtm ? ' ' + rtm : '') : ''), '$' + fare]);
     }
     if (state.child) rows.push(['Child seat × ' + state.child, '$' + state.child * EXTRAS.childSeat]);
     if (state.stop) rows.push(['Extra stop' + (state.rt ? ' × 2' : ''), '$' + EXTRAS.extraStop * (state.rt ? 2 : 1)]);
@@ -361,6 +458,12 @@ const vehIcons: Record<string, string> = {
       dateEl.classList.add('field-err');
       return show('Pickup must be at least 3 days from today so we can confirm your driver.');
     }
+    updatePaxUi();
+    if (!paxOk()) {
+      showStep(0);
+      paxEl.focus();
+      return show('Choose 1–8 passengers. Each SUV seats 4; 5–8 books a second SUV.');
+    }
     err.style.display = 'none';
 
     const btn = $('payBtn') as HTMLButtonElement;
@@ -374,7 +477,8 @@ const vehIcons: Record<string, string> = {
       metadata: {
         route: state.dir === 'from' ? 'UIO->' + z.key : z.key + '->UIO',
         vehicle: state.veh,
-        pax: ($('pax') as HTMLSelectElement).value,
+        pax: String(paxCount()),
+        vehicles: vehicleCount(),
         date: ($('date') as HTMLInputElement).value,
         time: ($('time') as HTMLInputElement).value,
         roundTrip: state.rt,
@@ -426,7 +530,10 @@ const vehIcons: Record<string, string> = {
     b.addEventListener('click', () => setDir(b.dataset.dir!)),
   );
   zoneSel.addEventListener('change', recalc);
-  ($('pax') as HTMLSelectElement).addEventListener('change', recalc);
+  paxEl.addEventListener('change', () => {
+    updatePaxUi();
+    recalc();
+  });
   dateEl.addEventListener('change', () => {
     clampPickup();
     dateEl.classList.remove('field-err');
@@ -480,6 +587,7 @@ const vehIcons: Record<string, string> = {
   dateEl.value = qsDate && qsDate >= minPickup ? qsDate : minPickup;
   clampPickup();
   setDateHint(LEAD_COPY, false);
+  updatePaxUi();
 
   // Global prefill hook (used by the rates table + deep-links).
   (window as any).andesPrefill = (key: string) => {
