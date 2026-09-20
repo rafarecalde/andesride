@@ -14,15 +14,13 @@ export const SITE = {
   whatsapp: '',
   phone: '',
 
-  // Payments — keep "mock" until the Cloudflare Worker is deployed with real
-  // Stripe keys (see functions/README.md). Do not invent a placeholder URL.
-  paymentsMode: 'mock' as 'mock' | 'live',
+  // Payments — Worker is deployed; 'live' posts to it. Stripe is still on
+  // test keys (sk_test_ / pk_test_); swap those in the Worker for real charges.
+  paymentsMode: 'live' as 'mock' | 'live',
   payProvider: 'stripe' as 'stripe' | 'payphone' | 'kushki' | 'pagoplux' | 'dlocal',
 
-  // TODO: after `npx wrangler deploy` in /functions, set this to the real
-  // workers.dev URL Wrangler prints (e.g. https://uiotransfers-pay.<account>.workers.dev)
-  // with no trailing slash, then set paymentsMode: 'live'.
-  paymentApiBase: '',
+  // Deployed Cloudflare Worker (no trailing slash). Stripe Checkout is test mode.
+  paymentApiBase: 'https://uiotransfers-pay.uiotransfers.workers.dev',
 
   cancelFreeHours: 24,
 
