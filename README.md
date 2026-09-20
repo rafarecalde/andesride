@@ -77,12 +77,13 @@ total = zone.price × (roundTrip ? 2 : 1)
 
 ## Adding the hero image
 
-The homepage hero uses a real chauffeur / luxury-cabin photo at
-`src/assets/hero.webp` (WebP, 1600×900). A dark gradient wash keeps the
-**Quito Airport Transfer** headline and $50 / $100 rates readable. To swap the
-still, replace that file (or drop `hero.{jpg,png,avif}`) — `src/lib/hero.ts`
-picks it up automatically. If no file is present, `public/hero-quito-placeholder.svg`
-is used.
+The homepage hero uses the owner chauffeur / luxury-cabin photo at
+`src/assets/hero.webp` (WebP, 1920×1080, ~180 KB), re-encoded from
+`src/assets/_source/chauffeur-owner.webp`. A refined dark gradient keeps the
+**Quito Airport Transfer** headline and $50 / $100 rates readable without
+muddying the still. To swap the photo, replace that file (or drop
+`hero.{jpg,png,avif}`) — `src/lib/hero.ts` picks it up automatically. If no
+file is present, `public/hero-quito-placeholder.svg` is used.
 
 ## Adding fleet photos
 
@@ -167,8 +168,9 @@ When DNS is pointed at GitHub Pages:
    `SITE.email`). Then add `public/CNAME` and flip `astro.config.mjs` to `site` +
    `base: '/'`. WhatsApp/phone stay hidden until real numbers are set in
    `src/config.ts` (placeholder digits are not shown).
-6. Replace **placeholder reviews** (`src/components/Reviews.astro`) with real,
-   verifiable quotes before treating them as social proof.
+6. The homepage uses a quiet trust strip (`src/components/Reviews.astro`) —
+   licensed · prepaid · flight tracking — not sample reviews. Add real,
+   verifiable quotes only when they exist.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
 8. Keep destination guides (Cumbayá, Otavalo, etc.) as quote-on-request;
    prepaid bookable products stay airport-hotel vs. Quito city.

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { u } from '../lib/url';
 import { heroPhoto } from '../lib/hero';
 import Booker from './Booker.astro';
@@ -7,7 +6,7 @@ import Booker from './Booker.astro';
 <section class:list={['hero', heroPhoto && 'has-photo']} id="top">
   <div class="hero-bg" aria-hidden="true">
     {heroPhoto
-      ? <Image src={heroPhoto} alt="" width={1600} height={900} sizes="100vw" loading="eager" fetchpriority="high" />
+      ? <img src={heroPhoto.src} alt="" width={heroPhoto.width} height={heroPhoto.height} decoding="async" fetchpriority="high" />
       : <img src={u('/hero-quito-placeholder.svg')} alt="" />}
   </div>
   <div class="hero-overlay" aria-hidden="true"></div>
@@ -16,17 +15,16 @@ import Booker from './Booker.astro';
       <div class="hero-copy">
         <span class="eyebrow">Quito Airport Transfer · UIO</span>
         <h1>Prepaid luxury SUV from UIO — <span class="hl">$50</span> or <span class="hl">$100</span></h1>
-        <p class="hero-sub">A licensed driver in a luxury SUV. Pay the flat rate up front: $50 to Wyndham Quito Airport, $100 anywhere in Quito city — including Hyatt, Oro Verde, Swissôtel, and Casa Gangotena.</p>
+        <p class="hero-sub">A licensed driver in a luxury SUV. $50 to Wyndham Quito Airport, $100 anywhere in Quito — Hyatt, Oro Verde, Swissôtel, Casa Gangotena.</p>
         <div class="hero-prices" aria-label="Prepaid flat rates">
           <div class="hp"><b>$50</b><span>Wyndham Quito Airport</span></div>
           <div class="hp"><b>$100</b><span>Anywhere in Quito</span></div>
         </div>
-        <div class="hero-usps">
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Prepaid flat rate in USD — no meter, no surprises</div>
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Luxury SUV with a licensed, airport-authorized driver</div>
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> We track your flight — wait time included if you're delayed</div>
-          <div class="usp"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span> Meet &amp; greet at arrivals with a name sign, included</div>
-        </div>
+        <ul class="hero-trust">
+          <li>Licensed driver</li>
+          <li>Prepaid in USD</li>
+          <li>Flight tracking</li>
+        </ul>
       </div>
 
       <Booker />
