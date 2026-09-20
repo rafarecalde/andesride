@@ -5,9 +5,7 @@ const telLink = hasPhone ? `tel:${SITE.phone.replace(/[^0-9+]/g, '')}` : '';
 // Section anchors live on the home page; prefix with "/" so they also work
 // from /guide, route pages, etc. u() makes them base-aware.
 const links = [
-  { href: u('/#book'), label: 'Book' },
   { href: u('/#rates'), label: 'Rates' },
-  { href: u('/#how'), label: 'How it works' },
   { href: u('/#fleet'), label: 'Fleet' },
   { href: u('/guide'), label: 'Guide' },
   { href: u('/#faq'), label: 'FAQ' },
@@ -17,9 +15,9 @@ const links = [
   <div class="wrap nav-inner">
     <a class="brand" href={u('/')} aria-label={`${SITE.name} home`}>
       <svg class="mk" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-        <rect x="1" y="1" width="42" height="42" rx="12" fill="#0D7480"/>
-        <path d="M9 28l7-11 5 7 3-5 6 9z" fill="none" stroke="#F6A41B" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="22" cy="14" r="2.4" fill="#F6A41B"/>
+        <rect x="1" y="1" width="42" height="42" rx="10" fill="#12100E"/>
+        <rect x="8" y="8" width="28" height="28" rx="6" stroke="#C4A36A" stroke-width="1.4"/>
+        <text x="22" y="28" text-anchor="middle" fill="#C4A36A" font-size="16" font-family="Georgia, serif" font-weight="600">Q</text>
       </svg>
       <span class="nm"><span class="t1">{SITE.name}</span><span class="t2">{SITE.descriptor}</span></span>
     </a>

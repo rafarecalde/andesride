@@ -20,7 +20,7 @@ const vehIcons: Record<string, string> = {
   <div class="bk-head">
     <div class="h-l">
       <svg viewBox="0 0 24 24"><path d="M3 16l6-2 5-9 2 1-2 8 5-1 1 2-16 5z"/></svg>
-      <span class="ti" id="bkTitle">Book your transfer</span>
+      <span class="ti" id="bkTitle">Reserve your transfer</span>
     </div>
     <div class="bk-steps"><i class="on" id="dot0"></i><i id="dot1"></i><i id="dot2"></i></div>
   </div>
@@ -61,7 +61,7 @@ const vehIcons: Record<string, string> = {
             <div class="veh-opt sel solo" data-veh={v.key}>
               <span class="vi">
                 {photo
-                  ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={92} height={76} />
+                  ? <Image src={photo} alt={`${v.name} — representative vehicle`} width={104} height={80} quality={80} />
                   : <svg viewBox="0 0 24 24" set:html={vehIcons[v.key] || vehIcons.suv} />}
               </span>
               <span class="vmid"><span class="vn">{v.name}</span><span class="vmeta">Licensed driver · up to {v.maxPax} passengers · {v.bags} bags</span></span>
@@ -250,7 +250,7 @@ const vehIcons: Record<string, string> = {
     state.step = n;
     for (let i = 0; i < 4; i++) $('step' + i).classList.toggle('on', i === n);
     for (let i = 0; i < 3; i++) $('dot' + i).classList.toggle('on', i <= Math.min(n, 2));
-    const titles = ['Book your transfer', 'Add-ons & details', 'Review & pay up front', 'Booking confirmed'];
+    const titles = ['Reserve your transfer', 'Add-ons & details', 'Review & pay up front', 'Booking confirmed'];
     $('bkTitle').textContent = titles[n];
     document.querySelector('.booker')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

@@ -25,7 +25,7 @@ const placeholders: Record<string, string> = {
           <div class="fc reveal">
             <div class={`fimg${photo ? '' : ' is-placeholder'}`}>
               {photo
-                ? <Image src={photo} alt={`${v.name} — representative vehicle / professional chauffeured service`} width={900} height={600} />
+                ? <Image src={photo} alt={`${v.name} — representative vehicle / professional chauffeured service`} width={1200} height={800} quality={88} />
                 : <><svg viewBox="0 0 64 32" set:html={placeholders[v.key] || placeholders.suv} /><span class="fimg-badge">Sample image</span></>}
             </div>
             <h3>{v.name}</h3>
