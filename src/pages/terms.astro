@@ -20,6 +20,6 @@ import { u } from '../lib/url';
     <h2>Liability</h2>
     <p>To the extent permitted by law, {SITE.name} acts as a booking intermediary. Nothing here limits any rights you have under applicable consumer law.</p>
     <h2>Contact</h2>
-    <p>Questions: {SITE.email ? `${SITE.email} · ` : ''}{SITE.whatsapp}.</p>
+    <p>Questions: {SITE.email || 'Reply to your booking confirmation.'}</p>
   </div></div>
 </BaseLayout>

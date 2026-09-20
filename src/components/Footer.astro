@@ -1,8 +1,8 @@
 ---
-import { SITE, DISCLOSURE } from '../config';
+import { SITE, DISCLOSURE, hasWhatsApp } from '../config';
 import { u } from '../lib/url';
 const year = new Date().getFullYear();
-const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
+const waLink = hasWhatsApp ? `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}` : '';
 ---
 <footer class="site" id="contact">
   <div class="wrap">
@@ -27,7 +27,11 @@ const waLink = `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, '')}`;
       </div>
       <div class="foot-col">
         <h4>Contact</h4>
-        <span class="li"><b>WhatsApp</b><br><a href={waLink} target="_blank" rel="noopener">{SITE.whatsapp}</a></span>
+        {hasWhatsApp ? (
+          <span class="li"><b>WhatsApp</b><br><a href={waLink} target="_blank" rel="noopener">{SITE.whatsapp}</a></span>
+        ) : (
+          <span class="li"><b>WhatsApp</b><br>Coming soon</span>
+        )}
         {SITE.email ? (
           <span class="li"><b>Email</b><br><a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
         ) : null}

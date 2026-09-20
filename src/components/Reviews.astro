@@ -1,25 +1,26 @@
 ---
 // PLACEHOLDER copy — replace with real, verifiable testimonials before launch
-// (see README "Owner TODOs"). Do not treat these as live review counts.
+// (see README "Owner TODOs"). Do not treat these as live reviews or ratings.
 const reviews = [
-  { stars: 5, body: 'Driver was waiting with my name despite a delay. Prepaid the $50 airport-hotel rate, easy ride to Wyndham Quito Airport in a luxury SUV.', initials: 'SK', name: 'S.K.', loc: 'United States' },
-  { stars: 5, body: 'Booked the $100 city rate to Swissôtel, paid up front, and skipped the taxi negotiation after a late landing. Licensed driver, clear price.', initials: 'MR', name: 'M.R.', loc: 'Canada' },
-  { stars: 5, body: 'Family of four to Casa Gangotena. Luxury SUV had the bags, child seat was ready, and the prepaid rate was exactly what we paid.', initials: 'JL', name: 'J.L.', loc: 'United Kingdom' },
+  { body: 'Driver was waiting with my name despite a delay. Prepaid the $50 airport-hotel rate, easy ride to Wyndham Quito Airport in a luxury SUV.', loc: 'United States' },
+  { body: 'Booked the $100 city rate to Swissôtel, paid up front, and skipped the taxi negotiation after a late landing. Licensed driver, clear price.', loc: 'Canada' },
+  { body: 'Family of four to Casa Gangotena. Luxury SUV had the bags, child seat was ready, and the prepaid rate was exactly what we paid.', loc: 'United Kingdom' },
 ];
 ---
 <section id="reviews">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">What arrival can look like</span><h2 class="section-title">A prepaid SUV, a licensed driver, a name sign</h2>
-      <p class="lede">Illustrative notes — we will replace these with verified guest quotes before launch.</p>
+    <div class="sec-head">
+      <span class="eyebrow">Sample arrival notes</span>
+      <h2 class="section-title">A prepaid SUV, a licensed driver, a name sign</h2>
+      <p class="lede">Illustrative copy only — not customer reviews. We will replace these with verified guest quotes before launch.</p>
     </div>
     <div class="rev-grid">
       {reviews.map((r) => (
         <div class="rev reveal">
-          <div class="stars" style="color:var(--amber)" aria-label={`${r.stars} out of 5`}>★★★★★</div>
+          <span class="sample-badge">Sample copy</span>
           <p>{r.body}</p>
           <div class="who">
-            <div class="av">{r.initials}</div>
-            <div><div class="nm">{r.name}</div><div class="loc">{r.loc}</div></div>
+            <div class="loc">Example · {r.loc}</div>
           </div>
         </div>
       ))}

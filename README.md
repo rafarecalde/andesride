@@ -77,20 +77,19 @@ total = zone.price × (roundTrip ? 2 : 1)
 
 ## Adding the hero image
 
-The hero shows an on-brand Quito **placeholder** (`public/hero-quito-placeholder.svg`)
-with a "Sample image" feel. To use a real photo (El Panecillo, the UIO terminal,
-the Andes at dawn), drop ONE landscape image at `src/assets/hero.webp` (or
-`.jpg`/`.png`, ≥1600×900). It replaces the placeholder automatically — no code
-change. A light wash keeps the headline readable over any photo.
+The homepage hero uses a real chauffeur / luxury-cabin photo at
+`src/assets/hero.webp` (WebP, 1600×900). A dark gradient wash keeps the
+**Quito Airport Transfer** headline and $50 / $100 rates readable. To swap the
+still, replace that file (or drop `hero.{jpg,png,avif}`) — `src/lib/hero.ts`
+picks it up automatically. If no file is present, `public/hero-quito-placeholder.svg`
+is used.
 
 ## Adding fleet photos
 
-Drop a representative photo into `src/assets/fleet/` named exactly
-`suv.webp` (WebP preferred; PNG/JPG also work). It's picked up automatically via
-`astro:assets` — no code change. Until then, a neutral placeholder shows with the
-caption **"Representative vehicle — actual model may vary."** Recommended:
-landscape ~16:10 / 3:2, ≥1200×800, clean neutral background.
-(Optional: a logo, an Andes/Quito hero image, and a custom favicon.)
+The fleet card uses `src/assets/fleet/suv.webp` (a crop of the same chauffeur
+still) with the caption **"Representative vehicle / professional chauffeured
+service — actual model may vary."** Replace `suv.webp` with a vehicle-specific
+photo when you have one — `src/lib/fleet.ts` picks it up automatically.
 
 ## Adding a blog post
 
@@ -159,15 +158,17 @@ When DNS is pointed at GitHub Pages:
 
 1. **Source licensed, UIO-authorized carriers/drivers** — the launch gate. Local
    counsel to confirm the intermediary structure + carrier agreement.
-2. Send a **luxury SUV photo** (representative) → `src/assets/fleet/suv.webp`.
+2. Optionally replace the representative chauffeur still in `src/assets/hero.webp`
+   / `src/assets/fleet/suv.webp` with a vehicle-specific luxury SUV photo.
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
 5. **Register / point DNS** for `uiotransfer.com` (already in `SITE.domain` /
    `SITE.email`). Then add `public/CNAME` and flip `astro.config.mjs` to `site` +
-   `base: '/'`. WhatsApp/phone are still placeholders.
-6. Replace **placeholder reviews/ratings** (`src/components/Reviews.astro`,
-   `ratingValue`/`ratingCount` in `src/config.ts`) with real, verifiable ones.
+   `base: '/'`. WhatsApp/phone stay hidden until real numbers are set in
+   `src/config.ts` (placeholder digits are not shown).
+6. Replace **placeholder reviews** (`src/components/Reviews.astro`) with real,
+   verifiable quotes before treating them as social proof.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
 8. Keep destination guides (Cumbayá, Otavalo, etc.) as quote-on-request;
    prepaid bookable products stay airport-hotel vs. Quito city.
