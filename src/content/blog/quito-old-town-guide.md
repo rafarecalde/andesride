@@ -23,7 +23,7 @@ Give it a full day, wear good shoes for the hills, and pace yourself — you're 
 
 The airport sits in Tababela, around 45 minutes to an hour from the historic center depending on traffic. From **UIO** a private transfer takes you door-to-door to your hotel — no transfers, no hauling bags through the bus system after a flight. With a **flat rate** you know the cost up front, and your driver tracks your flight and waits if you're delayed.
 
-See the prepaid $100 city rate on the [Quito airport to anywhere in Quito](/quito-airport-to-quito) page — it covers Old Town hotels such as Casa Gangotena — or compare both products on the [rates](/#rates).
+See the prepaid $100 city rate on the [Quito airport to anywhere in Quito](/quito-airport-to-quito) page — it covers Old Town hotels such as Casa Gangotena — or compare all three products on the [rates](/#rates).
 
 ## Tips
 

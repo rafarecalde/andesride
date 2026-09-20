@@ -42,4 +42,4 @@ Now a real day trip is on the table:
 - Remember the **altitude** (2,850 m in the city) — go easy if you've been flying for hours.
 - Book the transfer **round trip** so the same driver returns you to the terminal on schedule.
 
-See the prepaid $100 city fare on the [anywhere in Quito](/quito-airport-to-quito) page, or the $50 airport-hotel rate if you stay at [Wyndham Quito Airport](/quito-airport-to-wyndham-airport).
+See the prepaid $100 city fare on the [anywhere in Quito](/quito-airport-to-quito) page, the $75 [Cumbayá](/quito-airport-to-cumbaya) rate if you stay in the valley, or the $50 airport-hotel rate at [Wyndham Quito Airport](/quito-airport-to-wyndham-airport).

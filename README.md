@@ -64,6 +64,7 @@ page read from it. Edit one file and everything updates.
 Published product (luxury SUV only):
 
 - **$50** one-way — UIO ↔ **Wyndham Quito Airport** (Tababela / airport-area hotel)
+- **$75** one-way — UIO ↔ **Cumbayá** (Valle de Tumbaco)
 - **$100** one-way — UIO ↔ **anywhere in Quito city** (Hyatt, Oro Verde, Swissôtel,
   Casa Gangotena, and any other city address)
 
@@ -77,20 +78,21 @@ total = zone.price × (roundTrip ? 2 : 1)
 
 ## Adding the hero image
 
-The homepage hero uses the owner chauffeur / luxury-cabin photo at
-`src/assets/hero.webp` (WebP, 1920×1080, ~180 KB), re-encoded from
-`src/assets/_source/chauffeur-owner.webp`. A refined dark gradient keeps the
-**Quito Airport Transfer** headline and $50 / $100 rates readable without
-muddying the still. To swap the photo, replace that file (or drop
-`hero.{jpg,png,avif}`) — `src/lib/hero.ts` picks it up automatically. If no
-file is present, `public/hero-quito-placeholder.svg` is used.
+The homepage hero is **paper, not a photo wallpaper**. Place-trust comes from
+the owner terminal still `src/assets/_source/uio-terminal.webp` (Mariscal Sucre
+exterior), shown as a contained figure. The chauffeur still
+`src/assets/_source/chauffeur-owner.webp` is a contained editorial portrait —
+never a full-bleed background. Do not replace either with a generated lookalike.
+The route map `src/assets/_source/route-map.webp` (UIO ↔ Old Town; Cumbayá on
+the path) feeds the How far section.
 
 ## Adding fleet photos
 
-The fleet card uses `src/assets/fleet/suv.webp` (a crop of the same chauffeur
-still) with the caption **"Representative vehicle / professional chauffeured
-service — actual model may vary."** Replace `suv.webp` with a vehicle-specific
-photo when you have one — `src/lib/fleet.ts` picks it up automatically.
+The fleet panel prefers `src/assets/fleet/suv.webp` (a cabin-forward crop of
+the same owner still: `1760:1100:160:90` scaled to 1600 wide) and falls back
+to `src/assets/_source/chauffeur-owner.webp`. Caption:
+**"Representative chauffeured luxury SUV — cabin and licensed driver. Actual
+model may vary."** Drop a vehicle-specific exterior `suv.webp` when you have one.
 
 ## Adding a blog post
 
@@ -159,9 +161,9 @@ When DNS is pointed at GitHub Pages:
 
 1. **Source licensed, UIO-authorized carriers/drivers** — the launch gate. Local
    counsel to confirm the intermediary structure + carrier agreement.
-2. Optionally replace the representative chauffeur still in `src/assets/hero.webp`
-   / `src/assets/fleet/suv.webp` with a vehicle-specific luxury SUV photo.
-3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
+2. Optionally replace the representative chauffeur still with a vehicle-specific
+   luxury SUV photo when you have one. Do not generate an exterior.
+3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 Cumbayá / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
 5. **Register / point DNS** for `uiotransfer.com` (already in `SITE.domain` /
@@ -172,8 +174,9 @@ When DNS is pointed at GitHub Pages:
    licensed · prepaid · flight tracking — not sample reviews. Add real,
    verifiable quotes only when they exist.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
-8. Keep destination guides (Cumbayá, Otavalo, etc.) as quote-on-request;
-   prepaid bookable products stay airport-hotel vs. Quito city.
+8. Keep destination guides beyond the three prepaid products (Otavalo, Mindo,
+   Mitad del Mundo, Papallacta, etc.) as quote-on-request. Prepaid bookable
+   products are airport-hotel ($50), Cumbayá ($75), and Quito city ($100).
 
 ## What's included
 
@@ -183,7 +186,7 @@ When DNS is pointed at GitHub Pages:
   `rss.xml`, sitemap, JSON-LD (`Article`, `FAQPage`, `TaxiService`/`LocalBusiness`,
   `Service`/`Offer` with prices).
 - Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`
-  (Wyndham Quito Airport + anywhere in Quito).
+  (Wyndham Quito Airport, Cumbayá, and anywhere in Quito).
 - Legal: `/terms`, `/privacy`, `/cancellation` (templates for counsel review).
 - Responsive (980 / 760 breakpoints), reduced-motion, keyboard-operable widget +
   menu, AA-minded contrast.

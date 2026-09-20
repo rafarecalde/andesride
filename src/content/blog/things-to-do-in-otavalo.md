@@ -18,7 +18,7 @@ Nearby, it's easy to add the **Peguche waterfall**, the **Cuicocha** crater lake
 
 Otavalo is roughly two hours north of Quito on the Panamericana, climbing through classic Andean scenery. From **Mariscal Sucre International Airport (UIO)** in Tababela, a private transfer skips the cross-city bus connections entirely: your driver meets you at arrivals and takes you straight north.
 
-Because it's a long, scenic mountain drive, a **fixed price** matters here — you know the cost before you go, your driver tracks your flight if you're coming straight from a landing, and there's no meter ticking through traffic. Otavalo sits outside the two prepaid city products, so [ask for a quote](/#book) rather than using the $100 Quito rate. Published prepaid rates are on the [rates page](/#rates).
+Because it's a long, scenic mountain drive, a **fixed price** matters here — you know the cost before you go, your driver tracks your flight if you're coming straight from a landing, and there's no meter ticking through traffic. Otavalo sits outside the three prepaid products, so [ask for a quote](/#book) rather than using the $100 Quito rate. Published prepaid rates are on the [rates page](/#rates).
 
 ## Tips for a smooth visit
 

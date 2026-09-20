@@ -1,0 +1,45 @@
+---
+import rates from '../data/rates.json';
+import { routeMapPhoto } from '../lib/photos';
+import { u } from '../lib/url';
+
+const { zones } = rates;
+---
+<section id="route">
+  <div class="wrap">
+    <div class="howfar">
+      <figure class="howfar-map">
+        {routeMapPhoto ? (
+          <img
+            src={routeMapPhoto.src}
+            alt="Road map from Mariscal Sucre International Airport to Old Town Quito. Cumbayá sits on the valley path between them."
+            width={routeMapPhoto.width}
+            height={routeMapPhoto.height}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null}
+        <figcaption>
+          Typical drive from UIO toward Quito (about 33 km / 34 min off-peak to Old Town on this map).
+          Cumbayá sits on that valley path — closer than the city, farther than the airport hotel.
+        </figcaption>
+      </figure>
+      <div class="howfar-copy">
+        <span class="eyebrow">How far from UIO</span>
+        <h2 class="section-title">Airport hotel, the valley, or the city</h2>
+        <p class="lede">Three prepaid products. Traffic into Quito varies; Cumbayá is the middle hop on the same eastern-valley roads.</p>
+        <ol class="howfar-list">
+          {zones.map((z) => (
+            <li>
+              <a href={u(`/quito-airport-to-${z.key}`)}>
+                <b>${z.price}</b>
+                <span class="hf-name">{z.name}</span>
+                <span class="hf-meta">{z.eta} · {z.sub}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

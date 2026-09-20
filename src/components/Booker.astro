@@ -16,7 +16,7 @@ const vehIcons: Record<string, string> = {
   suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
 };
 ---
-<div class="booker reveal" id="book">
+<div class="booker" id="book">
   <div class="bk-head">
     <div class="h-l">
       <svg viewBox="0 0 24 24"><path d="M3 16l6-2 5-9 2 1-2 8 5-1 1 2-16 5z"/></svg>
@@ -39,7 +39,7 @@ const vehIcons: Record<string, string> = {
           <option value="" disabled selected>Choose your destination…</option>
           {zones.map((z) => <option value={z.key}>{z.name} — ${z.price}</option>)}
         </select>
-        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">$50 Wyndham Quito Airport · $100 anywhere in Quito</span></div>
+        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">$50 airport hotel · $75 Cumbayá · $100 Quito</span></div>
         <div class="hotel-hint" id="hotelHint" hidden></div>
       </div>
 
@@ -225,21 +225,18 @@ const vehIcons: Record<string, string> = {
     const hint = $('etaHint');
     const hotels = $('hotelHint');
     if (!z) {
-      hint.textContent = '$50 Wyndham Quito Airport · $100 anywhere in Quito';
+      hint.textContent = '$50 airport hotel · $75 Cumbayá · $100 Quito';
       hotels.hidden = true;
       hotels.textContent = '';
     } else {
       hint.textContent = 'Estimated drive time · ' + z.eta;
-      if (z.examples && z.examples.length) {
-        hotels.hidden = false;
-        hotels.textContent =
-          z.key === 'quito'
-            ? 'Includes Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and any other city address. A city-center Wyndham (not the airport hotel) is this $100 rate too.'
+      hotels.hidden = false;
+      hotels.textContent =
+        z.key === 'quito'
+          ? 'Includes Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and any other city address. A city-center Wyndham (not the airport hotel) is this $100 rate too.'
+          : z.key === 'cumbaya'
+            ? 'Cumbayá and nearby valley addresses — between the airport and Quito city. Not the $100 city rate.'
             : 'Airport-area hotel in Tababela — not a city-center Wyndham.';
-      } else {
-        hotels.hidden = true;
-        hotels.textContent = '';
-      }
     }
     const t = total();
     ['t0', 't1'].forEach((id) => ($(id).textContent = money(t)));

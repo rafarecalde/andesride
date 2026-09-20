@@ -28,7 +28,7 @@ See the prepaid $50 fare on the [Quito airport to Wyndham Quito Airport](/quito-
 ## Tips
 
 - Ideal for **very early departures** or **late-night arrivals** — book the short transfer both ways.
-- Prefer the valley over the city for a quiet stay? Consider [Cumbayá & Tumbaco](/guide/cumbaya-tumbaco-guide), a little further in.
+- Prefer the valley over the city for a quiet stay? [Cumbayá](/quito-airport-to-cumbaya) is $75 prepaid, a little further in.
 - Landing late and tired? Read [arriving at Quito airport after dark](/guide/arriving-quito-airport-late-at-night).
 
 For the night around a flight, staying close and pre-booking the short hop is the easiest win in your whole itinerary.

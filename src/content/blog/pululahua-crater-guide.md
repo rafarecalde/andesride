@@ -22,7 +22,7 @@ Because it's so close to **Mitad del Mundo**, the two pair perfectly into one ha
 
 Pululahua sits on the north side of the Quito area, near San Antonio de Pichincha. From **UIO** in the eastern valley it's a cross-region drive — easy with a private driver who can fold in Mitad del Mundo as an **extra stop**. A **flat rate** keeps the combined trip simple and priced up front.
 
-Pululahua sits with Mitad del Mundo, outside the prepaid Quito-city product, so [ask for a quote](/#book). Published rates ($50 airport hotel / $100 Quito) are on the [rates page](/#rates).
+Pululahua sits with Mitad del Mundo, outside the three prepaid products, so [ask for a quote](/#book). Published rates ($50 airport hotel / $75 Cumbayá / $100 Quito) are on the [rates page](/#rates).
 
 ## Tips
 

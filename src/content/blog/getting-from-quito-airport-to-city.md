@@ -22,7 +22,7 @@ Quito's airport (UIO) sits about 45–60 minutes from the city in Tababela, so "
 ## How to choose
 
 - **On a tight budget, traveling light, arriving in daylight?** The bus can work.
-- **Want certainty, arriving at night, carrying luggage, or traveling as a family?** A prepaid luxury-SUV transfer is the easy call — **$100** anywhere in Quito city, **$50** to Wyndham Quito Airport. See the [rates](/#rates).
+- **Want certainty, arriving at night, carrying luggage, or traveling as a family?** A prepaid luxury-SUV transfer is the easy call — **$50** to Wyndham Quito Airport, **$75** to [Cumbayá](/quito-airport-to-cumbaya), **$100** anywhere in Quito city. See the [rates](/#rates).
 - **Comfortable with apps and some uncertainty?** Rideshare can be cheaper off-peak, if pickup is allowed when you land.
 
 ## The honest summary
