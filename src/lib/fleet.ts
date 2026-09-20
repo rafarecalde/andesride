@@ -20,4 +20,5 @@ export function imageFor(key: string): ImageMetadata | undefined {
   return byKey[key.toLowerCase()];
 }
 
-export const REPRESENTATIVE_CAPTION = 'Representative vehicle — actual model may vary';
+export const REPRESENTATIVE_CAPTION =
+  'Representative vehicle / professional chauffeured service — actual model may vary';

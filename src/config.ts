@@ -10,8 +10,9 @@ export const SITE = {
   // Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
   domain: 'https://uiotransfer.com',
   email: 'book@uiotransfer.com',
-  whatsapp: '+593 99 000 0000',
-  phone: '+593 99 000 0000',
+  // Leave blank until a real number exists — do not ship placeholder digits.
+  whatsapp: '',
+  phone: '',
 
   // Payments — keep "mock" until the Stripe + US-entity piece is live (README §Payments).
   paymentsMode: 'mock' as 'mock' | 'live',
@@ -23,11 +24,22 @@ export const SITE = {
 
   cancelFreeHours: 24,
 
-  // Social proof shown on the site — PLACEHOLDER until real reviews exist (README).
+  // Social proof — PLACEHOLDER until real reviews exist (README).
   // Do not surface these as live counts in UI or JSON-LD until they are verified.
-  ratingValue: '4.9',
-  ratingCount: '1200',
+  ratingValue: '',
+  ratingCount: '',
 };
+
+function isRealPhone(value: string) {
+  const digits = (value || '').replace(/\D/g, '');
+  if (digits.length < 8) return false;
+  // Reject obvious placeholders such as +593 99 000 0000.
+  if (/0{5,}/.test(digits)) return false;
+  return true;
+}
+
+export const hasPhone = isRealPhone(SITE.phone);
+export const hasWhatsApp = isRealPhone(SITE.whatsapp);
 
 // Required intermediary disclosure (Expedia-style). Reused on footer, FAQ,
 // the booking step, and the confirmation screen.

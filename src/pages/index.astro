@@ -10,7 +10,7 @@ import Reviews from '../components/Reviews.astro';
 import Faq from '../components/Faq.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
-import { SITE } from '../config';
+import { SITE, hasPhone } from '../config';
 import { u } from '../lib/url';
 import { publicUrl } from '../lib/publicUrl';
 import { FAQ } from '../data/faq';
@@ -31,7 +31,7 @@ const taxiSchema = {
   name: SITE.name,
   url: origin,
   description: SITE.tagline,
-  ...(SITE.phone ? { telephone: SITE.phone } : {}),
+  ...(hasPhone ? { telephone: SITE.phone } : {}),
   ...(SITE.email ? { email: SITE.email } : {}),
   areaServed: { '@type': 'City', name: 'Quito, Ecuador' },
   priceRange: `$${low}–$${high} USD`,
