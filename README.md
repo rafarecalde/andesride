@@ -6,10 +6,9 @@ booking widget, and a markdown blog as the SEO engine. Built with **Astro**,
 deploys to **GitHub Pages**.
 
 The GitHub repo remains `rafarecalde/andesride`; the public brand is
-**Quito Airport Transfer**. The chosen domain is **quitoairporttransfers.com**
-(`SITE.domain` / `book@quitoairporttransfers.com`). It may not be registered or
-DNS-pointed yet; config still targets it so the build is ready. Do not use
-`andesride.com` — that domain belongs to an unrelated Chilean brand.
+**Quito Airport Transfer**. The locked-in domain is **uiotransfer.com**
+(`SITE.domain` / `book@uiotransfer.com`). Do not use `andesride.com`,
+`quitoairporttransfers.com`, or `transfersfromuio.com`.
 
 ---
 
@@ -138,23 +137,22 @@ step, and confirmation.
 2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. Push to `main` — `.github/workflows/deploy.yml` builds and deploys.
 
-### Custom domain (quitoairporttransfers.com)
+### Custom domain (uiotransfer.com)
 
-`SITE.domain` is **https://quitoairporttransfers.com** and the booking email
-placeholder is **book@quitoairporttransfers.com**. The domain may not be
-registered or DNS-pointed yet — config already targets it so canonical/OG/JSON-LD
-are launch-ready. **Do not use `andesride.com`.**
+`SITE.domain` is **https://uiotransfer.com** and the booking email placeholder is
+**book@uiotransfer.com**. Do not use `andesride.com`, `quitoairporttransfers.com`,
+or `transfersfromuio.com`.
 
 Until DNS is live, this repo still deploys as a GitHub Pages project preview at
 `https://rafarecalde.github.io/andesride/` (`base: '/andesride'`). That path is
 the repo name, not the brand. In-page links stay base-aware; canonical URLs use
-the chosen domain at the root.
+uiotransfer.com at the root.
 
 When DNS is pointed at GitHub Pages:
 
-1. Add a file `public/CNAME` containing just `quitoairporttransfers.com`.
+1. Add a file `public/CNAME` containing just `uiotransfer.com`.
 2. Point DNS at GitHub Pages (A records / `CNAME` per GitHub's docs).
-3. In `astro.config.mjs` set `site: 'https://quitoairporttransfers.com'` and `base: '/'`.
+3. In `astro.config.mjs` set `site: 'https://uiotransfer.com'` and `base: '/'`.
 
 ## Owner TODOs
 
@@ -164,9 +162,9 @@ When DNS is pointed at GitHub Pages:
 3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
-5. **Register / point DNS** for `quitoairporttransfers.com` (already in
-   `SITE.domain` / `SITE.email`). Then add `public/CNAME` and flip
-   `astro.config.mjs` to `site` + `base: '/'`. WhatsApp/phone are still placeholders.
+5. **Register / point DNS** for `uiotransfer.com` (already in `SITE.domain` /
+   `SITE.email`). Then add `public/CNAME` and flip `astro.config.mjs` to `site` +
+   `base: '/'`. WhatsApp/phone are still placeholders.
 6. Replace **placeholder reviews/ratings** (`src/components/Reviews.astro`,
    `ratingValue`/`ratingCount` in `src/config.ts`) with real, verifiable ones.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).

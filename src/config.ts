@@ -5,11 +5,10 @@ export const SITE = {
   name: 'Quito Airport Transfer',
   descriptor: 'Prepaid luxury SUV · UIO',
   tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
-  // Chosen public origin. Domain may not be registered or DNS-pointed yet;
-  // canonical / OG / JSON-LD still target it so the build is launch-ready.
-  // Do not use andesride.com — that domain belongs to an unrelated Chilean brand.
-  domain: 'https://quitoairporttransfers.com',
-  email: 'book@quitoairporttransfers.com',
+  // Chosen public origin: https://uiotransfer.com
+  // Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
+  domain: 'https://uiotransfer.com',
+  email: 'book@uiotransfer.com',
   whatsapp: '+593 99 000 0000',
   phone: '+593 99 000 0000',
 
@@ -18,7 +17,7 @@ export const SITE = {
   payProvider: 'stripe' as 'stripe' | 'payphone' | 'kushki' | 'pagoplux' | 'dlocal',
 
   // URL of the deployed serverless checkout function (used only in "live" mode).
-  // e.g. 'https://quitoairporttransfers-pay.<you>.workers.dev'  — leave blank for mock.
+  // e.g. 'https://uiotransfer-pay.<you>.workers.dev'  — leave blank for mock.
   paymentApiBase: '',
 
   cancelFreeHours: 24,

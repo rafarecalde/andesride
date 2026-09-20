@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-# Canonical sitemap on the chosen domain. DNS may not be pointed yet.
-# Do not use andesride.com.
-Sitemap: https://quitoairporttransfers.com/sitemap-index.xml
+# Canonical sitemap on the chosen domain.
+# Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
+Sitemap: https://uiotransfer.com/sitemap-index.xml
