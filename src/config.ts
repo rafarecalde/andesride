@@ -5,7 +5,8 @@ export const SITE = {
   name: 'Quito Airport Transfer',
   descriptor: 'Prepaid luxury SUV · UIO',
   tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
-  // Chosen public origin: https://uiotransfer.com
+  // Locked public origin (owner buying on Namecheap — may not resolve yet).
+  // Canonical / OG / JSON-LD still target it so the build is launch-ready.
   // Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
   domain: 'https://uiotransfer.com',
   email: 'book@uiotransfer.com',

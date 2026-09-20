@@ -7,7 +7,8 @@ deploys to **GitHub Pages**.
 
 The GitHub repo remains `rafarecalde/andesride`; the public brand is
 **Quito Airport Transfer**. The locked-in domain is **uiotransfer.com**
-(`SITE.domain` / `book@uiotransfer.com`). Do not use `andesride.com`,
+(`SITE.domain` / `book@uiotransfer.com`), being bought separately on Namecheap
+and may not resolve yet. Do not use `andesride.com`,
 `quitoairporttransfers.com`, or `transfersfromuio.com`.
 
 ---
