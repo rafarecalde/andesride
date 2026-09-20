@@ -47,4 +47,8 @@ export const FAQ: { q: string; a: string }[] = [
     q: 'Do you go beyond Quito city?',
     a: 'The published prepaid rates are UIO → Wyndham Quito Airport ($50), UIO → anywhere in Cumbayá ($75), and UIO → anywhere in Quito city ($100). Destinations beyond those three — Mitad del Mundo, Otavalo, Mindo, Papallacta, and similar — are quoted on request. Message us rather than guessing a city rate.',
   },
+  {
+    q: 'How far in advance do I need to book?',
+    a: 'At least 3 calendar days. The booker greys out today and the next two days; the earliest pickup is three days from today. That lead time is how we confirm a licensed, airport-authorized driver. Same-day and next-day pickups are not offered.',
+  },
 ];

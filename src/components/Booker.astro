@@ -10,7 +10,7 @@ const suv = vehicles[0];
 
 // Data handed to the client script — the widget reads rates from here, never
 // from hardcoded values (single source of truth = rates.json).
-const widgetData = JSON.stringify({ zones, vehicles, extras });
+const widgetData = JSON.stringify({ zones, vehicles, extras, minLeadDays: SITE.minLeadDays });
 
 const vehIcons: Record<string, string> = {
   suv: '<path d="M3 14l1.5-6A3 3 0 017.4 6h9.2a3 3 0 012.9 2L21 14"/><path d="M2 14h20v5H2zM6 19v2M18 19v2"/><circle cx="7" cy="14" r="1.5"/><circle cx="17" cy="14" r="1.5"/>',
@@ -44,9 +44,10 @@ const vehIcons: Record<string, string> = {
       </div>
 
       <div class="fld-row">
-        <div class="fld"><label for="date">Pick-up date</label><input class="ctrl" type="date" id="date"></div>
+        <div class="fld"><label for="date">Pick-up date</label><input class="ctrl" type="date" id="date" required></div>
         <div class="fld"><label for="time">Pick-up time</label><input class="ctrl" type="time" id="time" value="09:00"></div>
       </div>
+      <p class="date-hint" id="dateHint">We book at least 3 days ahead so your driver is confirmed.</p>
       <div class="fld"><label for="pax">Passengers</label>
         <select class="ctrl" id="pax">
           {Array.from({ length: suv.maxPax }, (_, i) => i + 1).map((n) => <option selected={n === 2}>{n}</option>)}
@@ -183,6 +184,7 @@ const vehIcons: Record<string, string> = {
   const data = JSON.parse(document.getElementById('ratesData')!.textContent || '{}');
   const ZONES: Zone[] = data.zones;
   const EXTRAS: Extras = data.extras;
+  const MIN_LEAD: number = typeof data.minLeadDays === 'number' ? data.minLeadDays : 3;
   const VEHNAME: Record<string, string> = Object.fromEntries(
     (data.vehicles as { key: string; name: string }[]).map((v) => [v.key, v.name]),
   );
@@ -192,6 +194,42 @@ const vehIcons: Record<string, string> = {
 
   const $ = (id: string) => document.getElementById(id)!;
   const zoneSel = $('zone') as HTMLSelectElement;
+  const dateEl = $('date') as HTMLInputElement;
+  const rdateEl = $('rdate') as HTMLInputElement;
+  const dateHint = $('dateHint');
+
+  function localYmd(d: Date) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  function addLocalDays(n: number) {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+  const minPickup = localYmd(addLocalDays(MIN_LEAD));
+  const LEAD_COPY = 'We book at least 3 days ahead so your driver is confirmed.';
+
+  function setDateHint(msg: string, err = false) {
+    dateHint.textContent = msg;
+    dateHint.classList.toggle('is-err', err);
+  }
+  function applyLeadMin() {
+    dateEl.min = minPickup;
+    rdateEl.min = dateEl.value && dateEl.value > minPickup ? dateEl.value : minPickup;
+  }
+  function pickupOk() {
+    const v = dateEl.value;
+    return !!v && v >= minPickup;
+  }
+  function clampPickup() {
+    if (!dateEl.value || dateEl.value < minPickup) dateEl.value = minPickup;
+    applyLeadMin();
+    if (rdateEl.value && rdateEl.value < dateEl.value) rdateEl.value = dateEl.value;
+  }
 
   const zone = () => ZONES.find((x) => x.key === state.zone);
   const basePrice = () => zone()?.price ?? null;
@@ -258,7 +296,23 @@ const vehIcons: Record<string, string> = {
       return;
     }
     zoneSel.classList.remove('field-err');
-    if (n === 2) buildSummary();
+    if (n >= 1) {
+      clampPickup();
+      if (!pickupOk()) {
+        dateEl.focus();
+        dateEl.classList.add('field-err');
+        setDateHint('Pick a date at least 3 days from today so we can confirm your driver.', true);
+        return;
+      }
+      dateEl.classList.remove('field-err');
+      setDateHint(LEAD_COPY, false);
+    }
+    if (n === 2) {
+      if (state.rt && rdateEl.value && rdateEl.value < dateEl.value) {
+        rdateEl.value = dateEl.value;
+      }
+      buildSummary();
+    }
     showStep(n);
   }
 
@@ -300,6 +354,13 @@ const vehIcons: Record<string, string> = {
     if (!name || !email || !phone) return show('Please add your name, email, and mobile number (step 2).');
     if (!/.+@.+\..+/.test(email)) return show('Please enter a valid email address.');
     if (!policy) return show('Please accept the cancellation policy to continue.');
+    clampPickup();
+    if (!pickupOk()) {
+      showStep(0);
+      dateEl.focus();
+      dateEl.classList.add('field-err');
+      return show('Pickup must be at least 3 days from today so we can confirm your driver.');
+    }
     err.style.display = 'none';
 
     const btn = $('payBtn') as HTMLButtonElement;
@@ -366,6 +427,15 @@ const vehIcons: Record<string, string> = {
   );
   zoneSel.addEventListener('change', recalc);
   ($('pax') as HTMLSelectElement).addEventListener('change', recalc);
+  dateEl.addEventListener('change', () => {
+    clampPickup();
+    dateEl.classList.remove('field-err');
+    setDateHint(LEAD_COPY, false);
+  });
+  dateEl.addEventListener('blur', clampPickup);
+  rdateEl.addEventListener('change', () => {
+    if (rdateEl.value && rdateEl.value < dateEl.value) rdateEl.value = dateEl.value;
+  });
   $('toStep1').addEventListener('click', () => go(1));
   $('back1').addEventListener('click', () => go(0));
   $('toStep2').addEventListener('click', () => go(2));
@@ -403,8 +473,13 @@ const vehIcons: Record<string, string> = {
     t.value = v;
   });
 
-  // Default date = today.
-  ($('date') as HTMLInputElement).value = new Date().toISOString().slice(0, 10);
+  // Default pickup = first bookable day (today + 3 calendar days). Native
+  // min greys out today and the next 2 days in the date picker.
+  applyLeadMin();
+  const qsDate = new URLSearchParams(location.search).get('date');
+  dateEl.value = qsDate && qsDate >= minPickup ? qsDate : minPickup;
+  clampPickup();
+  setDateHint(LEAD_COPY, false);
 
   // Global prefill hook (used by the rates table + deep-links).
   (window as any).andesPrefill = (key: string) => {

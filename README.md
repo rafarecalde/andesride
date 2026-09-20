@@ -68,6 +68,9 @@ Published product (luxury SUV only):
 - **$100** one-way — UIO ↔ **anywhere in Quito city** (Hyatt, Oro Verde, Swissôtel,
   Casa Gangotena, and any other city address)
 
+Pickup dates need **3 calendar days’ notice** (`SITE.minLeadDays` in
+`src/config.ts`). The booker greys out today and the next two days.
+
 Price math:
 
 ```
