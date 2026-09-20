@@ -23,10 +23,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Astro site
         uses: withastro/action@v3
-        # If you deploy to a PROJECT path (no custom domain yet), set the base here:
-        # with:
-        #   path: .
-        #   # then also set base:'/andesride' in astro.config.mjs
+        # Custom domain uiotransfers.com is served at the domain root (astro
+        # base: '/'). Do not set a /andesride project path here.
 
   deploy:
     needs: build

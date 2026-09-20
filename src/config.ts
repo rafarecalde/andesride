@@ -5,11 +5,11 @@ export const SITE = {
   name: 'Quito Airport Transfer',
   descriptor: 'Prepaid luxury SUV · UIO',
   tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
-  // Locked public origin (owner buying on Namecheap — may not resolve yet).
-  // Canonical / OG / JSON-LD still target it so the build is launch-ready.
+  // Locked public origin: uiotransfers.com (plural). Canonical / OG / JSON-LD
+  // target it so the build is launch-ready. DNS may still be propagating.
   // Do not use andesride.com, quitoairporttransfers.com, or transfersfromuio.com.
-  domain: 'https://uiotransfer.com',
-  email: 'book@uiotransfer.com',
+  domain: 'https://uiotransfers.com',
+  email: 'book@uiotransfers.com',
   // Leave blank until a real number exists — do not ship placeholder digits.
   whatsapp: '',
   phone: '',
@@ -19,7 +19,7 @@ export const SITE = {
   payProvider: 'stripe' as 'stripe' | 'payphone' | 'kushki' | 'pagoplux' | 'dlocal',
 
   // URL of the deployed serverless checkout function (used only in "live" mode).
-  // e.g. 'https://uiotransfer-pay.<you>.workers.dev'  — leave blank for mock.
+  // e.g. 'https://uiotransfers-pay.<you>.workers.dev'  — leave blank for mock.
   paymentApiBase: '',
 
   cancelFreeHours: 24,
