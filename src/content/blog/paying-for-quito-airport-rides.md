@@ -16,7 +16,7 @@ Ecuador's official currency is the **US dollar**, so prices — including airpor
 
 - **Taxis and many local services are cash-first.** Don't assume a curbside taxi takes cards, and airport ATMs can occasionally be out of cash on late arrivals.
 - **Rideshare** charges your app's saved card (when pickup is allowed), but surge can make the final amount a surprise.
-- **A pre-booked private transfer** is the cleanest: you **pay online by card in advance**, in USD, and the price is fixed — so you arrive with nothing to settle at the curb. ([See how the flat rate works.](/#rates))
+- **A pre-booked private transfer** is the cleanest: you **pay online by card up front**, in USD, and the price is fixed — so you arrive with nothing to settle at the curb. ([See the prepaid rates.](/#rates))
 
 ## Tipping
 

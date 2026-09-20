@@ -18,8 +18,8 @@ UIO is in Tababela, well outside Quito, so the fare depends on where in the city
 - **Rideshare:** can be cheaper off-peak but surges at busy times, pickup zones at airports are often restricted, and there's no one waiting with your name.
 - **Flat-rate private transfer:** one price, confirmed before you fly, with a vetted driver meeting you at arrivals and flight tracking included. You trade the lowest-possible-fare lottery for certainty.
 
-## What AndesRide charges
+## What Quito Airport Transfer charges
 
-We publish flat USD prices by area — [see the full rates table](/#rates). For example, Cumbayá and the valle are among the closest and lowest, while destinations like Otavalo or Mindo are longer drives priced accordingly. Round trips, child seats, and extra stops are added transparently at checkout — no meter, no surge, no airport-surcharge surprise.
+We publish two prepaid luxury-SUV rates — [see the rates](/#rates). **$50** to Wyndham Quito Airport (Tababela) and **$100** anywhere in Quito city (Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and other city addresses). Destinations outside the city are quoted on request. Round trips, child seats, and extra stops are added at checkout — no meter, no surge, no airport-surcharge surprise.
 
 If certainty matters more than chasing the cheapest curbside fare, a pre-booked flat rate is the easier call — especially [for a late-night landing](/guide/arriving-quito-airport-late-at-night).

@@ -4,7 +4,7 @@ description: "La Mariscal is Quito's dining and nightlife hub, with artsy La Flo
 category: "Neighborhoods"
 publishDate: 2026-05-02
 tags: ["La Mariscal", "La Floresta", "Quito", "nightlife", "Quito airport", "transfer"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 If the Old Town is Quito's history, La Mariscal is its night out. This central district — and the artsy **La Floresta** beside it — is where travelers base themselves for restaurants, bars, cafés, and easy access to the rest of the city.
@@ -19,7 +19,7 @@ It's walkable, central, and well connected, which makes it a practical base for 
 
 La Mariscal is in central Quito, roughly 45 minutes to an hour from **UIO** depending on traffic. A private transfer drops you right at your hotel with your bags — no late-night taxi negotiation after a long flight. With a **flat rate**, the price is set before you land, and your driver tracks your flight.
 
-It's covered by our [Quito Centro / La Mariscal](/quito-airport-to-centro) route — see the fare there or on the [rates table](/#rates).
+It's covered by the prepaid $100 [anywhere in Quito](/quito-airport-to-quito) rate (Hyatt, Swissôtel, Oro Verde, and other city hotels) — see that page or the [rates](/#rates).
 
 ## Tips
 

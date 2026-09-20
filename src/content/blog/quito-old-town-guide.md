@@ -4,7 +4,7 @@ description: "Quito's Centro Histórico is the best-preserved historic center in
 category: "Neighborhoods"
 publishDate: 2026-03-14
 tags: ["Quito", "Old Town", "Centro Historico", "Quito airport", "transfer"]
-ctaZone: "centro"
+ctaZone: "quito"
 ---
 
 Quito's Old Town was one of the first UNESCO World Heritage Sites ever named — and walking it, you understand why. Cobbled streets, gilded churches, and grand plazas spread across the slopes beneath Pichincha volcano.
@@ -23,7 +23,7 @@ Give it a full day, wear good shoes for the hills, and pace yourself — you're 
 
 The airport sits in Tababela, around 45 minutes to an hour from the historic center depending on traffic. From **UIO** a private transfer takes you door-to-door to your hotel — no transfers, no hauling bags through the bus system after a flight. With a **flat rate** you know the cost up front, and your driver tracks your flight and waits if you're delayed.
 
-See the fare on the [Quito airport to Quito Centro / La Mariscal](/quito-airport-to-centro) page or compare areas on the [rates table](/#rates).
+See the prepaid $100 city rate on the [Quito airport to anywhere in Quito](/quito-airport-to-quito) page — it covers Old Town hotels such as Casa Gangotena — or compare both products on the [rates](/#rates).
 
 ## Tips
 

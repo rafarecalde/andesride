@@ -4,7 +4,6 @@ description: "Mindo is Ecuador's cloud-forest playground — hummingbirds, water
 category: "Destinations"
 publishDate: 2026-02-21
 tags: ["Mindo", "cloud forest", "Quito airport", "birding", "transfer"]
-ctaZone: "mindo"
 ---
 
 If Quito's altitude has you a little breathless, Mindo is the perfect antidote: a lush, warm cloud forest northwest of the city where the air is thick with birdsong instead of thin with elevation.
@@ -23,7 +22,7 @@ It works as a long day trip or, better, an overnight to catch the dawn chorus.
 
 Mindo is around two to two-and-a-half hours from Quito, descending the western slope of the Andes through changing cloud-forest scenery. From **UIO airport** the drive is a real journey — winding and beautiful — which is exactly why a **flat-rate private transfer** beats piecing together buses: one fixed price, a driver who handles the mountain road, and flight tracking if you're coming straight from arrivals.
 
-Check the fare on the [Quito airport to Mindo](/quito-airport-to-mindo) page, or see all areas on the [rates table](/#rates).
+Check a quote rather than the city rate — Mindo is outside Quito. Published prepaid airport-to-hotel rates are on the [rates page](/#rates), or [message us](/#book).
 
 ## Practical tips
 

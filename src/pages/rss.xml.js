@@ -7,7 +7,7 @@ export async function GET(context) {
     (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
   );
   return rss({
-    title: `${SITE.name} — Quito Airport Travel Guide`,
+    title: `${SITE.name} travel guide`,
     description:
       'Tips for getting to and from Quito airport (UIO): arrivals, families, meet & greet, costs, and safe, licensed transfers.',
     site: context.site,

@@ -2,11 +2,15 @@
 // Site-wide settings. Owner: edit these before launch (see README "Owner TODOs").
 // ─────────────────────────────────────────────────────────────────────────────
 export const SITE = {
-  name: 'AndesRide',
-  descriptor: 'Quito Airport Transfers — UIO',
-  tagline: 'Private, flat-rate airport transfers to and from Quito (UIO).',
-  domain: 'https://andesride.com',
-  email: 'book@andesride.com',
+  name: 'Quito Airport Transfer',
+  descriptor: 'Prepaid luxury SUV · UIO',
+  tagline: 'Prepaid luxury-SUV airport transfers from Quito (UIO).',
+  // Public origin for canonical / OG / JSON-LD. Leave blank until a real domain
+  // is owned. Canonical URLs then fall back to the Astro `site` (GitHub Pages).
+  // Do not set andesride.com — that domain belongs to an unrelated Chilean brand.
+  domain: '',
+  // Set when a domain is chosen (e.g. book@YOUR_DOMAIN). Omit from the UI until then.
+  email: '',
   whatsapp: '+593 99 000 0000',
   phone: '+593 99 000 0000',
 
@@ -15,12 +19,13 @@ export const SITE = {
   payProvider: 'stripe' as 'stripe' | 'payphone' | 'kushki' | 'pagoplux' | 'dlocal',
 
   // URL of the deployed serverless checkout function (used only in "live" mode).
-  // e.g. 'https://andesride-pay.<you>.workers.dev'  — leave blank for mock.
+  // e.g. 'https://YOUR_PROJECT-pay.<you>.workers.dev'  — leave blank for mock.
   paymentApiBase: '',
 
   cancelFreeHours: 24,
 
   // Social proof shown on the site — PLACEHOLDER until real reviews exist (README).
+  // Do not surface these as live counts in UI or JSON-LD until they are verified.
   ratingValue: '4.9',
   ratingCount: '1200',
 };
@@ -28,6 +33,6 @@ export const SITE = {
 // Required intermediary disclosure (Expedia-style). Reused on footer, FAQ,
 // the booking step, and the confirmation screen.
 export const DISCLOSURE =
-  'AndesRide is a booking platform. Rides are provided by independent, licensed, ' +
+  'Quito Airport Transfer is a booking platform. Rides are provided by independent, licensed, ' +
   'airport-authorized carriers we coordinate. We collect payment as the carrier’s ' +
   'booking and payment channel.';

@@ -14,12 +14,12 @@ Standard taxis may not have child seats, may not fit your bags, and won't be wai
 
 ## Book the right vehicle and add what you need
 
-Choose an SUV or van for space, add child seats when you book, and your driver meets you at arrivals and helps with the bags to the car. One fixed price covers the whole family — no per-bag surprises, no scramble.
+Book a luxury SUV, add child seats when you book, and your licensed driver meets you at arrivals and helps with the bags to the car. One prepaid price covers the whole family — no per-bag surprises, no scramble.
 
 ## Family tips for UIO
 
-- Pick a van for 5+ travelers or lots of luggage.
+- The luxury SUV seats up to 5 passengers with room for bags.
 - Add child seats at checkout so they're installed and waiting.
 - Remember the altitude — a calm, direct ride to the hotel beats figuring out logistics tired.
 
-Booked ahead, the airport-to-hotel leg becomes the easy part of the trip. Compare [our flat rates and vehicle sizes](/#rates) before you choose.
+Booked ahead, the airport-to-hotel leg becomes the easy part of the trip. Compare [our prepaid rates](/#rates) before you choose.

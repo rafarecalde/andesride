@@ -10,17 +10,17 @@ Quito is one of the best base camps in South America. Within a few hours in any 
 
 ## North: markets and equator
 
-- **[Otavalo](/guide/things-to-do-in-otavalo)** — South America's most famous craft market, ~2 hours north. [Route & price →](/quito-airport-to-otavalo)
-- **[Mitad del Mundo](/guide/visiting-mitad-del-mundo)** — straddle the equator just outside the city. [Route & price →](/quito-airport-to-mitad)
+- **[Otavalo](/guide/things-to-do-in-otavalo)** — South America's most famous craft market, ~2 hours north.
+- **[Mitad del Mundo](/guide/visiting-mitad-del-mundo)** — straddle the equator just outside the city.
 - **[Pululahua crater](/guide/pululahua-crater-guide)** — a living volcanic caldera next door to the equator.
 
 ## West: cloud forest
 
-- **[Mindo](/guide/mindo-cloud-forest-guide)** — hummingbirds, waterfalls, chocolate, and a warm, green escape from the altitude. [Route & price →](/quito-airport-to-mindo)
+- **[Mindo](/guide/mindo-cloud-forest-guide)** — hummingbirds, waterfalls, chocolate, and a warm, green escape from the altitude.
 
 ## East: hot springs
 
-- **[Papallacta](/guide/papallacta-hot-springs-guide)** — thermal pools high in the mountains on the road to the Amazon. [Route & price →](/quito-airport-to-papallacta)
+- **[Papallacta](/guide/papallacta-hot-springs-guide)** — thermal pools high in the mountains on the road to the Amazon.
 
 ## South: volcanoes and craters
 
@@ -35,4 +35,4 @@ Quito is one of the best base camps in South America. Within a few hours in any 
 
 ## How to reach them without the headache
 
-Most of these are mountain drives, and public transport means connections and luggage juggling. A **private flat-rate transfer** turns any of them into a simple door-to-door day: a fixed USD price set before you go, a driver who knows the roads, flight tracking if you're coming from a landing, and the option to add an **extra stop**. Compare every published route on the [flat-rate table](/#rates) — and for destinations beyond the list, just [ask for a quote](/#book).
+Most of these are mountain drives, and public transport means connections and luggage juggling. A **private transfer** turns any of them into a simple door-to-door day: a driver who knows the roads, flight tracking if you're coming from a landing, and the option to add an **extra stop**. Prepaid published rates cover [Wyndham Quito Airport](/quito-airport-to-wyndham-airport) and [anywhere in Quito](/quito-airport-to-quito); for these day-trip destinations, [ask for a quote](/#book).

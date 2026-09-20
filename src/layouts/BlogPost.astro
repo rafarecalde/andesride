@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
 import { SITE } from '../config';
 import { u } from '../lib/url';
+import { publicUrl } from '../lib/publicUrl';
 import rates from '../data/rates.json';
 import type { CollectionEntry } from 'astro:content';
 
@@ -12,13 +13,13 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, category, publishDate, updatedDate, tags, ctaZone } = post.data;
 
-// When a post names a zone, deep-link its CTA to that route with the flat price.
+// When a post names a zone, deep-link its CTA to that route with the prepaid price.
 const zone = ctaZone ? rates.zones.find((z) => z.key === ctaZone) : undefined;
 const ctaProps = zone
   ? {
       zone: zone.key,
       heading: `Book your UIO ↔ ${zone.name} transfer`,
-      text: `Flat USD price from $${zone.sedan}, about ${zone.eta}, with flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`,
+      text: `Prepaid luxury SUV · $${zone.price} USD · about ${zone.eta}. Flight tracking and meet & greet included. Free cancellation up to ${SITE.cancelFreeHours} hours before.`,
     }
   : {};
 const path = `/guide/${post.slug}`;
@@ -34,7 +35,7 @@ const articleSchema = {
   keywords: tags.join(', '),
   datePublished: publishDate.toISOString(),
   ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
-  mainEntityOfPage: new URL(path, SITE.domain).href,
+  mainEntityOfPage: publicUrl(path, Astro.site),
   author: { '@type': 'Organization', name: SITE.name },
   publisher: { '@type': 'Organization', name: SITE.name },
 };

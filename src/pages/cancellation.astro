@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, DISCLOSURE } from '../config';
 ---
-<BaseLayout title={`Cancellation Policy | ${SITE.name}`} description="AndesRide cancellation and refund policy for Quito airport transfers." path="/cancellation">
+<BaseLayout title={`Cancellation Policy | ${SITE.name}`} description="Quito Airport Transfer cancellation and refund policy for UIO airport transfers." path="/cancellation">
   <header class="page-hero"><div class="wrap"><span class="eyebrow">Policy</span><h1>Cancellation &amp; refund policy</h1></div></header>
   <div class="wrap"><div class="prose">
     <p><em>Template — have local counsel review before launch.</em></p>
@@ -15,7 +15,7 @@ import { SITE, DISCLOSURE } from '../config';
     <h2>Changes</h2>
     <p>To change a pickup time or location, reply to your confirmation email or message us on WhatsApp at {SITE.whatsapp}. We'll accommodate changes where the carrier's availability allows.</p>
     <h2>How to cancel</h2>
-    <p>Reply to your confirmation email or contact us at {SITE.email}. Refunds are issued to the original payment method.</p>
+    <p>Reply to your confirmation email{SITE.email ? ` or contact us at ${SITE.email}` : ''}. Refunds are issued to the original payment method.</p>
     <p class="disclosure">{DISCLOSURE}</p>
   </div></div>
 </BaseLayout>

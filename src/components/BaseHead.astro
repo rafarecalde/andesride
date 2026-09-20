@@ -1,19 +1,20 @@
 ---
 import { SITE } from '../config';
 import { u } from '../lib/url';
+import { publicUrl } from '../lib/publicUrl';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
-  /** Path-only (e.g. "/guide"); canonical/OG URL is built from SITE.domain. */
+  /** Path-only (e.g. "/guide"); canonical/OG URL uses SITE.domain or Astro.site. */
   path?: string;
   ogType?: 'website' | 'article';
   image?: string;
 }
-const { title, description, path = '', ogType = 'website', image } = Astro.props;
-const canonical = new URL(path || Astro.url.pathname, SITE.domain).href;
-const ogImage = new URL(image ?? '/og-default.png', SITE.domain).href;
+const { title, description, path = '/', ogType = 'website', image } = Astro.props;
+const canonical = publicUrl(path || '/', Astro.site);
+const ogImage = publicUrl(image ?? '/og-default.png', Astro.site);
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

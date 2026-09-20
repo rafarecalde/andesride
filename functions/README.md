@@ -1,4 +1,4 @@
-# AndesRide payment + notification function
+# Quito Airport Transfer payment + notification function
 
 A static GitHub Pages site **cannot hold secret keys**, so online payment runs in
 a small serverless function deployed **separately** from the site. The booking
@@ -42,11 +42,11 @@ entity and slot behind the same `create-checkout` contract.
 | --- | --- |
 | `STRIPE_SECRET_KEY` | Stripe secret key (live or test) |
 | `STRIPE_WEBHOOK_SECRET` | Verify webhook signatures |
-| `SUCCESS_URL` | e.g. `https://andesride.com/success` |
-| `CANCEL_URL` | e.g. `https://andesride.com/#book` |
+| `SUCCESS_URL` | e.g. `https://YOUR_DOMAIN/success` |
+| `CANCEL_URL` | e.g. `https://YOUR_DOMAIN/#book` |
 | `OPERATOR_EMAIL` | Where operator booking emails go |
 | `EMAIL_API_KEY` | Transactional email provider (Resend/Postmark/SES) |
 | `BOOKINGS_SHEET_WEBHOOK` | Google Sheet / Airtable append endpoint |
-| `ALLOWED_ORIGIN` | `https://andesride.com` (CORS) |
+| `ALLOWED_ORIGIN` | `https://YOUR_DOMAIN` (CORS) |
 
 See `.env.example` in the project root for the full list.

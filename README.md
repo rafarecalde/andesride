@@ -1,9 +1,13 @@
-# AndesRide — Quito (UIO) Airport Transfers
+# Quito Airport Transfer — UIO prepaid luxury SUV
 
-A fast, premium, **US-facing** airport-transfer booking site for Quito's Mariscal
-Sucre International Airport (UIO): flat USD pricing, an online booking widget, and
-a markdown blog as the SEO engine. Built with **Astro**, deploys to **GitHub
-Pages**.
+A **US-facing** airport-transfer booking site for Quito's Mariscal Sucre
+International Airport (UIO): prepaid luxury-SUV flat USD pricing, an online
+booking widget, and a markdown blog as the SEO engine. Built with **Astro**,
+deploys to **GitHub Pages**.
+
+The GitHub repo remains `rafarecalde/andesride`; the public brand is
+**Quito Airport Transfer**. Do not use `andesride.com` — that domain belongs to
+an unrelated Chilean brand.
 
 ---
 
@@ -52,11 +56,19 @@ functions/               # serverless payment + webhook stub (deployed SEPARATEL
 ## Editing rates (nothing is hardcoded)
 
 All prices, zones, vehicles, and add-on costs live in **`src/data/rates.json`**.
-The booking widget, the rates table, the fleet cards, and every route landing
-page read from it. Edit one file and everything updates. Price math:
+The booking widget, the rates cards, the fleet card, and every route landing
+page read from it. Edit one file and everything updates.
+
+Published product (luxury SUV only):
+
+- **$50** one-way — UIO ↔ **Wyndham Quito Airport** (Tababela / airport-area hotel)
+- **$100** one-way — UIO ↔ **anywhere in Quito city** (Hyatt, Oro Verde, Swissôtel,
+  Casa Gangotena, and any other city address)
+
+Price math:
 
 ```
-total = vehicleRate × (roundTrip ? 2 : 1)
+total = zone.price × (roundTrip ? 2 : 1)
       + childSeat × qty
       + (extraStop ? extraStop × (roundTrip ? 2 : 1) : 0)
 ```
@@ -71,11 +83,11 @@ change. A light wash keeps the headline readable over any photo.
 
 ## Adding fleet photos
 
-Drop representative photos into `src/assets/fleet/` named exactly
-`sedan.webp`, `suv.webp`, `van.webp` (WebP preferred; PNG/JPG also work). They're
-picked up automatically via `astro:assets` — no code change. Until then, neutral
-placeholders show with the caption **"Representative vehicle — actual model may
-vary."** Recommended: landscape ~16:10 / 3:2, ≥1200×800, clean neutral background.
+Drop a representative photo into `src/assets/fleet/` named exactly
+`suv.webp` (WebP preferred; PNG/JPG also work). It's picked up automatically via
+`astro:assets` — no code change. Until then, a neutral placeholder shows with the
+caption **"Representative vehicle — actual model may vary."** Recommended:
+landscape ~16:10 / 3:2, ≥1200×800, clean neutral background.
 (Optional: a logo, an Andes/Quito hero image, and a custom favicon.)
 
 ## Adding a blog post
@@ -99,7 +111,7 @@ and in the sitemap. A booking CTA is appended to every post automatically.
 ## Payments (mock now → live later)
 
 Payments ship in **mock** mode: the widget runs end-to-end and shows a clean
-simulated confirmation (`AR-UIO-######`) — never a broken card form. To go live:
+simulated confirmation (`UIO-######`) — never a broken card form. To go live:
 
 1. **Stand up a US entity + Stripe.** Stripe doesn't operate in Ecuador; since the
    site is US-facing and USD-priced, the recommended path is **Stripe Checkout in
@@ -124,44 +136,48 @@ step, and confirmation.
 2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 3. Push to `main` — `.github/workflows/deploy.yml` builds and deploys.
 
-### Custom domain (when you own andesride.com)
+### Custom domain (when you own one)
 
-The site is already built **as** `andesride.com` (root paths). When the domain is
-yours:
+Leave `SITE.domain` blank in `src/config.ts` until a real domain is yours.
+`andesride.com` is **not** available for this product.
 
-1. Add a file `public/CNAME` containing just `andesride.com`.
+When you have a domain:
+
+1. Add a file `public/CNAME` containing just `YOUR_DOMAIN`.
 2. Point DNS at GitHub Pages (A records / `CNAME` per GitHub's docs).
-3. That's it — `astro.config.mjs` already has `site: 'https://andesride.com'`.
+3. In `astro.config.mjs` set `site: 'https://YOUR_DOMAIN'` and `base: '/'`.
+4. Set `SITE.domain` and `SITE.email` in `src/config.ts`.
 
-**Want a public preview before owning the domain?** Deploy to the project path:
-in `astro.config.mjs` set `site: 'https://<user>.github.io'` and `base:
-'/andesride'` (and the matching `with:` in the workflow). Flip back to the
-custom-domain values above once the domain is live.
+**Public preview without a custom domain:** this repo already deploys as a
+GitHub Pages project at `https://rafarecalde.github.io/andesride/` (`base:
+'/andesride'`). That path is the repo name, not the brand.
 
 ## Owner TODOs
 
 1. **Source licensed, UIO-authorized carriers/drivers** — the launch gate. Local
    counsel to confirm the intermediary structure + carrier agreement.
-2. Send **vehicle photos** (Sedan / SUV / Van, representative) → `src/assets/fleet/`.
-3. Confirm **final rates** in `src/data/rates.json` (premium US-facing values set).
+2. Send a **luxury SUV photo** (representative) → `src/assets/fleet/suv.webp`.
+3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $100 Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
-5. Set real **domain, email, WhatsApp/phone** in `src/config.ts`; decide where
-   bookings land (operator email / Google Sheet / Airtable) in the function.
+5. Choose a **domain** (not andesride.com) and set `SITE.domain` + `SITE.email`
+   in `src/config.ts`; decide where bookings land (operator email / Google Sheet /
+   Airtable) in the function. WhatsApp/phone are still placeholders.
 6. Replace **placeholder reviews/ratings** (`src/components/Reviews.astro`,
    `ratingValue`/`ratingCount` in `src/config.ts`) with real, verifiable ones.
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
-8. Write the **next 3 blog posts** (route angles: UIO ↔ Cumbayá / Mitad del Mundo
-   / Otavalo, "every option compared", altitude tips).
+8. Keep destination guides (Cumbayá, Otavalo, etc.) as quote-on-request;
+   prepaid bookable products stay airport-hotel vs. Quito city.
 
 ## What's included
 
 - Booking widget (3 steps + confirmation), live USD pricing from `rates.json`,
   round trip, child seats, extra stops, validation, **mock** payment + reference.
-- Blog: `/guide` index, 5 seed posts with booking CTAs, 3 latest on the home page,
+- Blog: `/guide` index, seed posts with booking CTAs, 3 latest on the home page,
   `rss.xml`, sitemap, JSON-LD (`Article`, `FAQPage`, `TaxiService`/`LocalBusiness`,
   `Service`/`Offer` with prices).
-- Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`.
+- Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`
+  (Wyndham Quito Airport + anywhere in Quito).
 - Legal: `/terms`, `/privacy`, `/cancellation` (templates for counsel review).
 - Responsive (980 / 760 breakpoints), reduced-motion, keyboard-operable widget +
   menu, AA-minded contrast.

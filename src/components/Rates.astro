@@ -1,49 +1,46 @@
 ---
 import rates from '../data/rates.json';
 const { zones, vehicles } = rates;
-const cap = (key: string) => vehicles.find((v) => v.key === key)?.maxPax;
+const suv = vehicles[0];
 ---
 <section id="rates" class="alt">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Flat rates</span>
+      <span class="eyebrow">Prepaid flat rates</span>
       <h2 class="section-title">Quito airport transfer prices (UIO)</h2>
-      <p class="lede">One fixed price per area — to and from the airport. No surge, no meter, no airport surcharge surprises. All prices in USD, one-way.</p>
+      <p class="lede">Two prepaid luxury-SUV rates, in USD, paid up front. One-way airport pickups are the product — no meter, no surge, no airport surcharge.</p>
     </div>
-    <div class="rates reveal">
-      <table>
-        <thead>
-          <tr>
-            <th>Area (to / from UIO)</th>
-            <th class="num">Sedan<br><small style="font-weight:400;opacity:.7">up to {cap('sedan')}</small></th>
-            <th class="num">SUV<br><small style="font-weight:400;opacity:.7">up to {cap('suv')}</small></th>
-            <th class="num">Van<br><small style="font-weight:400;opacity:.7">up to {cap('van')}</small></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {zones.map((z) => (
-            <tr>
-              <td class="zone">{z.name}<small>{z.sub} · {z.eta}</small></td>
-              <td class="num">${z.sedan}</td>
-              <td class="num">${z.suv}</td>
-              <td class="num">${z.van}</td>
-              <td><button type="button" class="book" data-zone={z.key}>Book →</button></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div class="rate-cards">
+      {zones.map((z) => (
+        <article class="rate-card reveal">
+          <div class="rate-card-kicker">{z.sub}</div>
+          <h3>{z.name}</h3>
+          <div class="rate-card-price">${z.price} <small>USD · one-way</small></div>
+          <p class="rate-card-meta">{suv.name} · licensed driver · {z.eta}</p>
+          {z.examples?.length ? (
+            <ul class="hotel-list">
+              {z.examples.map((h) => <li>{h}</li>)}
+            </ul>
+          ) : null}
+          {z.key === 'quito' ? (
+            <p class="rate-card-note">Any city hotel or address, including a city-center Wyndham if that is where you are staying.</p>
+          ) : (
+            <p class="rate-card-note">Tababela airport hotel only — not a hotel in Quito city.</p>
+          )}
+          <button type="button" class="btn btn-amber book" data-zone={z.key}>Book this rate</button>
+        </article>
+      ))}
     </div>
     <div class="rates-note">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      Round trips, child seats, and extra stops are added at checkout. Areas outside this list — just ask.
+      Round trips are twice the one-way rate. Child seats and extra stops are added at checkout. Destinations outside Quito city are quoted on request.
     </div>
   </div>
 </section>
 
 <script>
-  // Prefill the booking widget from a rates-table "Book →" button.
-  document.querySelectorAll<HTMLButtonElement>('.rates .book').forEach((b) =>
+  // Prefill the booking widget from a rates-card "Book" button.
+  document.querySelectorAll<HTMLButtonElement>('#rates .book').forEach((b) =>
     b.addEventListener('click', () => {
       const z = b.dataset.zone;
       if (z && (window as any).andesPrefill) (window as any).andesPrefill(z);

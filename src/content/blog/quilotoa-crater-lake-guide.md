@@ -22,7 +22,7 @@ The light and color shift through the day, and the air is thin and cold, so it's
 
 Quilotoa is a few hours southwest of Quito through farmland and high páramo. From **Quito airport (UIO)** or the city, a **private flat-rate transfer** makes the long, winding drive simple: one fixed price, a driver used to mountain roads, and no juggling rural bus connections to reach a remote crater.
 
-Quilotoa is outside the standard zones on our [rates table](/#rates), so [message us for a flat quote](/#book).
+Quilotoa is outside the prepaid airport-hotel and Quito-city rates on our [rates page](/#rates), so [message us for a quote](/#book).
 
 ## Tips
 

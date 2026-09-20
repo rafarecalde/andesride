@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../config';
 ---
-<BaseLayout title={`Privacy Policy | ${SITE.name}`} description="AndesRide privacy policy." path="/privacy">
+<BaseLayout title={`Privacy Policy | ${SITE.name}`} description="Quito Airport Transfer privacy policy." path="/privacy">
   <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Privacy policy</h1></div></header>
   <div class="wrap"><div class="prose">
     <p><em>Template — have local counsel review before launch.</em></p>
@@ -11,12 +11,12 @@ import { SITE } from '../config';
     <h2>How we use it</h2>
     <p>We use your information to confirm and deliver your transfer, to coordinate the assigned carrier, to track your flight, and to contact you about your booking. We share only what's necessary with the carrier providing your ride.</p>
     <h2>Payment processing</h2>
-    <p>Card payments are handled by a third-party payment processor under their own terms and security standards. AndesRide receives a confirmation and booking metadata, not your card details.</p>
+    <p>Card payments are handled by a third-party payment processor under their own terms and security standards. {SITE.name} receives a confirmation and booking metadata, not your card details.</p>
     <h2>Your choices</h2>
-    <p>To access, correct, or delete your information, contact {SITE.email}.</p>
+    <p>To access, correct, or delete your information, {SITE.email ? `contact ${SITE.email}` : 'reply to your booking confirmation'}.</p>
     <h2>Analytics &amp; cookies</h2>
     <p>If analytics are enabled, this section will describe what is collected and how to opt out. Add your analytics/cookie disclosure here before launch.</p>
     <h2>Contact</h2>
-    <p>{SITE.email}</p>
+    <p>{SITE.email || SITE.whatsapp}</p>
   </div></div>
 </BaseLayout>

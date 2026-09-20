@@ -7,16 +7,18 @@ import sitemap from '@astrojs/sitemap';
 //
 // This is currently configured for a GitHub Pages PROJECT preview, served under
 // a subpath: https://rafarecalde.github.io/andesride/  (base '/andesride').
+// The GitHub repo path stays andesride; that is not the public brand.
 //
-// When the custom domain andesride.com is live, flip to root hosting — change
-// these two lines and add public/CNAME:
-//     site: 'https://andesride.com',
+// When you own a custom domain, flip to root hosting — change these two lines
+// and add public/CNAME. Do not use andesride.com (unrelated Chilean brand):
+//     site: 'https://YOUR_DOMAIN',
 //     base: '/',
 // All internal links go through u() (src/lib/url.ts) and markdown links are
 // base-prefixed automatically, so the flip needs no other edits.
 // ─────────────────────────────────────────────────────────────────────────────
 const SITE = 'https://rafarecalde.github.io';
 const BASE = '/andesride';
+const withBase = (path) => (BASE === '/' ? path : `${BASE}${path === '/' ? '/' : path}`);
 
 // Base-aware rewrite of internal links inside markdown (href/src starting with
 // "/"). No-op when BASE is '/'. Avoids a unist dependency by recursing manually.
@@ -50,5 +52,16 @@ export default defineConfig({
   integrations: [sitemap()],
   markdown: {
     rehypePlugins: [rehypeBase],
+  },
+  redirects: {
+    '/quito-airport-to-puembo': withBase('/quito-airport-to-wyndham-airport'),
+    '/quito-airport-to-norte': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-centro': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-sur': withBase('/quito-airport-to-quito'),
+    '/quito-airport-to-cumbaya': withBase('/'),
+    '/quito-airport-to-mitad': withBase('/'),
+    '/quito-airport-to-papallacta': withBase('/'),
+    '/quito-airport-to-otavalo': withBase('/'),
+    '/quito-airport-to-mindo': withBase('/'),
   },
 });

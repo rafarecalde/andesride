@@ -1,8 +1,8 @@
 // Resolves real fleet photos when the owner drops them into src/assets/fleet/
-// (e.g. sedan.webp). Until then `imageFor()` returns undefined and components
+// (e.g. suv.webp). Until then `imageFor()` returns undefined and components
 // fall back to the neutral inline-SVG placeholder + "representative vehicle"
-// caption. Dropping in sedan.webp / suv.webp / van.webp just works — no code
-// change needed (this is the astro:assets wiring from the brief).
+// caption. Dropping in suv.webp just works — no code change needed (this is
+// the astro:assets wiring from the brief).
 import type { ImageMetadata } from 'astro';
 
 const files = import.meta.glob<{ default: ImageMetadata }>(

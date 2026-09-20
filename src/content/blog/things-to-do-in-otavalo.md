@@ -4,7 +4,6 @@ description: "Planning the famous Otavalo market? Here's what to see, when to go
 category: "Destinations"
 publishDate: 2026-02-14
 tags: ["Otavalo", "Quito airport", "day trip", "market", "transfer"]
-ctaZone: "otavalo"
 ---
 
 Otavalo is home to one of South America's largest and most colorful indigenous markets — and it's one of the most popular trips travelers add the moment they land in Quito. Here's how to do it without losing half a day to logistics.
@@ -19,7 +18,7 @@ Nearby, it's easy to add the **Peguche waterfall**, the **Cuicocha** crater lake
 
 Otavalo is roughly two hours north of Quito on the Panamericana, climbing through classic Andean scenery. From **Mariscal Sucre International Airport (UIO)** in Tababela, a private transfer skips the cross-city bus connections entirely: your driver meets you at arrivals and takes you straight north.
 
-Because it's a long, scenic mountain drive, a **fixed flat rate** matters here — you know the price before you go, your driver tracks your flight if you're coming straight from a landing, and there's no meter ticking through traffic. See the exact price on our [Quito airport to Otavalo](/quito-airport-to-otavalo) route page, or compare every area on the [flat-rate table](/#rates).
+Because it's a long, scenic mountain drive, a **fixed price** matters here — you know the cost before you go, your driver tracks your flight if you're coming straight from a landing, and there's no meter ticking through traffic. Otavalo sits outside the two prepaid city products, so [ask for a quote](/#book) rather than using the $100 Quito rate. Published prepaid rates are on the [rates page](/#rates).
 
 ## Tips for a smooth visit
 

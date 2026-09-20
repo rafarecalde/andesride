@@ -21,7 +21,7 @@ const links = [
         <path d="M9 28l7-11 5 7 3-5 6 9z" fill="none" stroke="#F6A41B" stroke-width="2" stroke-linejoin="round"/>
         <circle cx="22" cy="14" r="2.4" fill="#F6A41B"/>
       </svg>
-      <span class="nm"><span class="t1">{SITE.name}</span><span class="t2">Quito Airport Transfers · UIO</span></span>
+      <span class="nm"><span class="t1">{SITE.name}</span><span class="t2">{SITE.descriptor}</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
