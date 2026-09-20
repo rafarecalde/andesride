@@ -39,7 +39,7 @@ const vehIcons: Record<string, string> = {
           <option value="" disabled selected>Choose your destination…</option>
           {zones.map((z) => <option value={z.key}>{z.name} — ${z.price}</option>)}
         </select>
-        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">$50 airport hotel · $75 Cumbayá · $100 Quito</span></div>
+        <div class="route-hint"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> <span id="etaHint">$50 airport hotel · $75 anywhere in Cumbayá · $100 anywhere in Quito</span></div>
         <div class="hotel-hint" id="hotelHint" hidden></div>
       </div>
 
@@ -225,7 +225,7 @@ const vehIcons: Record<string, string> = {
     const hint = $('etaHint');
     const hotels = $('hotelHint');
     if (!z) {
-      hint.textContent = '$50 airport hotel · $75 Cumbayá · $100 Quito';
+      hint.textContent = '$50 airport hotel · $75 anywhere in Cumbayá · $100 anywhere in Quito';
       hotels.hidden = true;
       hotels.textContent = '';
     } else {
@@ -235,7 +235,7 @@ const vehIcons: Record<string, string> = {
         z.key === 'quito'
           ? 'Includes Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and any other city address. A city-center Wyndham (not the airport hotel) is this $100 rate too.'
           : z.key === 'cumbaya'
-            ? 'Cumbayá and nearby valley addresses — between the airport and Quito city. Not the $100 city rate.'
+            ? 'Anywhere in Cumbayá — valley hotels and addresses between the airport and Quito city. Not the $100 city rate.'
             : 'Airport-area hotel in Tababela — not a city-center Wyndham.';
     }
     const t = total();

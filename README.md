@@ -64,7 +64,7 @@ page read from it. Edit one file and everything updates.
 Published product (luxury SUV only):
 
 - **$50** one-way — UIO ↔ **Wyndham Quito Airport** (Tababela / airport-area hotel)
-- **$75** one-way — UIO ↔ **Cumbayá** (Valle de Tumbaco)
+- **$75** one-way — UIO ↔ **anywhere in Cumbayá** (Valle de Tumbaco)
 - **$100** one-way — UIO ↔ **anywhere in Quito city** (Hyatt, Oro Verde, Swissôtel,
   Casa Gangotena, and any other city address)
 
@@ -78,13 +78,17 @@ total = zone.price × (roundTrip ? 2 : 1)
 
 ## Adding the hero image
 
-The homepage hero is **paper, not a photo wallpaper**. Place-trust comes from
-the owner terminal still `src/assets/_source/uio-terminal.webp` (Mariscal Sucre
-exterior), shown as a contained figure. The chauffeur still
-`src/assets/_source/chauffeur-owner.webp` is a contained editorial portrait —
-never a full-bleed background. Do not replace either with a generated lookalike.
-The route map `src/assets/_source/route-map.webp` (UIO ↔ Old Town; Cumbayá on
-the path) feeds the How far section.
+The homepage hero is **paper, not a photo wallpaper**. It opens with eyebrow, h1,
+short sub, and the three price rows, then the owner meet-and-greet still
+`src/assets/_source/meet-greet.webp` (chauffeur with name-sign tablet at UIO
+arrivals) as a contained, captioned figure. Do not lead the page with that photo
+alone. The cabin chauffeur still `src/assets/_source/chauffeur-owner.webp` is
+kept for fleet, not repeated in the hero. The terminal exterior
+`src/assets/_source/uio-terminal.webp` is a smaller place photo in How far. The
+Cumbayá still `src/assets/_source/cumbaya-valley.webp` sits on the Cumbayá rate
+card, How far, and `/quito-airport-to-cumbaya`. The route map
+`src/assets/_source/route-map.webp` (UIO ↔ Old Town; Cumbayá on the path) also
+feeds How far. Do not replace owner stills with generated lookalikes.
 
 ## Adding fleet photos
 
@@ -163,7 +167,7 @@ When DNS is pointed at GitHub Pages:
    counsel to confirm the intermediary structure + carrier agreement.
 2. Optionally replace the representative chauffeur still with a vehicle-specific
    luxury SUV photo when you have one. Do not generate an exterior.
-3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 Cumbayá / $100 Quito).
+3. Confirm **final rates** in `src/data/rates.json` ($50 airport Wyndham / $75 anywhere in Cumbayá / $100 anywhere in Quito).
 4. Stand up the **US entity + Stripe** (or pick a local gateway); add keys to the
    function's secret store; set `paymentsMode: 'live'`.
 5. **Register / point DNS** for `uiotransfer.com` (already in `SITE.domain` /
@@ -176,7 +180,7 @@ When DNS is pointed at GitHub Pages:
 7. Add **analytics** (Plausible/GA4) + a privacy/cookie note (`/privacy`).
 8. Keep destination guides beyond the three prepaid products (Otavalo, Mindo,
    Mitad del Mundo, Papallacta, etc.) as quote-on-request. Prepaid bookable
-   products are airport-hotel ($50), Cumbayá ($75), and Quito city ($100).
+   products are airport-hotel ($50), anywhere in Cumbayá ($75), and Quito city ($100).
 
 ## What's included
 
@@ -186,7 +190,7 @@ When DNS is pointed at GitHub Pages:
   `rss.xml`, sitemap, JSON-LD (`Article`, `FAQPage`, `TaxiService`/`LocalBusiness`,
   `Service`/`Offer` with prices).
 - Route landing pages: `/quito-airport-to-<zone>` for every zone in `rates.json`
-  (Wyndham Quito Airport, Cumbayá, and anywhere in Quito).
+  (Wyndham Quito Airport, anywhere in Cumbayá, and anywhere in Quito).
 - Legal: `/terms`, `/privacy`, `/cancellation` (templates for counsel review).
 - Responsive (980 / 760 breakpoints), reduced-motion, keyboard-operable widget +
   menu, AA-minded contrast.

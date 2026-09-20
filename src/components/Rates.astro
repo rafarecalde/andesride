@@ -1,5 +1,6 @@
 ---
 import rates from '../data/rates.json';
+import { cumbayaValleyPhoto } from '../lib/photos';
 const { zones, vehicles } = rates;
 const suv = vehicles[0];
 ---
@@ -12,7 +13,20 @@ const suv = vehicles[0];
     </div>
     <div class="rate-board">
       {zones.map((z) => (
-        <article class="rate-row reveal">
+        <article class={`rate-row${z.key === 'cumbaya' && cumbayaValleyPhoto ? ' has-media' : ''}`}>
+          {z.key === 'cumbaya' && cumbayaValleyPhoto ? (
+            <figure class="rate-photo">
+              <img
+                src={cumbayaValleyPhoto.src}
+                alt="Cumbayá valley — prepaid $75 transfer from UIO"
+                width={cumbayaValleyPhoto.width}
+                height={cumbayaValleyPhoto.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Anywhere in Cumbayá · Valle de Tumbaco</figcaption>
+            </figure>
+          ) : null}
           <div class="rate-copy">
             <div class="rate-card-kicker">{z.sub}</div>
             <h3>{z.name}</h3>

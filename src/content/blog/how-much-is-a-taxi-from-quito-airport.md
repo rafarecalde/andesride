@@ -20,6 +20,6 @@ UIO is in Tababela, well outside Quito, so the fare depends on where in the city
 
 ## What Quito Airport Transfer charges
 
-We publish three prepaid luxury-SUV rates — [see the rates](/#rates). **$50** to Wyndham Quito Airport (Tababela), **$75** to [Cumbayá](/quito-airport-to-cumbaya), and **$100** anywhere in Quito city (Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and other city addresses). Destinations beyond those three are quoted on request. Round trips, child seats, and extra stops are added at checkout — no meter, no surge, no airport-surcharge surprise.
+We publish three prepaid luxury-SUV rates — [see the rates](/#rates). **$50** to Wyndham Quito Airport (Tababela), **$75** to [anywhere in Cumbayá](/quito-airport-to-cumbaya), and **$100** anywhere in Quito city (Hyatt, Oro Verde, Swissôtel, Casa Gangotena, and other city addresses). Destinations beyond those three are quoted on request. Round trips, child seats, and extra stops are added at checkout — no meter, no surge, no airport-surcharge surprise.
 
 If certainty matters more than chasing the cheapest curbside fare, a pre-booked flat rate is the easier call — especially [for a late-night landing](/guide/arriving-quito-airport-late-at-night).

@@ -23,7 +23,7 @@ It's also the gateway toward Papallacta and the eastern mountains.
 
 This is the **closest populated valley to the airport** — typically only around 25–35 minutes from **UIO**, since both sit on the eastern side of the metro area. That makes Cumbayá a smart choice if you have an early flight, a short stay, or simply don't want to climb all the way up to central Quito after landing.
 
-Cumbayá is its own prepaid product: **$75** one-way in a luxury SUV. See [Quito airport to Cumbayá](/quito-airport-to-cumbaya) or compare all three rates on the [rates page](/#rates). It is not the $100 city rate.
+Anywhere in Cumbayá is its own prepaid product: **$75** one-way in a luxury SUV. See [Quito airport to anywhere in Cumbayá](/quito-airport-to-cumbaya) or compare all three rates on the [rates page](/#rates). It is not the $100 city rate.
 
 ## Tips
 

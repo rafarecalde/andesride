@@ -1,6 +1,6 @@
 ---
 import rates from '../data/rates.json';
-import { chauffeurPhoto, terminalPhoto } from '../lib/photos';
+import { meetGreetPhoto } from '../lib/photos';
 import Booker from './Booker.astro';
 
 const { zones } = rates;
@@ -9,19 +9,6 @@ const { zones } = rates;
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
-        {terminalPhoto ? (
-          <figure class="hero-place">
-            <img
-              src={terminalPhoto.src}
-              alt="Mariscal Sucre International Airport (UIO) terminal, Tababela"
-              width={terminalPhoto.width}
-              height={terminalPhoto.height}
-              decoding="async"
-              fetchpriority="high"
-            />
-            <figcaption>Mariscal Sucre International Airport (UIO), Tababela</figcaption>
-          </figure>
-        ) : null}
         <span class="eyebrow">Quito Airport Transfer · UIO</span>
         <h1>Prepaid luxury SUV from UIO</h1>
         <p class="hero-sub">Three flat rates from Mariscal Sucre. Licensed driver. Pay in USD before you land.</p>
@@ -44,16 +31,17 @@ const { zones } = rates;
           <li>Prepaid in USD</li>
           <li>Flight tracking</li>
         </ul>
-        {chauffeurPhoto ? (
-          <figure class="hero-portrait">
+        {meetGreetPhoto ? (
+          <figure class="hero-meet">
             <img
-              src={chauffeurPhoto.src}
-              alt="Licensed chauffeur in the cabin — representative service"
-              width={chauffeurPhoto.width}
-              height={chauffeurPhoto.height}
+              src={meetGreetPhoto.src}
+              alt="Licensed chauffeur at UIO arrivals holding a name-sign tablet for Sra. Martínez"
+              width={meetGreetPhoto.width}
+              height={meetGreetPhoto.height}
               decoding="async"
+              fetchpriority="high"
             />
-            <figcaption>Licensed chauffeur. Representative cabin — actual vehicle model may vary.</figcaption>
+            <figcaption>Name-sign meet &amp; greet at UIO arrivals. Your driver is waiting when you land.</figcaption>
           </figure>
         ) : null}
       </div>
