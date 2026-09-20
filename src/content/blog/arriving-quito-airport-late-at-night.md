@@ -1,26 +1,39 @@
 ---
-title: "Arriving at Quito Airport Late at Night? Read This First"
-description: "Landing at UIO after dark? Here's how to get to your hotel safely, what to expect at arrivals, and why a pre-booked transfer beats finding a taxi at midnight."
+title: "Landing at Quito Airport at 11:30pm: Why a Prepaid SUV Beats a Street Taxi"
+description: "Many Miami and US flights into UIO arrive around 11:30pm. Here's what arrivals feels like after dark, why taxi negotiation is a bad bet when you're tired, and why a prepaid licensed SUV is worth more than the cheapest curb fare."
 category: "Arrival tips"
 publishDate: 2026-01-20
-tags: ["Quito airport", "late arrival", "safety", "UIO"]
+updatedDate: 2026-09-20
+tags: ["Quito airport", "late arrival", "Miami flight", "safety", "UIO"]
 ---
 
-Quito's airport (UIO) sits in Tababela, 45 minutes to an hour from the city — and that drive feels very different at 11pm than at noon. If your flight lands late, a little planning turns a stressful arrival into a non-event.
+A lot of flights from the US — Miami especially — are scheduled into **Mariscal Sucre (UIO) around 11:30pm**. You clear immigration in a quiet terminal, walk out with your bags, and the city is still 40–60 minutes away in the dark. That is the hour this product is built for.
 
-## What arrivals looks like after dark
+We do not try to undercut a street taxi or a surged Uber. The prepaid rate is **intentionally above** the cheapest curb quote. You are paying for a licensed driver who is already waiting, a name sign you can walk to, the SUV door held open, and a flat USD price with no haggling.
 
-Late flights mean a quieter terminal, fewer staff, and a thinner taxi line. ATMs may be empty and you'll be tired, jet-lagged, and navigating in Spanish. This is exactly when travelers overpay or get into the wrong car.
+## What 11:30pm at UIO actually feels like
 
-## Why a pre-booked transfer matters most at night
+Late international banks are thinner than the afternoon. Fewer staff at the desks. A shorter, less predictable taxi rank. ATMs that may be empty. You are tired, possibly with family or a laptop bag, and you may not want to negotiate in Spanish with the first person who approaches you past customs.
 
-With a transfer booked in advance, a vetted driver is already waiting at arrivals with your name on a sign — no negotiating a fare half-asleep, no wondering if the car is legitimate. The price is fixed before you fly, and we track your flight, so a delay doesn't leave you stranded or paying extra.
+That mix — dark, jet-lagged, cash-or-bargain at the curb — is when travelers overpay, accept the wrong car, or stand around hoping an app will find a driver who is allowed to pick up at the airport. [Rideshare at UIO is uneven](/guide/uber-from-quito-airport); [licensed airport drivers](/guide/why-licensed-airport-drivers-matter-quito) are not a random rank.
 
-## Quick tips for a smooth late landing
+## Why a prepaid private SUV is worth more at that hour
 
-- Book your ride before you leave home; have the confirmation offline.
-- Share your flight number so the driver tracks your actual landing time.
-- Have your hotel address written down in Spanish.
-- Don't accept rides from people approaching you inside the terminal.
+A street taxi can be cheaper on a good day. At 11:30pm the “saving” is the part you do not want: fare negotiation while exhausted, no one waiting with your name, no guarantee the car is airport-authorized, and no one tracking a delay if the Miami inbound runs long.
 
-A prepaid, flight-tracked luxury-SUV transfer is the single easiest thing to get right before a late arrival. See [our UIO rates](/#rates) or read [how meet & greet works at arrivals](/guide/dont-arrive-to-an-empty-airport).
+A prepaid luxury SUV is the other product:
+
+- **Someone is there.** Your driver waits at arrivals with a name sign. You do not hunt. See [how meet & greet works](/guide/dont-arrive-to-an-empty-airport).
+- **The door is open.** Bags go in the SUV; you sit down. No meter discussion in the dark.
+- **The price is already paid** in USD — $50 to Wyndham Quito Airport, $75 [anywhere in Cumbayá](/quito-airport-to-cumbaya), $100 [anywhere in Quito](/quito-airport-to-quito). Flight tracking is included, so a late landing does not restart the clock.
+
+Comfort and reliability are the point. Safety is the licensed, airport-authorized driver — not a cheaper stranger at the curb.
+
+## What to do before you fly
+
+- Book and pay the flat rate while you still have wifi at home.
+- Put the confirmation somewhere offline.
+- Enter the real flight number so the driver tracks the Miami (or other US) inbound.
+- Write the hotel or Cumbayá address down. Do not accept rides from people who approach you inside the hall.
+
+If you are landing after dark, the calm arrival is the one you already paid for. Compare the three prepaid rates on the [rates board](/#rates), or [book the transfer](/#book) before you board.

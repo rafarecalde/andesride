@@ -86,6 +86,7 @@ header.nav{position:sticky;top:0;z-index:60;background:rgba(251,249,246,.9);back
   padding:22px 0 36px;
 }
 .hero-copy{grid-area:copy;padding-top:0;}
+.hero-grid > .booker{grid-area:booker;}
 .hero-grid > script{display:none;}
 .hero h1{font-size:clamp(1.45rem,2.2vw,1.9rem);line-height:1.18;margin:8px 0 0;font-weight:650;letter-spacing:-.028em;max-width:16ch;}
 .hero-sub{margin-top:10px;color:var(--slate);font-size:.94rem;line-height:1.5;max-width:40ch;}
@@ -371,6 +372,11 @@ footer.site{background:#080706;color:rgba(255,255,255,.9);padding:64px 0 0;borde
 .pcard .pc-more{margin-top:14px;color:var(--teal);font-weight:700;font-size:.88rem;}
 .pcard .pc-date{font-size:.78rem;color:var(--slate);margin-top:10px;}
 
+.late-callout{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.late-callout .section-title{max-width:22ch;margin-top:10px;}
+.late-callout p{margin-top:14px;color:var(--slate);font-size:1rem;line-height:1.6;max-width:54ch;}
+.late-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;}
+.late-actions .btn{width:auto;}
 .cta-block{background:var(--ink);color:#fff;border-radius:var(--r);padding:32px;text-align:center;margin:40px auto;max-width:720px;position:relative;overflow:hidden;}
 .cta-block::before{content:none;}
 .cta-block > *{position:relative;z-index:2;}
