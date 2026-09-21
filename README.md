@@ -181,7 +181,7 @@ Remaining DNS step: point `uiotransfers.com` at GitHub Pages (A records /
 5. **Point DNS** for `uiotransfers.com` at GitHub Pages (already in
    `SITE.domain` / `SITE.email`, `astro.config.mjs` `site` + `base: '/'`, and
    `public/CNAME`). Then set the custom domain in repo Settings → Pages.
-   WhatsApp/phone stay hidden until real numbers are set in `src/config.ts`
+   Phone stays hidden until a real number is set in `src/config.ts`
    (placeholder digits are not shown).
 6. The homepage uses a quiet trust strip (`src/components/Reviews.astro`) —
    licensed · prepaid · flight tracking — not sample reviews. Add real,

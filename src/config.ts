@@ -11,7 +11,6 @@ export const SITE = {
   domain: 'https://uiotransfers.com',
   email: 'book@uiotransfers.com',
   // Leave blank until a real number exists — do not ship placeholder digits.
-  whatsapp: '',
   phone: '',
 
   // Payments — Worker is deployed; 'live' posts to it. Stripe is still on
@@ -43,7 +42,6 @@ function isRealPhone(value: string) {
 }
 
 export const hasPhone = isRealPhone(SITE.phone);
-export const hasWhatsApp = isRealPhone(SITE.whatsapp);
 
 // Required intermediary disclosure (Expedia-style). Reused on footer, FAQ,
 // the booking step, and the confirmation screen.

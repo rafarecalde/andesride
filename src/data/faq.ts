@@ -37,7 +37,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Can I cancel or change my booking?',
-    a: 'Yes — cancel free up to 24 hours before pickup for a full refund. Within 24 hours of pickup, or for a no-show, the booking is non-refundable because the carrier has been committed. To change a time or pickup point, reply to your confirmation or message us on WhatsApp.',
+    a: 'Yes — cancel free up to 24 hours before pickup for a full refund. Within 24 hours of pickup, or for a no-show, the booking is non-refundable because the carrier has been committed. To change a time or pickup point, reply to your confirmation email.',
   },
   {
     q: 'Who actually provides the ride?',
@@ -45,7 +45,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Do you go beyond Quito city?',
-    a: 'The published prepaid rates are UIO → Wyndham Quito Airport ($50), UIO → anywhere in Cumbayá ($75), and UIO → anywhere in Quito city ($100). Destinations beyond those three — Mitad del Mundo, Otavalo, Mindo, Papallacta, and similar — are quoted on request. Message us rather than guessing a city rate.',
+    a: 'The published prepaid rates are UIO → Wyndham Quito Airport ($50), UIO → anywhere in Cumbayá ($75), and UIO → anywhere in Quito city ($100). Destinations beyond those three — Mitad del Mundo, Otavalo, Mindo, Papallacta, and similar — are quoted on request. Email us rather than guessing a city rate.',
   },
   {
     q: 'How far in advance do I need to book?',
