@@ -81,10 +81,17 @@ Smoke-test Checkout create (no browser CORS):
 ```bash
 curl -sS -X POST http://127.0.0.1:8787/create-checkout \
   -H 'Content-Type: application/json' \
-  -d '{"amountUSD":50,"reference":"UIO-123456","metadata":{"route":"UIO->quito","email":"test@example.com","roundTrip":false}}'
+  -d '{"amountUSD":50,"reference":"UIO-123456","metadata":{"route":"UIO->quito","email":"test@example.com","name":"Ada Lovelace","phone":"+15555550100","flight":"AV123","time":"09:00","hotel":"Casa Gangotena · Quito","pax":"2","notes":"Two large bags","roundTrip":false}}'
 ```
 
 You should get `{ "checkoutUrl": "https://checkout.stripe.com/...", "reference": "UIO-123456" }`.
+
+`metadata` must include the passenger the driver collects: `name` (pickup name),
+`phone`, `flight`, `time` (pickup time), `hotel` (drop-off/hotel), and `pax`
+(passenger count). `notes` is optional. Stripe allows 50 metadata keys and 500
+characters per value; the worker keeps the passenger fields first and trims
+anything past those limits. A request missing a required passenger field is
+`400`.
 
 ## Flip the site to live
 
