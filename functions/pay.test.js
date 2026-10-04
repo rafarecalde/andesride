@@ -184,46 +184,141 @@ test('unknown paths 404; GET /create-checkout is 405', async () => {
   assert.equal(get.status, 405);
 });
 
-test('webhook rejects unsigned payloads and accepts a valid HMAC', async () => {
-  const payload = JSON.stringify({
-    type: 'checkout.session.completed',
-    data: { object: { metadata: { reference: 'UIO-424242' } } },
-  });
-
-  const bad = await worker.fetch(
-    new Request('https://uiotransfers-pay.example.workers.dev/webhook', {
-      method: 'POST',
-      body: payload,
-    }),
-    env,
-  );
-  assert.equal(bad.status, 400);
-
-  const ts = Math.floor(Date.now() / 1000);
+async function sign(payload, secret = env.STRIPE_WEBHOOK_SECRET, ts = Math.floor(Date.now() / 1000)) {
   const key = await crypto.subtle.importKey(
     'raw',
-    new TextEncoder().encode(env.STRIPE_WEBHOOK_SECRET),
+    new TextEncoder().encode(secret),
     { name: 'HMAC', hash: 'SHA-256' },
     false,
     ['sign'],
   );
-  const mac = await crypto.subtle.sign(
-    'HMAC',
-    key,
-    new TextEncoder().encode(`${ts}.${payload}`),
-  );
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${ts}.${payload}`));
   const v1 = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, '0')).join('');
+  return `t=${ts},v1=${v1}`;
+}
 
-  await verifyStripeSignature(payload, `t=${ts},v1=${v1}`, env.STRIPE_WEBHOOK_SECRET);
+function paidEvent(overrides = {}) {
+  return JSON.stringify({
+    id: 'evt_123',
+    type: 'checkout.session.completed',
+    data: {
+      object: {
+        id: 'cs_live_abc',
+        payment_status: 'paid',
+        amount_total: 5000,
+        currency: 'usd',
+        payment_intent: 'pi_123',
+        client_reference_id: 'UIO-424242',
+        customer_details: { email: 'ada@example.com' },
+        metadata: { ...checkoutBody.metadata, reference: 'UIO-424242', name: 'Ada <b>Lovelace</b>' },
+        ...overrides,
+      },
+    },
+  });
+}
 
-  const ok = await worker.fetch(
-    new Request('https://uiotransfers-pay.example.workers.dev/webhook', {
-      method: 'POST',
-      headers: { 'stripe-signature': `t=${ts},v1=${v1}` },
-      body: payload,
-    }),
-    env,
-  );
-  assert.equal(ok.status, 200);
-  assert.equal(await ok.text(), 'ok');
+function webhookReq(payload, sig) {
+  return new Request('https://uiotransfers-pay.example.workers.dev/webhook', {
+    method: 'POST',
+    headers: sig ? { 'stripe-signature': sig } : {},
+    body: payload,
+  });
+}
+
+function emailEnv() {
+  const sent = [];
+  return { sent, env: { ...env, EMAIL: { send: async (m) => { sent.push(m); return { messageId: 'm1' }; } } } };
+}
+
+test('webhook rejects unsigned, wrongly signed and stale payloads', async () => {
+  const payload = paidEvent();
+  const { env: e, sent } = emailEnv();
+  assert.equal((await worker.fetch(webhookReq(payload), e)).status, 400);
+  assert.equal((await worker.fetch(webhookReq(payload, await sign(payload, 'whsec_wrong')), e)).status, 400);
+  const old = Math.floor(Date.now() / 1000) - 3600;
+  assert.equal((await worker.fetch(webhookReq(payload, await sign(payload, undefined, old)), e)).status, 400);
+  assert.equal(sent.length, 0);
+});
+
+test('verifyStripeSignature accepts a valid HMAC', async () => {
+  const payload = paidEvent();
+  await verifyStripeSignature(payload, await sign(payload), env.STRIPE_WEBHOOK_SECRET);
+});
+
+test('paid checkout.session.completed emails book@uiotransfers.com with booking details, then the customer', async () => {
+  const payload = paidEvent();
+  const { env: e, sent } = emailEnv();
+  const res = await worker.fetch(webhookReq(payload, await sign(payload)), e);
+  assert.equal(res.status, 200);
+  assert.equal(await res.text(), 'ok');
+  assert.equal(sent.length, 2);
+
+  const [ops, cust] = sent;
+  assert.equal(ops.to, 'book@uiotransfers.com');
+  assert.equal(ops.replyTo, 'ada@example.com');
+  assert.match(ops.subject, /UIO-424242/);
+  assert.match(ops.subject, /\$50\.00/);
+  for (const needle of ['UIO-424242', '$50.00 USD', 'ada@example.com', 'UIO->quito', '2026-10-01', '09:00', 'AV123', 'pi_123', 'cs_live_abc']) {
+    assert.ok(ops.text.includes(needle), `text missing ${needle}`);
+  }
+  assert.ok(!ops.html.includes('<b>Lovelace'), 'html must escape metadata');
+  assert.ok(ops.html.includes('&lt;b&gt;Lovelace'));
+
+  assert.equal(cust.to, 'ada@example.com');
+  assert.equal(cust.replyTo, 'book@uiotransfers.com');
+  assert.match(cust.subject, /UIO-424242/);
+});
+
+test('webhook uses the Resend REST API when only RESEND_API_KEY is set', async () => {
+  const payload = paidEvent();
+  const calls = [];
+  const original = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url: String(url), init });
+    return new Response(JSON.stringify({ id: 'r1' }), { status: 200 });
+  };
+  try {
+    const res = await worker.fetch(webhookReq(payload, await sign(payload)), {
+      ...env,
+      RESEND_API_KEY: 're_test',
+      EMAIL_FROM: 'bookings@uiotransfers.com',
+    });
+    assert.equal(res.status, 200);
+    assert.equal(calls.length, 2);
+    assert.equal(calls[0].url, 'https://api.resend.com/emails');
+    assert.equal(calls[0].init.headers.Authorization, 'Bearer re_test');
+    assert.equal(calls[0].init.headers['Idempotency-Key'], 'booking-notify-evt_123');
+    const body = JSON.parse(calls[0].init.body);
+    assert.deepEqual(body.to, ['book@uiotransfers.com']);
+    assert.equal(body.from, 'bookings@uiotransfers.com');
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test('webhook returns 500 (so Stripe retries) when the operator email cannot be sent', async () => {
+  const payload = paidEvent();
+  const res = await worker.fetch(webhookReq(payload, await sign(payload)), env); // no provider
+  assert.equal(res.status, 500);
+  const failing = { ...env, EMAIL: { send: async () => { throw new Error('boom'); } } };
+  assert.equal((await worker.fetch(webhookReq(payload, await sign(payload)), failing)).status, 500);
+});
+
+test('a failing customer receipt does not make the webhook fail', async () => {
+  const payload = paidEvent();
+  let n = 0;
+  const e = { ...env, EMAIL: { send: async () => { if (++n === 2) throw new Error('boom'); return {}; } } };
+  assert.equal((await worker.fetch(webhookReq(payload, await sign(payload)), e)).status, 200);
+  assert.equal(n, 2);
+});
+
+test('unpaid sessions and other event types are acknowledged without emailing', async () => {
+  const { env: e, sent } = emailEnv();
+  const unpaid = paidEvent({ payment_status: 'unpaid' });
+  assert.equal((await worker.fetch(webhookReq(unpaid, await sign(unpaid)), e)).status, 200);
+  const other = JSON.stringify({ id: 'evt_9', type: 'charge.succeeded', data: { object: {} } });
+  const res = await worker.fetch(webhookReq(other, await sign(other)), e);
+  assert.equal(res.status, 200);
+  assert.equal(await res.text(), 'ignored');
+  assert.equal(sent.length, 0);
 });

@@ -4,10 +4,19 @@ compatibility_date = "2026-09-20"
 workers_dev = true
 
 # Non-secret config. Override with `wrangler.toml` env blocks if needed.
-# STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET are secrets — never put them here.
+# STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET and RESEND_API_KEY are secrets — never put them here.
 #   npx wrangler secret put STRIPE_SECRET_KEY
 #   npx wrangler secret put STRIPE_WEBHOOK_SECRET
+#   npx wrangler secret put RESEND_API_KEY      # booking e-mail provider (see README)
 [vars]
 SUCCESS_URL = "https://uiotransfers.com/success"
 CANCEL_URL = "https://uiotransfers.com/#book"
 ALLOWED_ORIGIN = "https://uiotransfers.com"
+NOTIFY_TO = "book@uiotransfers.com"
+# Must be an address on a domain verified with your e-mail provider.
+EMAIL_FROM = "Quito Airport Transfer <bookings@uiotransfers.com>"
+
+# Alternative to RESEND_API_KEY once uiotransfers.com is onboarded to Cloudflare
+# Email Service (needs the domain's DNS on Cloudflare): uncomment this binding.
+# [[send_email]]
+# name = "EMAIL"

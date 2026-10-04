@@ -1,6 +1,14 @@
 // POST /webhook — Stripe checkout.session.completed.
-// Verifies Stripe-Signature with Web Crypto (no Node SDK). Fulfilment
-// (email / Sheet) is left as a sketch — do not trust the event until verified.
+// Verifies Stripe-Signature with Web Crypto (no Node SDK), then e-mails the
+// booking to the operator (NOTIFY_TO, default book@uiotransfers.com) and a
+// confirmation to the customer. The event is never trusted until verified.
+import {
+  DEFAULT_NOTIFY_TO,
+  buildBookingNotification,
+  buildCustomerReceipt,
+  customerEmailOf,
+  sendEmail,
+} from './email.js';
 
 function hex(bytes) {
   return [...bytes].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -71,17 +79,46 @@ export async function onRequestPost({ request, env }) {
       return new Response('invalid JSON', { status: 400 });
     }
 
-    if (event.type !== 'checkout.session.completed') {
+    const handled = ['checkout.session.completed', 'checkout.session.async_payment_succeeded'];
+    if (!handled.includes(event.type)) {
       return new Response('ignored', { status: 200 });
     }
 
-    const booking = event.data?.object?.metadata || {};
+    const session = event.data?.object || {};
+    // Card payments are 'paid' immediately; delayed methods complete as 'unpaid'
+    // and arrive again later as async_payment_succeeded.
+    if (session.payment_status !== 'paid') {
+      return new Response('ignored (not paid)', { status: 200 });
+    }
 
-    // ── Fulfilment (implement later) ──────────────────────────────────────────
-    // 1. Email the CUSTOMER: reference, route, date/time, vehicle, total, policy.
-    // 2. Email the OPERATOR (env.OPERATOR_EMAIL): the full booking record.
-    // 3. Append the booking to a Sheet/Airtable (env.BOOKINGS_SHEET_WEBHOOK).
-    void booking;
+    // Operator notification. If it fails we return 500 so Stripe retries.
+    const note = buildBookingNotification(session, event);
+    try {
+      await sendEmail(env, {
+        to: env.NOTIFY_TO || DEFAULT_NOTIFY_TO,
+        replyTo: customerEmailOf(session) || undefined,
+        idempotencyKey: `booking-notify-${event.id}`,
+        ...note,
+      });
+    } catch (err) {
+      console.error('booking notification failed', session.id, err?.message || err);
+      return new Response('notification failed', { status: 500 });
+    }
+
+    // Customer confirmation: best-effort, never causes a retry.
+    const customer = customerEmailOf(session);
+    if (customer && customer.includes('@') && env.SEND_CUSTOMER_RECEIPT !== 'false') {
+      try {
+        await sendEmail(env, {
+          to: customer,
+          replyTo: env.NOTIFY_TO || DEFAULT_NOTIFY_TO,
+          idempotencyKey: `booking-receipt-${event.id}`,
+          ...buildCustomerReceipt(session),
+        });
+      } catch (err) {
+        console.error('customer receipt failed', session.id, err?.message || err);
+      }
+    }
 
     return new Response('ok', { status: 200 });
   } catch (err) {

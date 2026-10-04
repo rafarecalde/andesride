@@ -36,8 +36,18 @@ Set these in Wrangler / the Cloudflare dashboard. **Never commit real keys.**
 | `CANCEL_URL` | var | `https://uiotransfers.com/#book` |
 | `ALLOWED_ORIGIN` | var | `https://uiotransfers.com` (CORS for the booking widget) |
 
-Optional (fulfilment, not required to open Checkout): `OPERATOR_EMAIL`,
-`EMAIL_API_KEY`, `BOOKINGS_SHEET_WEBHOOK`.
+Booking e-mail (sent by `/webhook` on every paid `checkout.session.completed`):
+
+| Name | Kind | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | **secret** | Resend API key (used when no `EMAIL` binding is present) |
+| `EMAIL` | `[[send_email]]` binding | Cloudflare Email Service alternative (domain must be onboarded) |
+| `NOTIFY_TO` | var | Operator inbox, default `book@uiotransfers.com` |
+| `EMAIL_FROM` | var | Sender; must be on a domain verified with the provider |
+| `SEND_CUSTOMER_RECEIPT` | var | Set to `false` to skip the customer confirmation |
+
+If no provider is configured the webhook answers 500 and Stripe retries, so
+nothing is lost once e-mail is set up.
 
 Suggested production defaults are already in `wrangler.toml` `[vars]`. Use Stripe
 **test** keys until you are ready to charge real cards.
@@ -95,8 +105,11 @@ Until step 2, leave `paymentsMode: 'mock'` and `paymentApiBase: ''`.
    `https://uiotransfers-pay.<your-subdomain>.workers.dev/webhook`
    for `checkout.session.completed`. Put the signing secret in
    `STRIPE_WEBHOOK_SECRET`.
-4. `/webhook` verifies the signature with Web Crypto. Email / Google Sheet
-   fulfilment is still a sketch inside `webhook.js`.
+4. `/webhook` verifies the signature with Web Crypto, then e-mails the booking
+   (reference, amount, customer e-mail and all checkout metadata) to
+   `NOTIFY_TO` and a confirmation to the customer. For live mode create the
+   endpoint in the **live** dashboard and store its `whsec_…` as
+   `STRIPE_WEBHOOK_SECRET`.
 
 ## Why a US entity + Stripe
 
