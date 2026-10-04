@@ -57,7 +57,7 @@ const vehIcons: Record<string, string> = {
 
       <div class="fld-row">
         <div class="fld"><label for="date">Pick-up date</label><input class="ctrl" type="date" id="date" required></div>
-        <div class="fld"><label for="time">Pick-up time</label><input class="ctrl" type="time" id="time" value="09:00"></div>
+        <div class="fld"><label for="time">Pick-up time</label><input class="ctrl" type="time" id="time" value="09:00" required></div>
       </div>
       <p class="date-hint" id="dateHint">We book at least 3 days ahead so your driver is confirmed.</p>
       <div class="fld"><label for="pax">Passengers</label>
@@ -128,12 +128,15 @@ const vehIcons: Record<string, string> = {
         </div>
       </div>
 
-      <div class="fld"><label for="flight">Flight number <span style="color:var(--slate-light);text-transform:none;letter-spacing:0">(so we track your arrival)</span></label><input class="ctrl" id="flight" placeholder="e.g. AV 0918"></div>
-      <div class="fld"><label for="name">Lead passenger name</label><input class="ctrl" id="name" placeholder="Full name" autocomplete="name"></div>
+      <div class="fld"><label for="flight">Flight number <span style="color:var(--slate-light);text-transform:none;letter-spacing:0">(so we track your arrival)</span></label><input class="ctrl" id="flight" placeholder="e.g. AV 0918" required maxlength="40" autocomplete="off"></div>
+      <div class="fld"><label for="hotel" id="hotelLabel">Drop-off hotel or address</label><input class="ctrl" id="hotel" placeholder="Hotel name or street address" required maxlength="500" autocomplete="street-address"></div>
+      <div class="fld"><label for="name">Pickup name</label><input class="ctrl" id="name" placeholder="Person we collect" autocomplete="name" required maxlength="200"></div>
       <div class="fld-row">
-        <div class="fld"><label for="email">Email</label><input class="ctrl" type="email" id="email" placeholder="you@email.com" autocomplete="email"></div>
-        <div class="fld"><label for="phone">Mobile</label><input class="ctrl" id="phone" placeholder="+1 305 …" autocomplete="tel"></div>
+        <div class="fld"><label for="email">Email</label><input class="ctrl" type="email" id="email" placeholder="you@email.com" autocomplete="email" required maxlength="200"></div>
+        <div class="fld"><label for="phone">Mobile</label><input class="ctrl" id="phone" placeholder="+1 305 …" autocomplete="tel" required maxlength="40"></div>
       </div>
+      <div class="fld"><label for="notes">Notes <span style="color:var(--slate-light);text-transform:none;letter-spacing:0">(optional — gate, luggage, child ages)</span></label><textarea class="ctrl" id="notes" rows="2" maxlength="500" placeholder="Anything the driver should know"></textarea></div>
+      <div id="detailsErr" class="route-hint" style="color:#d9534f;display:none;margin-bottom:10px"></div>
 
       <p class="disclosure">{DISCLOSURE}</p>
 
@@ -181,7 +184,7 @@ const vehIcons: Record<string, string> = {
       <div class="confirm">
         <div class="ok"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
         <h3>You're booked!</h3>
-        <p>A confirmation and driver details are on the way to your email. We'll track your flight and be waiting at arrivals.</p>
+        <p id="confirmCopy">A confirmation and driver details are on the way to your email. We'll track your flight and be waiting at arrivals.</p>
         <div class="ref" id="bref">UIO-000000</div>
         <p class="disclosure" style="text-align:left">{DISCLOSURE}</p>
         <div style="margin-top:18px"><button class="btn btn-outline" id="again">Book another transfer</button></div>
@@ -332,6 +335,8 @@ const vehIcons: Record<string, string> = {
     );
     $('zoneLabel').textContent =
       d === 'from' ? 'Drop-off (prepaid luxury SUV)' : 'Pick-up (prepaid luxury SUV)';
+    $('hotelLabel').textContent =
+      d === 'from' ? 'Drop-off hotel or address' : 'Pick-up hotel or address';
     recalc();
   }
   function recalc() {
@@ -393,14 +398,101 @@ const vehIcons: Record<string, string> = {
       }
       dateEl.classList.remove('field-err');
       setDateHint(LEAD_COPY, false);
+      const timeEl = $('time') as HTMLInputElement;
+      if (!timeEl.value) {
+        timeEl.focus();
+        timeEl.classList.add('field-err');
+        return;
+      }
+      timeEl.classList.remove('field-err');
     }
     if (n === 2) {
+      const problem = detailsProblems();
+      if (problem) {
+        showDetailsErr(problem);
+        return;
+      }
+      hideDetailsErr();
       if (state.rt && rdateEl.value && rdateEl.value < dateEl.value) {
         rdateEl.value = dateEl.value;
       }
       buildSummary();
     }
     showStep(n);
+  }
+
+  function field(id: string) {
+    return ($(id) as HTMLInputElement | HTMLTextAreaElement).value.trim();
+  }
+  function clip(value: string, max = 500) {
+    return value.length > max ? value.slice(0, max) : value;
+  }
+  function esc(value: string) {
+    return value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function showDetailsErr(message: string) {
+    const err = $('detailsErr');
+    err.textContent = message;
+    err.style.display = 'flex';
+  }
+  function hideDetailsErr() {
+    const err = $('detailsErr');
+    err.textContent = '';
+    err.style.display = 'none';
+  }
+  function markField(id: string, bad: boolean) {
+    $(id).classList.toggle('field-err', bad);
+  }
+  /** Name, phone, flight, hotel, pickup time, and passenger count are required. Notes are optional. */
+  function detailsProblems() {
+    const name = field('name');
+    const email = field('email');
+    const phone = field('phone');
+    const flight = field('flight');
+    const hotel = field('hotel');
+    const time = field('time');
+    const emailOk = /.+@.+\..+/.test(email);
+    markField('name', !name);
+    markField('email', !emailOk);
+    markField('phone', !phone);
+    markField('flight', !flight);
+    markField('hotel', !hotel);
+    markField('time', !time);
+    markField('pax', !paxOk());
+    if (!name) {
+      $('name').focus();
+      return 'Please add the pickup name — the person we should collect.';
+    }
+    if (!emailOk) {
+      $('email').focus();
+      return 'Please enter a valid email address.';
+    }
+    if (!phone) {
+      $('phone').focus();
+      return 'Please add a mobile number.';
+    }
+    if (!flight) {
+      $('flight').focus();
+      return 'Please add the flight number so we can track the arrival.';
+    }
+    if (!hotel) {
+      $('hotel').focus();
+      return 'Please add the hotel or street address.';
+    }
+    if (!time) {
+      $('time').focus();
+      return 'Please add a pickup time.';
+    }
+    if (!paxOk()) {
+      paxEl.focus();
+      return 'Choose 1–8 passengers. Each SUV seats 4; 5–8 books a second SUV.';
+    }
+    return '';
   }
 
   function buildSummary() {
@@ -412,11 +504,17 @@ const vehIcons: Record<string, string> = {
     const route = state.dir === 'from' ? 'UIO → ' + z.name : z.name + ' → UIO';
     const d = ($('date') as HTMLInputElement).value;
     const tm = ($('time') as HTMLInputElement).value;
+    const notes = field('notes');
     const rows: [string, string][] = [];
-    rows.push(['Route', route]);
-    rows.push(['When', (d || 'Date TBC') + (tm ? ' · ' + tm : '')]);
-    rows.push(['Vehicles', suvs === 2 ? '2 luxury SUVs' : '1 luxury SUV']);
+    rows.push(['Pickup name', esc(field('name'))]);
+    rows.push(['Phone', esc(field('phone'))]);
+    rows.push(['Flight number', esc(field('flight'))]);
+    rows.push(['Drop-off / hotel', esc(`${field('hotel')} · ${z.name}`)]);
     rows.push(['Passengers', pax]);
+    if (notes) rows.push(['Notes', esc(notes)]);
+    rows.push(['Route', esc(route)]);
+    rows.push(['When', esc((d || 'Date TBC') + (tm ? ' · ' + tm : ''))]);
+    rows.push(['Vehicles', suvs === 2 ? '2 luxury SUVs' : '1 luxury SUV']);
     if (suvs === 2) {
       rows.push(['2 × ' + VEHNAME[state.veh] + ' · ' + pax + ' pax', '$' + fare]);
       rows.push(['Each vehicle', 'up to 4 passengers · 4 bags']);
@@ -440,16 +538,25 @@ const vehIcons: Record<string, string> = {
 
   async function pay() {
     const err = $('payErr');
-    const name = ($('name') as HTMLInputElement).value.trim();
-    const email = ($('email') as HTMLInputElement).value.trim();
-    const phone = ($('phone') as HTMLInputElement).value.trim();
+    const name = field('name');
+    const email = field('email');
+    const phone = field('phone');
+    const flight = field('flight');
+    const hotel = field('hotel');
+    const notes = field('notes');
     const policy = ($('policy') as HTMLInputElement).checked;
     const show = (m: string) => {
       err.textContent = m;
       err.style.display = 'flex';
     };
-    if (!name || !email || !phone) return show('Please add your name, email, and mobile number (step 2).');
-    if (!/.+@.+\..+/.test(email)) return show('Please enter a valid email address.');
+    const problem = detailsProblems();
+    if (problem) {
+      showStep(1);
+      showDetailsErr(problem);
+      err.style.display = 'none';
+      return;
+    }
+    hideDetailsErr();
     if (!policy) return show('Please accept the cancellation policy to continue.');
     clampPickup();
     if (!pickupOk()) {
@@ -457,12 +564,6 @@ const vehIcons: Record<string, string> = {
       dateEl.focus();
       dateEl.classList.add('field-err');
       return show('Pickup must be at least 3 days from today so we can confirm your driver.');
-    }
-    updatePaxUi();
-    if (!paxOk()) {
-      showStep(0);
-      paxEl.focus();
-      return show('Choose 1–8 passengers. Each SUV seats 4; 5–8 books a second SUV.');
     }
     err.style.display = 'none';
 
@@ -472,24 +573,27 @@ const vehIcons: Record<string, string> = {
     btn.textContent = 'Processing…';
 
     const z = zone()!;
+    const metadata: Record<string, string | number | boolean> = {
+      route: state.dir === 'from' ? 'UIO->' + z.key : z.key + '->UIO',
+      vehicle: state.veh,
+      pax: String(paxCount()),
+      vehicles: vehicleCount(),
+      date: ($('date') as HTMLInputElement).value,
+      time: ($('time') as HTMLInputElement).value,
+      roundTrip: state.rt,
+      childSeats: state.child,
+      extraStop: state.stop,
+      flight: clip(flight, 40),
+      hotel: clip(`${hotel} · ${z.name}`),
+      name: clip(name, 200),
+      email: clip(email, 200),
+      phone: clip(phone, 40),
+      cancellationAccepted: true,
+    };
+    if (notes) metadata.notes = clip(notes);
     const result = await createCheckout({
       amountUSD: total()!,
-      metadata: {
-        route: state.dir === 'from' ? 'UIO->' + z.key : z.key + '->UIO',
-        vehicle: state.veh,
-        pax: String(paxCount()),
-        vehicles: vehicleCount(),
-        date: ($('date') as HTMLInputElement).value,
-        time: ($('time') as HTMLInputElement).value,
-        roundTrip: state.rt,
-        childSeats: state.child,
-        extraStop: state.stop,
-        flight: ($('flight') as HTMLInputElement).value.trim(),
-        name,
-        email,
-        phone,
-        cancellationAccepted: true,
-      },
+      metadata,
     });
 
     if (!result.ok) {
@@ -502,6 +606,7 @@ const vehIcons: Record<string, string> = {
       return;
     }
     $('bref').textContent = result.reference;
+    $('confirmCopy').textContent = `${name}, you're booked. A confirmation is on the way to ${email}. We will pick up ${name}.`;
     btn.disabled = false;
     btn.innerHTML = label;
     showStep(3);
@@ -565,6 +670,12 @@ const vehIcons: Record<string, string> = {
     recalc();
   });
   $('stop').addEventListener('change', recalc);
+  for (const id of ['name', 'email', 'phone', 'flight', 'hotel', 'notes', 'time']) {
+    $(id).addEventListener('input', () => {
+      $(id).classList.remove('field-err');
+      hideDetailsErr();
+    });
+  }
 
   // Live card-field niceties (only present in live mode).
   const cc = $('cc') as HTMLInputElement | null;

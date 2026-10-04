@@ -27,14 +27,104 @@ export function json(body, status, env) {
   });
 }
 
-/** Stripe metadata values must be strings; stringify booleans/numbers. */
+// Stripe Checkout metadata: 50 keys, key names ≤40 characters, values ≤500 characters.
+const STRIPE_MAX_KEYS = 50;
+const STRIPE_MAX_KEY = 40;
+const STRIPE_MAX_VALUE = 500;
+
+// Driver-critical fields stay even when the payload is trimmed to 50 keys.
+const METADATA_PRIORITY = [
+  'name',
+  'phone',
+  'flight',
+  'time',
+  'hotel',
+  'pax',
+  'notes',
+  'email',
+  'date',
+  'route',
+  'vehicle',
+  'vehicles',
+  'roundTrip',
+  'childSeats',
+  'extraStop',
+  'cancellationAccepted',
+];
+
+const REQUIRED_PASSENGER_FIELDS = [
+  ['name', 'passenger name'],
+  ['phone', 'phone'],
+  ['flight', 'flight number'],
+  ['time', 'pickup time'],
+  ['hotel', 'drop-off/hotel'],
+  ['pax', 'passenger count'],
+];
+
+function isPlainObject(value) {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+/** Trim passenger strings. Drop a blank notes value so it does not consume a key. */
+export function normalizeMetadata(metadata) {
+  if (!isPlainObject(metadata)) return {};
+  const out = { ...metadata };
+  for (const key of ['name', 'phone', 'flight', 'time', 'hotel', 'notes', 'email', 'pax']) {
+    if (typeof out[key] === 'string') out[key] = out[key].trim();
+    else if (key === 'pax' && (typeof out[key] === 'number' || typeof out[key] === 'boolean')) {
+      out[key] = String(out[key]);
+    }
+  }
+  if (typeof out.notes === 'string' && out.notes === '') delete out.notes;
+  return out;
+}
+
+/** Null when the booking has the fields the driver needs. Notes stay optional. */
+export function passengerFieldError(metadata) {
+  if (!isPlainObject(metadata)) return 'passenger name is required';
+  for (const [key, label] of REQUIRED_PASSENGER_FIELDS) {
+    const value = metadata[key];
+    if (value === undefined || value === null || String(value).trim() === '') {
+      return `${label} is required`;
+    }
+  }
+  return null;
+}
+
+/**
+ * Stripe metadata values must be strings. Booleans and numbers are stringified.
+ * Priority passenger fields are kept first so a 50-key cap cannot drop them.
+ */
 export function stringifyMetadata(metadata, reference) {
-  const out = { reference: String(reference ?? '') };
-  if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) return out;
-  for (const [key, value] of Object.entries(metadata)) {
-    if (value === undefined || value === null) continue;
-    const str = typeof value === 'string' ? value : String(value);
-    out[key] = str.length > 500 ? str.slice(0, 500) : str;
+  const source = isPlainObject(metadata) ? metadata : {};
+  const ordered = ['reference'];
+  for (const key of METADATA_PRIORITY) {
+    if (key in source && !ordered.includes(key)) ordered.push(key);
+  }
+  for (const key of Object.keys(source)) {
+    if (!ordered.includes(key)) ordered.push(key);
+  }
+
+  const out = {};
+  for (const key of ordered) {
+    if (Object.keys(out).length >= STRIPE_MAX_KEYS) break;
+    const safeKey = String(key).slice(0, STRIPE_MAX_KEY);
+    if (!safeKey || Object.prototype.hasOwnProperty.call(out, safeKey)) continue;
+
+    let raw;
+    if (key === 'reference') {
+      const fromMeta = source.reference;
+      raw =
+        fromMeta !== undefined && fromMeta !== null && String(fromMeta).trim() !== ''
+          ? fromMeta
+          : reference ?? '';
+    } else {
+      raw = source[key];
+    }
+    if (raw === undefined || raw === null) continue;
+    const str = typeof raw === 'string' ? raw : String(raw);
+    if (key !== 'reference' && str.trim() === '') continue;
+    out[safeKey] = str.length > STRIPE_MAX_VALUE ? str.slice(0, STRIPE_MAX_VALUE) : str;
   }
   return out;
 }
@@ -107,7 +197,11 @@ export async function onRequestPost({ request, env }) {
       return json({ error: 'SUCCESS_URL and CANCEL_URL must be configured' }, 500, env);
     }
 
-    const metadata = stringifyMetadata(body.metadata, reference);
+    const metadataIn = normalizeMetadata(body.metadata);
+    const fieldError = passengerFieldError(metadataIn);
+    if (fieldError) return json({ error: fieldError }, 400, env);
+
+    const metadata = stringifyMetadata(metadataIn, reference);
     const payload = {
       mode: 'payment',
       success_url: withRef(env.SUCCESS_URL, reference),
@@ -126,8 +220,8 @@ export async function onRequestPost({ request, env }) {
       metadata,
     };
 
-    if (typeof body.metadata?.email === 'string' && body.metadata.email.includes('@')) {
-      payload.customer_email = body.metadata.email;
+    if (typeof metadataIn.email === 'string' && metadataIn.email.includes('@')) {
+      payload.customer_email = metadataIn.email;
     }
 
     const stripeRes = await fetch(STRIPE_SESSIONS_URL, {

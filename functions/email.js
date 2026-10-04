@@ -16,21 +16,26 @@ const LABELS = {
   route: 'Route',
   date: 'Date',
   time: 'Pickup time',
-  flight: 'Flight',
-  pax: 'Passengers',
+  flight: 'Flight number',
+  pax: 'Passenger count',
   vehicle: 'Vehicle',
+  vehicles: 'Vehicles',
   roundTrip: 'Round trip',
   childSeats: 'Child seats',
   extraStop: 'Extra stop',
-  name: 'Name',
+  name: 'Pickup name',
   email: 'Email',
   phone: 'Phone',
+  hotel: 'Drop-off / hotel',
+  notes: 'Notes',
   cancellationAccepted: 'Cancellation policy accepted',
 };
-// Show these first, in this order; any other metadata keys follow alphabetically.
+// Operator mail leads with who we collect and where. Other keys follow.
+const PICKUP_KEYS = ['name', 'phone', 'flight', 'time', 'hotel', 'pax', 'notes'];
 const ORDER = [
-  'reference', 'route', 'date', 'time', 'flight', 'pax', 'vehicle', 'roundTrip',
-  'childSeats', 'extraStop', 'name', 'email', 'phone', 'cancellationAccepted',
+  ...PICKUP_KEYS,
+  'reference', 'route', 'date', 'vehicle', 'vehicles', 'roundTrip',
+  'childSeats', 'extraStop', 'email', 'cancellationAccepted',
 ];
 
 export function escapeHtml(value) {
@@ -64,24 +69,46 @@ export function referenceOf(session) {
   return oneLine(session?.metadata?.reference || session?.client_reference_id || session?.id || '');
 }
 
+function metaValue(meta, key) {
+  if (!meta || !(key in meta) || meta[key] === undefined || meta[key] === null) return '';
+  return oneLine(meta[key]);
+}
+
 function metadataRows(session) {
   const meta = { ...(session?.metadata || {}) };
   const keys = [
     ...ORDER.filter((k) => k in meta),
     ...Object.keys(meta).filter((k) => !ORDER.includes(k)).sort(),
   ];
-  return keys.map((k) => [LABELS[k] || k, String(meta[k])]);
+  return keys
+    .filter((k) => metaValue(meta, k) !== '')
+    .map((k) => [LABELS[k] || k, metaValue(meta, k)]);
+}
+
+/** Who to collect, and the trip facts the driver needs, in a fixed order. */
+function pickupRows(session) {
+  const meta = session?.metadata || {};
+  const rows = [];
+  for (const key of PICKUP_KEYS) {
+    const value = metaValue(meta, key);
+    // Pickup name is always first so a booking without one is obvious.
+    // Phone and the other fields appear only when they were collected.
+    if (!value && key !== 'name') continue;
+    rows.push([LABELS[key], value || '(missing)']);
+  }
+  return rows;
 }
 
 function allRows(session, event) {
   const pi = typeof session?.payment_intent === 'string' ? session.payment_intent : '';
   const rows = [
+    ...pickupRows(session),
     ['Reference', referenceOf(session)],
     ['Amount paid', formatAmount(session)],
     ['Payment status', session?.payment_status || 'unknown'],
     ['Customer email', customerEmailOf(session) || '(none)'],
   ];
-  const seen = new Set(['Reference']);
+  const seen = new Set(rows.map(([label]) => label));
   for (const [label, value] of metadataRows(session)) {
     if (seen.has(label)) continue;
     seen.add(label);
@@ -113,8 +140,11 @@ function htmlTable(rows) {
 export function buildBookingNotification(session, event) {
   const meta = session?.metadata || {};
   const ref = referenceOf(session);
+  const who = oneLine(meta.name);
   const trip = [meta.route, meta.date, meta.time].filter(Boolean).join(' · ');
-  const subject = oneLine(`New paid booking ${ref} — ${formatAmount(session)}${trip ? ` — ${trip}` : ''}`);
+  const subject = oneLine(
+    `New paid booking ${ref}${who ? ` — ${who}` : ''} — ${formatAmount(session)}${trip ? ` — ${trip}` : ''}`,
+  );
   const rows = allRows(session, event);
   return {
     subject,
@@ -129,17 +159,31 @@ export function buildBookingNotification(session, event) {
 export function buildCustomerReceipt(session) {
   const meta = session?.metadata || {};
   const ref = referenceOf(session);
+  const who = oneLine(meta.name);
+  const phone = metaValue(meta, 'phone');
   const rows = [
+    ...(who ? [['Pickup name', who]] : []),
+    ...(phone ? [['Phone', phone]] : []),
     ['Reference', ref],
     ['Amount paid', formatAmount(session)],
-    ...[['route', 'Route'], ['date', 'Date'], ['time', 'Pickup time'], ['flight', 'Flight'], ['pax', 'Passengers']]
-      .filter(([k]) => meta[k])
-      .map(([k, l]) => [l, String(meta[k])]),
+    ...[
+      ['route', 'Route'],
+      ['date', 'Date'],
+      ['time', 'Pickup time'],
+      ['flight', 'Flight number'],
+      ['hotel', 'Drop-off / hotel'],
+      ['pax', 'Passenger count'],
+      ['notes', 'Notes'],
+    ]
+      .filter(([k]) => metaValue(meta, k))
+      .map(([k, l]) => [l, metaValue(meta, k)]),
   ];
-  const intro = `Thank you${meta.name ? `, ${oneLine(meta.name)}` : ''}! Your payment was received and your Quito airport transfer is booked.`;
+  const intro = who
+    ? `Thank you, ${who}! Your payment was received and your Quito airport transfer is booked. We will pick up ${who}.`
+    : 'Thank you! Your payment was received and your Quito airport transfer is booked.';
   const outro = 'Questions or changes? Just reply to this email or write to book@uiotransfers.com. Free cancellation up to 24 hours before pickup.';
   return {
-    subject: oneLine(`Booking confirmed ${ref} — Quito Airport Transfer`),
+    subject: oneLine(`Booking confirmed ${ref}${who ? ` — ${who}` : ''} — Quito Airport Transfer`),
     text: `${intro}\n\n${textTable(rows)}\n\n${outro}\n`,
     html:
       `<p style="font:16px -apple-system,Segoe UI,Arial,sans-serif">${escapeHtml(intro)}</p>` +
