@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { AFFILIATE_DISCLOSURE } from '../config/affiliates';
+import { SITE } from '../config';
+
+const credits: { place: string; file: string; artist: string; license: string; licenseHref?: string }[] = [
+  { place: 'Mitad del Mundo', file: 'Mitad del Mundo, Quito, Ecuador, 2015-07-22, DD 02.JPG', artist: 'Diego Delso', license: 'CC BY-SA 4.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+  { place: 'Quito from El Panecillo', file: 'Quito as from panecillo Basilica.jpg', artist: 'Cayambe', license: 'CC BY-SA 3.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+  { place: 'Quito Old Town', file: 'Calle Marañon, Quito Historic Center of Quito, street scene.jpg', artist: 'David Adam Kess', license: 'CC BY-SA 4.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+  { place: 'Otavalo market', file: 'Otavalo Artisan Market - Andes Mountains - South America - photograph 001.JPG', artist: 'David Adam Kess', license: 'CC BY-SA 3.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+  { place: 'Cotopaxi', file: 'Cotopaxi 01.jpg', artist: 'Bernard Gagnon', license: 'CC BY-SA 3.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+  { place: 'Quilotoa', file: 'Quilotoa crater lake, Ecuador, Jan 2010.jpg', artist: 'Eric Schmuttenmaer', license: 'CC BY-SA 2.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/2.0/' },
+  { place: 'Bartolomé, Galápagos', file: 'Bartolome Island, Galapagos (50122421803).jpg', artist: 'kuhnmi', license: 'CC BY 2.0', licenseHref: 'https://creativecommons.org/licenses/by/2.0/' },
+  { place: 'Mindo cloud forest', file: 'Mindo-Cloud-Forest-03.jpg', artist: 'Ayacop', license: 'Public domain' },
+  { place: 'Pailón del Diablo, Baños', file: 'Pailón del Diablo, cerca de Baños, Ecuador (3257).jpg', artist: 'Sebastian Reategui', license: 'CC0', licenseHref: 'https://creativecommons.org/publicdomain/zero/1.0/' },
+  { place: 'Papallacta', file: 'Papallacta Scenery 2015-06-11 (2) (39680265964).jpg', artist: 'Don Henise', license: 'CC BY 2.0', licenseHref: 'https://creativecommons.org/licenses/by/2.0/' },
+  { place: 'Cuicocha and Imbabura', file: 'Laguna Cuicocha Imbabura volcano seen from the entrance to the park.jpg', artist: 'Ymblanter', license: 'CC BY-SA 4.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/4.0/' },
+  { place: 'TelefériQo', file: 'Teleférico de Quito - Equador - panoramio (9).jpg', artist: 'Paulo JC Nogueira', license: 'CC BY-SA 3.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+  { place: 'Pululahua', file: 'Crater del Pululahua - panoramio.jpg', artist: 'diego_cue', license: 'CC BY-SA 3.0', licenseHref: 'https://creativecommons.org/licenses/by-sa/3.0/' },
+];
+
+function commons(file: string): string {
+  return `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file.replace(/ /g, '_'))}`;
+}
+---
+<BaseLayout
+  title={`Affiliate disclosure | ${SITE.name}`}
+  description="Some links on Quito Airport Transfer are affiliate links. Booking through them may earn us a commission at no extra cost to you."
+  path="/disclosure"
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Legal</span>
+      <h1>Affiliate disclosure</h1>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="prose">
+      <p>{AFFILIATE_DISCLOSURE}</p>
+      <p>
+        Guides on this site sometimes link to tours, hotels, car rental, and travel eSIMs
+        (including GetYourGuide, Viator, Civitatis, Discover Cars, Booking.com, and Airalo).
+        If you book through one of those links, we may earn a commission. The price you pay
+        is the partner’s price. Our airport-transfer booking is separate and is not part of
+        those programs.
+      </p>
+      <h2>Photo credits</h2>
+      <p>
+        Lodge cards use scenery of the area — a valley, a volcano, or the historic center —
+        rather than a photograph of a different hotel. The airport card uses our own terminal photo.
+      </p>
+      <ul>
+        {credits.map((credit) => (
+          <li>
+            <a href={commons(credit.file)}>{credit.place}</a>
+            {' — '}
+            {credit.artist}
+            {', '}
+            {credit.licenseHref ? <a href={credit.licenseHref}>{credit.license}</a> : credit.license}
+            {', via Wikimedia Commons'}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

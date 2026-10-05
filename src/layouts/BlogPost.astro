@@ -1,6 +1,9 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
+import LuxuryStays from '../components/LuxuryStays.astro';
+import TripPlan from '../components/TripPlan.astro';
+import { AFFILIATE_DISCLOSURE, luxuryIdsForPost } from '../config/affiliates';
 import { SITE } from '../config';
 import { u } from '../lib/url';
 import { publicUrl } from '../lib/publicUrl';
@@ -23,6 +26,7 @@ const ctaProps = zone
     }
   : {};
 const path = `/guide/${post.slug}`;
+const luxuryIds = luxuryIdsForPost(post.slug);
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
@@ -55,6 +59,12 @@ const articleSchema = {
     <div class="wrap">
       <div class="prose">
         <slot />
+      </div>
+      <div class="post-extras">
+        {luxuryIds.length > 0 && <LuxuryStays ids={luxuryIds} embedded />}
+        <h2 class="post-plan-title">Plan your trip</h2>
+        <TripPlan variant="post" slug={post.slug} embedded />
+        <p class="aff-note">{AFFILIATE_DISCLOSURE} <a href={u('/disclosure')}>Affiliate disclosure</a></p>
       </div>
       <BookingCta {...ctaProps} />
     </div>

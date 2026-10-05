@@ -120,6 +120,41 @@ tags: ["Quito airport", "UIO"]
 
 It appears automatically on `/guide`, in the homepage "latest" row, in `rss.xml`,
 and in the sitemap. A booking CTA is appended to every post automatically.
+Each guide also gets one mid-article affiliate card and an end-of-post
+“Plan your trip” block from `src/config/affiliates.ts`. Add the new slug to
+`POST_AFFILIATES` in that file or the affiliate test will fail.
+
+## Affiliate programs
+
+Partner ids live in **`src/config/affiliates.ts`** (`AFFILIATE_IDS`). Until you
+replace a `*_TODO` value, that parameter is left off the URL and the link is
+the partner’s normal page. Do not publish a half-filled tracking link.
+
+| Field | Where to get it | What it does |
+|---|---|---|
+| `getYourGuidePartnerId` | GetYourGuide Partner Portal → Account | Appended as `partner_id` on `getyourguide.com/s/?q=` |
+| `viatorPid` | Viator Partner Resource Center | Appended as `pid`, with Viator’s published `mcid=42383` and `medium=link` |
+| `civitatisAid` | Civitatis affiliates panel | Appended as `aid` |
+| `discoverCarsAid` | Discover Cars affiliate dashboard | Appended as `a_aid` on the Quito rental page |
+| `bookingAid` | Booking.com Partnerships, or the `aid` inside a Travelpayouts Booking.com link | Appended as `aid` |
+| `travelpayoutsMarker` | Travelpayouts partner id (marker) | Sent as Booking.com’s `label`. Needs a real `bookingAid` as well — Travelpayouts’ own aid, copied from a link they generate |
+| `airaloImpactUrl` | Airalo’s Impact dashboard (paste the full tracking URL) | Used as-is for the Ecuador eSIM |
+| `airaloPartnerId` | Only if you do not have an Impact URL yet | Appended as `partner_id` on `airalo.com/ecuador-esim`. Airalo does not document that parameter; prefer `airaloImpactUrl` |
+
+Named hotels use a verified Booking.com property path when one was confirmed
+(Casa Gangotena, Illa Experience, Plaza Grande, JW Marriott, Hacienda Cusín,
+La Mirage, San Agustín de Callo, Hacienda El Porvenir, Bellavista). Hacienda
+Zuleta and Mashpi Lodge were not given a property URL — Check rates opens a
+Booking.com search for that name. There is no direct-booking form.
+
+The disclosure line is on every affiliate module, on `/disclosure` (footer),
+and in `/privacy`. Affiliate links use `rel="sponsored noopener"`. Clicks call
+`plausible` or `gtag` only if one of those functions is already on the page.
+
+Destination photos live in `public/images/affiliates/` (Wikimedia Commons,
+credited on `/disclosure`). Car rental and eSIM cards keep the line icon.
+Lodge cards use area scenery, not a photo of a different property. The airport
+hotel card reuses the site’s own terminal still.
 
 ## Payments (mock now → live later)
 

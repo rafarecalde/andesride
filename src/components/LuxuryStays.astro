@@ -1,0 +1,46 @@
+---
+import { HOME_LUXURY_IDS, stayById, stayHref } from '../config/affiliates';
+
+interface Props {
+  ids?: string[];
+  embedded?: boolean;
+}
+
+const { ids = HOME_LUXURY_IDS, embedded = false } = Astro.props;
+const stays = ids.map((id) => stayById(id)).filter((stay) => stay != null);
+---
+
+{stays.length > 0 && (
+  <div class:list={['stays', embedded && 'stays-embedded']}>
+    {!embedded && (
+      <header class="sec-head">
+        <span class="eyebrow">Stays</span>
+        <h2 class="section-title">Luxury stays near Quito</h2>
+      </header>
+    )}
+    {embedded && <h3 class="stays-title">Luxury stays near Quito</h3>}
+    <div class="stay-row">
+      {stays.map((stay) => (
+        <a
+          class="stay-card"
+          href={stayHref(stay)}
+          rel="sponsored noopener"
+          target="_blank"
+          data-affiliate="booking"
+          data-affiliate-label={stay.id}
+        >
+          <span class="stay-photo" aria-hidden="true">
+            <img src={stay.photo} alt="" />
+          </span>
+          <span class="stay-body">
+            <span>
+              <span class="stay-area">{stay.area}</span>
+              <span class="stay-name">{stay.name}</span>
+            </span>
+            <span class="stay-go">Check rates</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+)}

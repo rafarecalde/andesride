@@ -1,0 +1,27 @@
+---
+import type { AffiliateCard } from '../config/affiliates';
+
+interface Props {
+  card: AffiliateCard;
+}
+const { card } = Astro.props;
+---
+<a
+  class="trip-card"
+  href={card.href}
+  rel="sponsored noopener"
+  target="_blank"
+  data-affiliate={card.partner}
+  data-affiliate-label={card.id}
+>
+  <span class:list={['art', card.art]} aria-hidden="true">
+    {card.photo && <img src={card.photo} alt="" />}
+  </span>
+  <span class="trip-meta">
+    <span>
+      <span class="trip-kicker">{card.kicker}</span>
+      <span class="trip-title">{card.title}</span>
+    </span>
+    <span class="trip-go">{card.cta}</span>
+  </span>
+</a>

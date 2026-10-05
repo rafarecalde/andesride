@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../config';
+import { u } from '../lib/url';
 ---
 <BaseLayout title={`Privacy Policy | ${SITE.name}`} description="Quito Airport Transfer privacy policy." path="/privacy">
   <header class="page-hero"><div class="wrap"><span class="eyebrow">Legal</span><h1>Privacy policy</h1></div></header>
@@ -14,6 +15,8 @@ import { SITE } from '../config';
     <p>Card payments are handled by a third-party payment processor under their own terms and security standards. {SITE.name} receives a confirmation and booking metadata, not your card details.</p>
     <h2>Your choices</h2>
     <p>To access, correct, or delete your information, {SITE.email ? `contact ${SITE.email}` : 'reply to your booking confirmation'}.</p>
+    <h2>Affiliate links</h2>
+    <p>Some pages link to tours, hotels, car rental, and travel eSIMs. We may earn a commission if you book through these links, at no extra cost to you. See the <a href={u('/disclosure')}>affiliate disclosure</a>.</p>
     <h2>Analytics &amp; cookies</h2>
     <p>If analytics are enabled, this section will describe what is collected and how to opt out. Add your analytics/cookie disclosure here before launch.</p>
     <h2>Contact</h2>
