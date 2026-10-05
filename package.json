@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:functions": "node --test functions/pay.test.js"
+    "test:functions": "node --test functions/pay.test.js",
+    "test:affiliates": "node --experimental-strip-types --test src/config/affiliates.test.ts"
   },
   "dependencies": {
     "astro": "^5.6.1",

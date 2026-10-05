@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { AFFILIATE_DISCLOSURE } from '../config/affiliates';
+import { SITE } from '../config';
+---
+<BaseLayout
+  title={`Affiliate disclosure | ${SITE.name}`}
+  description="Some links on Quito Airport Transfer are affiliate links. Booking through them may earn us a commission at no extra cost to you."
+  path="/disclosure"
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Legal</span>
+      <h1>Affiliate disclosure</h1>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="prose">
+      <p>{AFFILIATE_DISCLOSURE}</p>
+      <p>
+        Guides on this site sometimes link to tours, hotels, car rental, and travel eSIMs
+        (including GetYourGuide, Viator, Civitatis, Discover Cars, Booking.com, and Airalo).
+        If you book through one of those links, we may earn a commission. The price you pay
+        is the partner’s price. Our airport-transfer booking is separate and is not part of
+        those programs.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

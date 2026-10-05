@@ -12,6 +12,7 @@ import Reviews from '../components/Reviews.astro';
 import Faq from '../components/Faq.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
+import TripPlan from '../components/TripPlan.astro';
 import { SITE, hasPhone } from '../config';
 import { u } from '../lib/url';
 import { publicUrl } from '../lib/publicUrl';
@@ -82,6 +83,7 @@ const faqSchema = {
   <LandingLate />
   <Why />
   <Fleet />
+  <TripPlan variant="home" />
 
   <section id="guide-latest">
     <div class="wrap">

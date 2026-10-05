@@ -1,0 +1,43 @@
+---
+import AffiliateCard from './AffiliateCard.astro';
+import LuxuryStays from './LuxuryStays.astro';
+import {
+  AFFILIATE_DISCLOSURE,
+  homeTripCards,
+  postEndCards,
+} from '../config/affiliates';
+import { u } from '../lib/url';
+
+interface Props {
+  variant?: 'home' | 'confirm' | 'post';
+  slug?: string;
+  /** Card grid only. The parent page supplies the disclosure line. */
+  embedded?: boolean;
+}
+
+const { variant = 'home', slug = '', embedded = false } = Astro.props;
+const cards = variant === 'post' ? postEndCards(slug) : homeTripCards();
+const showLuxury = variant === 'home' || variant === 'confirm';
+const title = variant === 'post' ? 'Plan your trip' : 'Plan the rest of your trip';
+const eyebrow = variant === 'post' ? 'Plan your trip' : 'After your ride';
+---
+
+{embedded ? (
+  <div class:list={['trip-grid', variant === 'post' && 'trip-grid-post']}>
+    {cards.map((card) => <AffiliateCard card={card} />)}
+  </div>
+) : (
+  <section class:list={['after-ride', variant === 'confirm' && 'after-ride-confirm']} id={variant === 'home' ? 'after' : undefined}>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="eyebrow">{eyebrow}</span>
+        <h2 class="section-title">{title}</h2>
+      </header>
+      <div class="trip-grid">
+        {cards.map((card) => <AffiliateCard card={card} />)}
+      </div>
+      {showLuxury && <LuxuryStays embedded />}
+      <p class="aff-note">{AFFILIATE_DISCLOSURE} <a href={u('/disclosure')}>Affiliate disclosure</a></p>
+    </div>
+  </section>
+)}

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TripPlan from '../components/TripPlan.astro';
 import { SITE, DISCLOSURE } from '../config';
 import { u } from '../lib/url';
 // Payment-return page (live mode redirects here after hosted checkout).
@@ -18,4 +19,5 @@ const ref = Astro.url.searchParams.get('ref') ?? '';
       </div>
     </div>
   </section>
+  <TripPlan variant="confirm" />
 </BaseLayout>

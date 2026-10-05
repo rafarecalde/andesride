@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { remarkInlineAffiliate } from './src/config/affiliates.ts';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PRODUCTION HOST
@@ -54,6 +55,7 @@ export default defineConfig({
   trailingSlash: 'ignore',
   integrations: [sitemap()],
   markdown: {
+    remarkPlugins: [remarkInlineAffiliate],
     rehypePlugins: [rehypeBase],
   },
   redirects: {

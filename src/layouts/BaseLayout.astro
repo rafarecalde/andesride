@@ -50,5 +50,30 @@ const { title, description, path, ogType, image, schema } = Astro.props;
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
       }
     </script>
+    <script>
+      // Optional click hook. Calls Plausible or gtag only when one is already on the page.
+      const root = window as Window & {
+        __uioAffiliateClicks?: boolean;
+        plausible?: (name: string, options?: { props: Record<string, string> }) => void;
+        gtag?: (...args: unknown[]) => void;
+      };
+      if (!root.__uioAffiliateClicks) {
+        root.__uioAffiliateClicks = true;
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const link = target.closest('[data-affiliate]');
+          if (!link) return;
+          const partner = link.getAttribute('data-affiliate') || '';
+          const label = link.getAttribute('data-affiliate-label') || '';
+          if (typeof root.plausible === 'function') {
+            root.plausible('Affiliate', { props: { partner, label } });
+          }
+          if (typeof root.gtag === 'function') {
+            root.gtag('event', 'affiliate_click', { partner, label });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
