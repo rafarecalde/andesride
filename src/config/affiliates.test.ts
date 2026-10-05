@@ -8,6 +8,7 @@ import {
   isPlaceholderId,
   LUXURY_STAYS,
   POST_AFFILIATES,
+  tripCatalog,
   remarkInlineAffiliate,
   stayHref,
 } from './affiliates.ts';
@@ -113,6 +114,26 @@ test('every guide has one inline offer and sponsored attributes', () => {
     assert.match(html, /target="_blank"/);
     assert.equal(html.includes('TODO'), false, slug);
     assert.equal(html.includes('commission') && html.includes('%'), false);
+  }
+});
+
+test('destination cards use local photos and icons stay a fallback', () => {
+  const catalog = tripCatalog();
+  assert.equal(catalog['quito-tours'].photo, '/images/affiliates/equator.webp');
+  assert.equal(catalog.otavalo.photo, '/images/affiliates/otavalo.webp');
+  assert.equal(catalog.cotopaxi.photo, '/images/affiliates/cotopaxi.webp');
+  assert.equal(catalog.quilotoa.photo, '/images/affiliates/quilotoa.webp');
+  assert.equal(catalog.galapagos.photo, '/images/affiliates/galapagos.webp');
+  assert.equal(catalog['food-tour'].photo?.includes('otavalo'), false);
+  assert.equal(catalog.car.photo, undefined);
+  assert.equal(catalog.esim.photo, undefined);
+  const photoHtml = inlineOfferHtml('arriving-quito-airport-late-at-night');
+  assert.match(photoHtml, /src="\/images\/affiliates\/equator\.webp"/);
+  assert.equal(/src="https?:/.test(photoHtml), false);
+  const iconHtml = inlineOfferHtml('quito-airport-arrival-guide');
+  assert.equal(iconHtml.includes('<img'), false);
+  for (const stay of LUXURY_STAYS) {
+    assert.match(stay.photo, /^\/images\/affiliates\/[a-z0-9-]+\.webp$/);
   }
 });
 

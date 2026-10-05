@@ -151,6 +151,11 @@ The disclosure line is on every affiliate module, on `/disclosure` (footer),
 and in `/privacy`. Affiliate links use `rel="sponsored noopener"`. Clicks call
 `plausible` or `gtag` only if one of those functions is already on the page.
 
+Destination photos live in `public/images/affiliates/` (Wikimedia Commons,
+credited on `/disclosure`). Car rental and eSIM cards keep the line icon.
+Lodge cards use area scenery, not a photo of a different property. The airport
+hotel card reuses the site’s own terminal still.
+
 ## Payments (mock now → live later)
 
 Payments ship in **mock** mode: the widget runs end-to-end and shows a clean

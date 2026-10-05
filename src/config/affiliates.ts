@@ -126,6 +126,12 @@ export interface AffiliateCard {
   partner: string;
   art: string;
   cta: string;
+  /** Local scenery photo. The line icon in `art` shows when this is absent. */
+  photo?: string;
+}
+
+function scene(file: string): string {
+  return `/images/affiliates/${file}.webp`;
 }
 
 export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCard> {
@@ -136,7 +142,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       title: 'Quito & the equator',
       href: links.getYourGuide('Quito city tour Mitad del Mundo'),
       partner: 'getyourguide',
-      art: 'art-quito',
+      art: 'art-equator',
+      photo: scene('equator'),
       cta: 'See tours',
     },
     'old-town-tour': {
@@ -146,6 +153,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.getYourGuide('Quito Old Town walking tour'),
       partner: 'getyourguide',
       art: 'art-quito',
+      photo: scene('quito-street'),
       cta: 'See tours',
     },
     otavalo: {
@@ -155,6 +163,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/otavalo/'),
       partner: 'civitatis',
       art: 'art-market',
+      photo: scene('otavalo'),
       cta: 'See tours',
     },
     mitad: {
@@ -164,6 +173,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/quito/middle-world-intinan-museum-tour/'),
       partner: 'civitatis',
       art: 'art-equator',
+      photo: scene('equator'),
       cta: 'See the tour',
     },
     cotopaxi: {
@@ -173,6 +183,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.viator('Cotopaxi Quilotoa day trip'),
       partner: 'viator',
       art: 'art-volcano',
+      photo: scene('cotopaxi'),
       cta: 'See trips',
     },
     quilotoa: {
@@ -182,6 +193,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.getYourGuide('Quilotoa crater lake from Quito'),
       partner: 'getyourguide',
       art: 'art-lake',
+      photo: scene('quilotoa'),
       cta: 'See trips',
     },
     galapagos: {
@@ -191,6 +203,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/galapagos-islands/'),
       partner: 'civitatis',
       art: 'art-sea',
+      photo: scene('galapagos'),
       cta: 'See trips',
     },
     mindo: {
@@ -200,6 +213,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/mindo/'),
       partner: 'civitatis',
       art: 'art-forest',
+      photo: scene('forest'),
       cta: 'See tours',
     },
     banos: {
@@ -209,6 +223,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/banos-de-agua-santa/'),
       partner: 'civitatis',
       art: 'art-falls',
+      photo: scene('falls'),
       cta: 'See tours',
     },
     papallacta: {
@@ -218,6 +233,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.getYourGuide('Papallacta hot springs'),
       partner: 'getyourguide',
       art: 'art-springs',
+      photo: scene('springs'),
       cta: 'See tours',
     },
     'day-trips': {
@@ -227,6 +243,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.civitatis('/en/quito/day-trips/'),
       partner: 'civitatis',
       art: 'art-volcano',
+      photo: scene('cotopaxi'),
       cta: 'See trips',
     },
     teleferico: {
@@ -236,6 +253,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.getYourGuide('Teleferico Quito Pichincha'),
       partner: 'getyourguide',
       art: 'art-peak',
+      photo: scene('peak'),
       cta: 'See tours',
     },
     pululahua: {
@@ -245,6 +263,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       href: links.getYourGuide('Pululahua crater Quito'),
       partner: 'getyourguide',
       art: 'art-volcano',
+      photo: scene('pululahua'),
       cta: 'See tours',
     },
     'food-tour': {
@@ -253,7 +272,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       title: 'A food walk',
       href: links.getYourGuide('Quito food tour'),
       partner: 'getyourguide',
-      art: 'art-market',
+      art: 'art-quito',
+      photo: scene('quito-street'),
       cta: 'See tours',
     },
     car: {
@@ -282,6 +302,21 @@ export interface HotelQuery {
   label: string;
 }
 
+/** Area scenery for hotel-search cards. Not a photo of a named property. */
+const HOTEL_SCENES: Record<string, string> = {
+  Quito: scene('quito'),
+  'Quito Old Town': scene('quito-street'),
+  Cumbaya: scene('quito'),
+  Tababela: scene('airport'),
+  'La Mariscal Quito': scene('quito'),
+  Otavalo: scene('otavalo'),
+  Cotopaxi: scene('cotopaxi'),
+  Mindo: scene('forest'),
+  'Banos Ecuador': scene('falls'),
+  Papallacta: scene('springs'),
+  Quilotoa: scene('quilotoa'),
+};
+
 export function hotelCard(hotel: HotelQuery, links = affiliateLinks): AffiliateCard {
   return {
     id: `hotels-${hotel.query}`,
@@ -290,6 +325,7 @@ export function hotelCard(hotel: HotelQuery, links = affiliateLinks): AffiliateC
     href: links.bookingSearch(hotel.query),
     partner: 'booking',
     art: 'art-stay',
+    photo: HOTEL_SCENES[hotel.query],
     cta: 'Check rates',
   };
 }
@@ -306,6 +342,8 @@ export interface LuxuryStay {
    */
   bookingPath: string | null;
   searchQuery: string;
+  /** Area scenery. Never a photo of a different property's building. */
+  photo: string;
 }
 
 export const LUXURY_STAYS: LuxuryStay[] = [
@@ -315,6 +353,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/casa-gangotena-quito.html',
     searchQuery: 'Casa Gangotena Quito',
+    photo: scene('quito-street'),
   },
   {
     id: 'illa',
@@ -322,6 +361,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/illa-experience.html',
     searchQuery: 'Illa Experience Hotel Quito',
+    photo: scene('quito'),
   },
   {
     id: 'plaza-grande',
@@ -329,6 +369,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/plaza-grande.html',
     searchQuery: 'Plaza Grande Hotel Quito',
+    photo: scene('quito'),
   },
   {
     id: 'jw-marriott',
@@ -336,6 +377,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Quito',
     bookingPath: '/hotel/ec/jw-marriott-quito.html',
     searchQuery: 'JW Marriott Quito',
+    photo: scene('quito'),
   },
   {
     id: 'zuleta',
@@ -344,6 +386,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     // Telegraph lists Booking.com as the rate source, but no stable /hotel/ec/ path was verified.
     bookingPath: null,
     searchQuery: 'Hacienda Zuleta',
+    photo: scene('valley'),
   },
   {
     id: 'cusin',
@@ -351,6 +394,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Otavalo',
     bookingPath: '/hotel/ec/hacienda-cusin.html',
     searchQuery: 'Hacienda Cusin Otavalo',
+    photo: scene('valley'),
   },
   {
     id: 'mirage',
@@ -358,6 +402,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Cotacachi',
     bookingPath: '/hotel/ec/la-mirage-garden-spa.html',
     searchQuery: 'La Mirage Garden Hotel Cotacachi',
+    photo: scene('valley'),
   },
   {
     id: 'callo',
@@ -365,6 +410,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Cotopaxi',
     bookingPath: '/hotel/ec/hacienda-san-agustin-de-callo.html',
     searchQuery: 'Hacienda San Agustin de Callo',
+    photo: scene('cotopaxi'),
   },
   {
     id: 'porvenir',
@@ -372,6 +418,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Cotopaxi',
     bookingPath: '/hotel/ec/hacienda-el-porvenir-tierra-del-volcan.html',
     searchQuery: 'Hacienda El Porvenir Cotopaxi',
+    photo: scene('cotopaxi'),
   },
   {
     id: 'mashpi',
@@ -380,6 +427,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     // No verified Booking.com or Expedia property URL. Search the area by name.
     bookingPath: null,
     searchQuery: 'Mashpi Lodge',
+    photo: scene('forest'),
   },
   {
     id: 'bellavista',
@@ -387,6 +435,7 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     area: 'Mindo',
     bookingPath: '/hotel/ec/bellavista-cloud-forest-lodge.html',
     searchQuery: 'Bellavista Cloud Forest Lodge',
+    photo: scene('forest'),
   },
 ];
 
@@ -588,6 +637,7 @@ export function cardForOffer(id: string, links = affiliateLinks): AffiliateCard 
       href: stayHref(stay, links),
       partner: 'booking',
       art: 'art-stay',
+      photo: scene('quito-street'),
       cta: 'Check rates',
     };
   }
@@ -633,7 +683,7 @@ export function inlineOfferHtml(slug: string, links = affiliateLinks): string {
   if (!card) return '';
   return `<aside class="offer" data-inline-offer="${esc(card.id)}">
 <a href="${esc(card.href)}" rel="sponsored noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
-<span class="art ${esc(card.art)}" aria-hidden="true"></span>
+<span class="art ${esc(card.art)}" aria-hidden="true">${card.photo ? `<img src="${esc(card.photo)}" alt="">` : ''}</span>
 <span class="offer-copy"><span class="offer-kicker">${esc(card.kicker)}</span><strong>${esc(card.title)}</strong></span>
 <span class="offer-go">${esc(card.cta)}</span>
 </a>

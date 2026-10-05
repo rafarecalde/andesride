@@ -14,7 +14,9 @@ const { card } = Astro.props;
   data-affiliate={card.partner}
   data-affiliate-label={card.id}
 >
-  <span class:list={['art', card.art]} aria-hidden="true"></span>
+  <span class:list={['art', card.art]} aria-hidden="true">
+    {card.photo && <img src={card.photo} alt="" />}
+  </span>
   <span class="trip-meta">
     <span>
       <span class="trip-kicker">{card.kicker}</span>

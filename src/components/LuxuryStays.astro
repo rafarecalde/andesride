@@ -29,11 +29,16 @@ const stays = ids.map((id) => stayById(id)).filter((stay) => stay != null);
           data-affiliate="booking"
           data-affiliate-label={stay.id}
         >
-          <span>
-            <span class="stay-area">{stay.area}</span>
-            <span class="stay-name">{stay.name}</span>
+          <span class="stay-photo" aria-hidden="true">
+            <img src={stay.photo} alt="" />
           </span>
-          <span class="stay-go">Check rates</span>
+          <span class="stay-body">
+            <span>
+              <span class="stay-area">{stay.area}</span>
+              <span class="stay-name">{stay.name}</span>
+            </span>
+            <span class="stay-go">Check rates</span>
+          </span>
         </a>
       ))}
     </div>
