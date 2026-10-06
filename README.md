@@ -47,7 +47,7 @@ src/
   data/rates.json        # ⭐ single source of truth: zones, vehicles, extras, prices
   data/faq.ts            # FAQ copy (also feeds FAQPage JSON-LD)
   lib/payments.ts        # createCheckout() — mock | live abstraction
-  lib/fleet.ts           # resolves real fleet photos when added (astro:assets)
+  lib/photos.ts          # place photos, including the fleet SUV, and credits
   components/            # Nav, Hero, Booker (widget), Rates, Fleet, Faq, …
   layouts/               # BaseLayout, BlogPost
   content/blog/*.md      # blog posts (the SEO engine)
@@ -87,8 +87,8 @@ terminal (`getPhoto('uio')` in `src/lib/photos.ts`). That picture is the airport
 not a driver. Do not publish generated pictures of chauffeurs, name signs, or
 our vehicles.
 
-The fleet panel shows a Commons photograph of a black Range Rover, captioned as
-a reference and **not a vehicle in our fleet**. The booker uses a line icon.
+The fleet panel shows a Commons photograph of a black Changan CS55 Plus, with
+no caption under the photo. Its credit is on `/credits`. The booker uses a line icon.
 The owner terminal still `src/assets/_source/uio-terminal.webp` and the route
 map `src/assets/_source/route-map.webp` stay in How far. Every other photograph
 is a Wikimedia Commons file under CC BY, CC BY-SA, CC0, or public domain.

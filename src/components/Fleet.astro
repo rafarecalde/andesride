@@ -1,9 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import rates from '../data/rates.json';
-import { REPRESENTATIVE_CAPTION } from '../lib/fleet';
 import { getPhoto } from '../lib/photos';
-import PhotoCredit from './PhotoCredit.astro';
 
 const suvPhoto = getPhoto('suv');
 
@@ -31,13 +29,12 @@ const fromPrice = Math.min(...zones.map((z) => z.price));
                 sizes="(min-width: 980px) 60vw, 100vw"
                 loading="lazy"
               />
-              <figcaption class="fimg-credit"><PhotoCredit id="suv" /></figcaption>
             </figure>
             <div class="fc-copy">
               <h3>{v.name}</h3>
               <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>
               <div class="from">From <b>${fromPrice}</b> prepaid, one-way</div>
-              <div class="repnote">Parties of 5–8 book a second SUV at the same prepaid rate × 2. {REPRESENTATIVE_CAPTION}</div>
+              <div class="repnote">Parties of 5–8 book a second SUV at the same prepaid rate × 2.</div>
             </div>
           </div>
         );

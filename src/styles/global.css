@@ -293,7 +293,6 @@ section{padding:64px 0;}
 .fc .fimg.is-placeholder{background:linear-gradient(135deg,var(--paper) 0%,var(--paper-2) 100%);border-bottom:1px solid var(--line-soft);}
 .fc .fimg svg{height:78px;stroke:var(--ink);fill:none;stroke-width:1.3;opacity:.85;}
 .fc .fimg img{width:100%;height:100%;flex:1;min-height:0;object-fit:cover;object-position:center;}
-.fc .fimg-credit{flex:0 0 auto;padding:8px 14px 10px;font-size:.75rem;line-height:1.4;color:var(--slate);background:#fff;}
 .fc .fimg .fimg-badge{position:absolute;bottom:8px;right:10px;font-size:.62rem;letter-spacing:.04em;color:var(--slate);background:rgba(255,255,255,.78);padding:2px 8px;border-radius:0;}
 .fc-copy{padding:36px 36px 36px 32px;display:flex;flex-direction:column;justify-content:center;}
 .fc h3{font-size:1.28rem;padding:0;}
