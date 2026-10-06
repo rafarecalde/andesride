@@ -1,15 +1,23 @@
 ---
+import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { getPhoto } from '../lib/photos';
 import { u } from '../lib/url';
 interface Props {
   post: CollectionEntry<'blog'>;
 }
 const { post } = Astro.props;
-const { title, description, category, publishDate } = post.data;
+const { title, description, category, publishDate, heroImage } = post.data;
+const photo = heroImage ? getPhoto(heroImage) : undefined;
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 <a class="pcard reveal" href={u(`/guide/${post.slug}`)}>
+  {photo && (
+    <span class="pc-photo">
+      <Picture src={photo.src} alt={photo.alt} formats={['avif', 'webp']} quality={68} widths={[480, 720]} sizes="(min-width: 900px) 30vw, 100vw" loading="lazy" />
+    </span>
+  )}
   <div class="pc-body">
     <span class="pc-cat">{category}</span>
     <h3>{title}</h3>

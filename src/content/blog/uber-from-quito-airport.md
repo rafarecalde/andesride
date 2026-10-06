@@ -5,6 +5,7 @@ category: "Costs & options"
 publishDate: 2026-06-02
 tags: ["Uber", "rideshare", "Quito airport", "UIO", "cost"]
 ctaZone: "quito"
+heroImage: uio
 ---
 
 "Can I just take an Uber from Quito airport?" is one of the most-searched travel questions about UIO — and the answer is a frustrating *it depends*. Here's the real picture.

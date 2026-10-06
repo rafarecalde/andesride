@@ -79,29 +79,21 @@ total = zone.price × (roundTrip ? 2 : 1)
       + (extraStop ? extraStop × (roundTrip ? 2 : 1) : 0)
 ```
 
-## Adding the hero image
+## Photographs
 
 The homepage hero is **paper, not a photo wallpaper**. It opens with eyebrow, h1,
-short sub, and the three price rows, then a **large** owner meet-and-greet still
-`src/assets/_source/meet-greet.webp` (chauffeur with name-sign tablet at UIO
-arrivals) as a contained, captioned figure filling the copy column. Do not lead
-the page with that photo alone. Do not use `door-holder.*` or
-`cumbaya-valley.*` in components — both files are the broken curb/door still
-(top-left crop artifact), not a valley landscape. The cabin still
-`src/assets/_source/chauffeur-owner.webp` is the fleet / booker representative
-photo. The terminal exterior
-`src/assets/_source/uio-terminal.webp` is a smaller place photo in How far. The
-route map
-`src/assets/_source/route-map.webp` (UIO ↔ Old Town; Cumbayá on the path) also
-feeds How far. Do not replace owner stills with generated lookalikes.
+short sub, and the three price rows, then a contained photograph of the UIO
+terminal (`getPhoto('uio')` in `src/lib/photos.ts`). That picture is the airport,
+not a driver. Do not publish generated pictures of chauffeurs, name signs, or
+our vehicles.
 
-## Adding fleet photos
-
-The fleet panel uses the cabin portrait `src/assets/_source/chauffeur-owner.webp`
-(or a vehicle file in `src/assets/fleet/`). Do not wire `door-holder.*` or
-`cumbaya-valley.*` back in.
-Caption: **"Representative chauffeur and cabin — we do not show a stock SUV
-exterior. Actual model may vary."** Do not generate an exterior stand-in.
+The fleet panel shows a Commons photograph of a black Range Rover, captioned as
+a reference and **not a vehicle in our fleet**. The booker uses a line icon.
+The owner terminal still `src/assets/_source/uio-terminal.webp` and the route
+map `src/assets/_source/route-map.webp` stay in How far. Every other photograph
+is a Wikimedia Commons file under CC BY, CC BY-SA, CC0, or public domain.
+Credits, including file name, author, license, and Commons link, are on
+`/credits`. Guide posts set `heroImage` to a photo id from `src/data/photo-credits.json`.
 
 ## Adding a blog post
 
@@ -113,6 +105,7 @@ title: "…"
 description: "…"
 category: "Arrival tips"
 publishDate: 2026-03-01
+heroImage: uio
 tags: ["Quito airport", "UIO"]
 # draft: true   # hide from index/sitemap/RSS until ready
 ---

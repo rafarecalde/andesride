@@ -5,6 +5,7 @@ category: "Airport tips"
 publishDate: 2026-10-03
 tags: ["Wyndham Quito Airport", "Tababela", "Quito airport", "UIO", "hotel transfer"]
 ctaZone: "wyndham-airport"
+heroImage: uio
 ---
 
 Wyndham Quito Airport is the hotel in Tababela next to Mariscal Sucre (UIO). Travelers book it for one reason: the flight is early, late, or both, and they do not want an hour on the highway before they sleep. The question that follows is whether you need a car at all.

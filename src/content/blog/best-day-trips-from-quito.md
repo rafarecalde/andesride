@@ -4,6 +4,7 @@ description: "Otavalo, Mindo, Cotopaxi, Papallacta, Quilotoa and more: the best 
 category: "Day trips"
 publishDate: 2026-05-16
 tags: ["Quito", "day trips", "Otavalo", "Mindo", "Cotopaxi", "transfer"]
+heroImage: cotopaxi
 ---
 
 Quito is one of the best base camps in South America. Within a few hours in any direction you can stand on the equator, soak in volcanic hot springs, wander a cloud forest, or gaze into a turquoise crater. Here are the trips worth your time — and how to reach each.

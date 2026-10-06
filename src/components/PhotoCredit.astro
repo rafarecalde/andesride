@@ -1,0 +1,24 @@
+---
+import { getPhoto } from '../lib/photos';
+
+interface Props {
+  id: string;
+}
+
+const photo = getPhoto(Astro.props.id);
+---
+<span class="photo-credit">
+  {photo.owner ? (
+    photo.kind === 'map' ? 'Our map.' : 'Our photograph.'
+  ) : (
+    <>
+      Photograph by {photo.sourceUrl ? <a href={photo.sourceUrl}>{photo.author}</a> : photo.author}
+      {photo.licenseUrl ? (
+        <>, <a href={photo.licenseUrl}>{photo.license}</a></>
+      ) : (
+        <>, {photo.license}</>
+      )}
+      .
+    </>
+  )}
+</span>

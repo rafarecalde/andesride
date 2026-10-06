@@ -5,6 +5,7 @@ category: "Neighborhoods"
 publishDate: 2026-05-02
 tags: ["La Mariscal", "La Floresta", "Quito", "nightlife", "Quito airport", "transfer"]
 ctaZone: "quito"
+heroImage: basilica
 ---
 
 If the Old Town is Quito's history, La Mariscal is its night out. This central district — and the artsy **La Floresta** beside it — is where travelers base themselves for restaurants, bars, cafés, and easy access to the rest of the city.

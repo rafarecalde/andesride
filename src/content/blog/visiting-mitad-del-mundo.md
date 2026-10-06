@@ -4,6 +4,7 @@ description: "Mitad del Mundo lets you straddle the equator just outside Quito. 
 category: "Destinations"
 publishDate: 2026-02-28
 tags: ["Mitad del Mundo", "equator", "Quito airport", "day trip", "transfer"]
+heroImage: mitad
 ---
 
 Few photos are as fun to send home as one foot in each hemisphere. Mitad del Mundo — "the Middle of the World" — is an easy, iconic half-day from Quito.

@@ -2,6 +2,7 @@
 import rates from '../data/rates.json';
 import { routeMapPhoto, terminalPhoto } from '../lib/photos';
 import { u } from '../lib/url';
+import PhotoCredit from './PhotoCredit.astro';
 
 const { zones } = rates;
 ---
@@ -35,7 +36,7 @@ const { zones } = rates;
               loading="lazy"
               decoding="async"
             />
-            <figcaption>Mariscal Sucre International Airport (UIO), Tababela</figcaption>
+            <figcaption>Mariscal Sucre International Airport (UIO), Tababela. <PhotoCredit id="terminal" /></figcaption>
           </figure>
         ) : null}
       </div>
@@ -53,6 +54,7 @@ const { zones } = rates;
         <figcaption>
           Typical drive from UIO toward Quito (about 33 km / 34 min off-peak to Old Town on this map).
           Cumbayá sits on that valley path — closer than the city, farther than the airport hotel.
+          <PhotoCredit id="route-map" />
         </figcaption>
       </figure>
     ) : null}

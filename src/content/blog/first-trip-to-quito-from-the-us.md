@@ -4,6 +4,7 @@ description: "What US travelers should sort before a first landing at UIO: fligh
 category: "Planning"
 publishDate: 2026-10-03
 tags: ["first trip", "Quito", "US flights", "UIO", "packing", "entry requirements"]
+heroImage: basilica
 ---
 
 A first trip to Quito from the United States is an ordinary international flight plus two local facts: the airport is well outside the city, and the city is high. This page is what to confirm, what to pack, and how the ride from Mariscal Sucre (UIO) works once you land.

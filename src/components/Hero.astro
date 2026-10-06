@@ -1,7 +1,11 @@
 ---
+import { Picture } from 'astro:assets';
 import rates from '../data/rates.json';
-import { meetGreetPhoto } from '../lib/photos';
+import { getPhoto } from '../lib/photos';
 import Booker from './Booker.astro';
+import PhotoCredit from './PhotoCredit.astro';
+
+const place = getPhoto('uio');
 
 const { zones } = rates;
 ---
@@ -33,19 +37,22 @@ const { zones } = rates;
         </ul>
       </div>
 
-      {meetGreetPhoto ? (
-        <figure class="hero-meet">
-          <img
-            src={meetGreetPhoto.src}
-            alt="Licensed chauffeur at UIO arrivals holding a name-sign tablet for Sra. Martínez"
-            width={meetGreetPhoto.width}
-            height={meetGreetPhoto.height}
-            decoding="async"
-            fetchpriority="high"
-          />
-          <figcaption>Name-sign meet &amp; greet at UIO arrivals.</figcaption>
-        </figure>
-      ) : null}
+      <figure class="hero-meet">
+        <Picture
+          src={place.src}
+          alt={place.alt}
+          formats={['avif', 'webp']}
+          quality={68}
+          widths={[640, 960, 1400]}
+          sizes="(min-width: 980px) 640px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption>
+          Mariscal Sucre International Airport (UIO), Tababela.
+          <PhotoCredit id="uio" />
+        </figcaption>
+      </figure>
 
       <Booker />
     </div>

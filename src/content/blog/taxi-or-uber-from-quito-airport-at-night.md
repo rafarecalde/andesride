@@ -4,6 +4,7 @@ description: "A straight answer on taxis and Uber from UIO after dark: both can 
 category: "Safety"
 publishDate: 2026-10-04
 tags: ["safety", "taxi", "Uber", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 A night landing at Mariscal Sucre (UIO) raises a fair question: is the taxi rank safe, and will Uber actually pick you up? The useful answer is specific. Quito is a large capital that plenty of travelers move through by taxi and by app without incident. The airport at night is still the moment to be deliberate, because you are tired, you have your bags, and you do not yet know which cars are the legitimate ones.

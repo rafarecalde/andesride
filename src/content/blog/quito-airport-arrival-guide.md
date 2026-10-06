@@ -4,6 +4,7 @@ description: "What happens after you land at UIO: immigration, bags, customs, US
 category: "Arrival tips"
 publishDate: 2026-10-03
 tags: ["Quito airport", "UIO", "immigration", "customs", "SIM", "arrival"]
+heroImage: uio
 ---
 
 The first hour at Mariscal Sucre (UIO) is a short sequence: immigration, bags, customs, then the person who is driving you. None of the steps is exotic. All of them feel longer when the flight landed at night and the phone has no data. This is the order to expect, with the parts that are worth arranging before you leave the United States.

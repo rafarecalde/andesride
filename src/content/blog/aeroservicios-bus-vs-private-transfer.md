@@ -5,6 +5,7 @@ category: "Costs & options"
 publishDate: 2026-06-10
 tags: ["Quito airport", "airport bus", "Aeroservicios", "UIO", "budget"]
 ctaZone: "quito"
+heroImage: uio
 ---
 
 If you're watching every dollar, the official Quito airport shuttle bus is the budget champion. But "cheapest" and "best for your trip" aren't always the same thing. Here's the honest comparison.

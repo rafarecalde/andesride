@@ -4,6 +4,7 @@ description: "Planning the famous Otavalo market? Here's what to see, when to go
 category: "Destinations"
 publishDate: 2026-02-14
 tags: ["Otavalo", "Quito airport", "day trip", "market", "transfer"]
+heroImage: otavalo
 ---
 
 Otavalo is home to one of South America's largest and most colorful indigenous markets — and it's one of the most popular trips travelers add the moment they land in Quito. Here's how to do it without losing half a day to logistics.

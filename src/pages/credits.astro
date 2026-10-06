@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config';
+import { allCredits } from '../lib/photos';
+
+const credits = allCredits();
+const description = 'Photographers and licenses for every image on Quito Airport Transfer. Commons photos use licenses that allow commercial use.';
+---
+<BaseLayout title={`Photo credits | ${SITE.name}`} description={description} path="/credits">
+  <header class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Colophon</span>
+      <h1>Photo credits</h1>
+      <p class="meta">
+        Place photographs are from Wikimedia Commons, under licenses that allow publication here.
+        Non-commercial licenses were not used. The route map and the small terminal photo are ours.
+        The black SUV is a reference photograph, not a vehicle in our fleet. We do not publish pictures of our drivers.
+      </p>
+    </div>
+  </header>
+  <div class="wrap" style="padding-bottom:72px">
+    <ul class="credit-list">
+      {credits.map((photo) => (
+        <li>
+          {photo.src ? (
+            <Image src={photo.src} alt={photo.alt} quality={68} widths={[480]} sizes="220px" />
+          ) : (
+            <img src={photo.publicPath} alt={photo.alt} width="480" height="320" loading="lazy" />
+          )}
+          <div>
+            <h2>
+              {photo.sourceUrl ? <a href={photo.sourceUrl}>{photo.alt}</a> : photo.alt}
+            </h2>
+            <p>
+              {photo.author}. {photo.licenseUrl ? <a href={photo.licenseUrl}>{photo.license}</a> : photo.license}.
+              {photo.file ? <> File: {photo.file}.</> : null}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

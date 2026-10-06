@@ -4,6 +4,7 @@ description: "Cotopaxi is one of the world's highest active volcanoes and an unf
 category: "Day trips"
 publishDate: 2026-03-28
 tags: ["Cotopaxi", "national park", "Quito", "day trip", "volcano", "transfer"]
+heroImage: cotopaxi
 ---
 
 Snow-capped, near-perfectly conical, and very much alive, Cotopaxi is the picture most people have in their heads when they imagine the Andes. It's one of the most rewarding day trips from Quito — if you respect the altitude.

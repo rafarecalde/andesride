@@ -5,6 +5,7 @@ category: "Airport tips"
 publishDate: 2026-05-23
 tags: ["Quito airport", "layover", "UIO", "things to do", "transfer"]
 ctaZone: "quito"
+heroImage: plaza
 ---
 
 A long layover in Quito doesn't have to mean staring at a departures board. The airport is far from the city, but with a pre-booked driver you can turn dead time into a real glimpse of Ecuador — and still make your onward flight.

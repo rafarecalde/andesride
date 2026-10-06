@@ -1,13 +1,14 @@
 ---
+import { Picture } from 'astro:assets';
 import rates from '../data/rates.json';
-import { imageFor, REPRESENTATIVE_CAPTION } from '../lib/fleet';
+import { REPRESENTATIVE_CAPTION } from '../lib/fleet';
+import { getPhoto } from '../lib/photos';
+import PhotoCredit from './PhotoCredit.astro';
+
+const suvPhoto = getPhoto('suv');
 
 const { vehicles, zones } = rates;
 const fromPrice = Math.min(...zones.map((z) => z.price));
-
-const placeholders: Record<string, string> = {
-  suv: '<path d="M3 23l3-11a5 5 0 014.8-3.5h26A5 5 0 0142 12l5 11"/><path d="M2 23h60v6H2zM12 29v3M52 29v3"/><circle cx="14" cy="23" r="2.6"/><circle cx="50" cy="23" r="2.6"/>',
-};
 ---
 <section id="fleet" class="alt">
   <div class="wrap">
@@ -18,14 +19,20 @@ const placeholders: Record<string, string> = {
     </div>
     <div class={`fleet${vehicles.length === 1 ? ' solo' : ''}`}>
       {vehicles.map((v) => {
-        const photo = imageFor(v.key);
         return (
           <div class="fc reveal">
-            <div class={`fimg${photo ? '' : ' is-placeholder'}`}>
-              {photo
-                ? <img src={photo.src} alt={`${v.name} with licensed chauffeur — representative service`} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
-                : <><svg viewBox="0 0 64 32" set:html={placeholders[v.key] || placeholders.suv} /><span class="fimg-badge">Sample image</span></>}
-            </div>
+            <figure class="fimg">
+              <Picture
+                src={suvPhoto.src}
+                alt={suvPhoto.alt}
+                formats={['avif', 'webp']}
+                quality={68}
+                widths={[640, 960, 1400]}
+                sizes="(min-width: 980px) 60vw, 100vw"
+                loading="lazy"
+              />
+              <figcaption class="fimg-credit"><PhotoCredit id="suv" /></figcaption>
+            </figure>
             <div class="fc-copy">
               <h3>{v.name}</h3>
               <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>

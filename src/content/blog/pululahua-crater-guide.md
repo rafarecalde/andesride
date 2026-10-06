@@ -4,6 +4,7 @@ description: "Pululahua is one of the few inhabited volcanic craters on Earth â€
 category: "Destinations"
 publishDate: 2026-04-18
 tags: ["Pululahua", "crater", "Mitad del Mundo", "Quito airport", "transfer"]
+heroImage: pululahua
 ---
 
 Most volcanic craters are barren. Pululahua is the opposite â€” a vast green caldera with farms, forest, and a microclimate of its own, all just north of Quito and a short hop from the equator.

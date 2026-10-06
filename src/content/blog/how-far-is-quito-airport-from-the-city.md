@@ -4,6 +4,7 @@ description: "UIO is in Tababela, not downtown Quito. Plan about 45–60 minutes
 category: "Planning"
 publishDate: 2026-10-04
 tags: ["Quito airport", "UIO", "drive time", "Cumbaya", "distance", "Tababela"]
+heroImage: uio
 ---
 
 Mariscal Sucre (UIO) is not in Quito. The terminal is in Tababela, east of the city, and the first practical question on a US itinerary is how long the car actually takes. The answer depends on which of three places you mean: the city, the valley town of Cumbayá, or the airport hotel next to UIO.
