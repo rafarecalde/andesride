@@ -19,17 +19,20 @@ const fromPrice = Math.min(...zones.map((z) => z.price));
       {vehicles.map((v) => {
         return (
           <div class="fc reveal">
-            <figure class="fimg">
-              <Picture
-                src={suvPhoto.src}
-                alt={suvPhoto.alt}
-                formats={['avif', 'webp']}
-                quality={68}
-                widths={[640, 960, 1400]}
-                sizes="(min-width: 980px) 60vw, 100vw"
-                loading="lazy"
-              />
-            </figure>
+            <div class="fc-visual">
+              <figure class="fimg">
+                <Picture
+                  src={suvPhoto.src}
+                  alt={suvPhoto.alt}
+                  formats={['avif', 'webp']}
+                  quality={68}
+                  widths={[640, 960, 1400]}
+                  sizes="(min-width: 980px) 60vw, 100vw"
+                  loading="lazy"
+                />
+              </figure>
+              <p class="fref">Vehicle shown for reference. Actual make and model may differ.</p>
+            </div>
             <div class="fc-copy">
               <h3>{v.name}</h3>
               <div class="cap">Up to {v.maxPax} passengers · {v.bags} bags · licensed driver</div>
