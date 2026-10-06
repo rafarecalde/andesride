@@ -7,10 +7,10 @@
 // Link shapes follow each program's public docs:
 // - GetYourGuide: ?partner_id= on any getyourguide.com URL (search: /s/?q=)
 // - Viator: ?pid=&mcid=42383&medium=link (42383 is Viator's published link medium)
-// - Civitatis: ?aid= on a civitatis.com URL
+// - Civitatis: ?aid= on a civitatis.com URL (not used on the site; Civitatis does not pay)
 // - Discover Cars: ?a_aid= (Post Affiliate Pro)
 // - Booking.com: ?aid= plus optional &label= for a Travelpayouts marker
-// - Airalo: Impact dashboard URL, or the Ecuador eSIM page
+// - Airalo and Klook: Travelpayouts short links below (already redirect with marker 786112)
 
 export const AFFILIATE_DISCLOSURE =
   'We may earn a commission if you book through these links, at no extra cost to you.';
@@ -31,6 +31,20 @@ export const AFFILIATE_IDS = {
    */
   airaloImpactUrl: 'AIRALO_IMPACT_URL_TODO',
 };
+
+/**
+ * Travelpayouts short links for marker 786112. Each one redirects with tracking.
+ * Airalo replaces the plain Ecuador eSIM page. Klook replaces Civitatis.
+ */
+export const AIRALO_LINKS = {
+  ecuadorEsim: 'https://airalo.tpk.lu/wlqWEIpT',
+} as const;
+
+export const KLOOK_LINKS = {
+  quito: 'https://klook.tpk.lu/5dU9ztBd',
+  galapagos: 'https://klook.tpk.lu/orm6CUKt',
+  otavalo: 'https://klook.tpk.lu/KDthU8eu',
+} as const;
 
 export type AffiliateIds = { [K in keyof typeof AFFILIATE_IDS]: string };
 
@@ -108,10 +122,14 @@ export function createAffiliateLinks(ids: AffiliateIds = AFFILIATE_IDS) {
       });
     },
 
+    /** Tracked Ecuador eSIM. Ignores the plain airalo.com page. */
     airalo() {
       if (!isPlaceholderId(ids.airaloImpactUrl)) return ids.airaloImpactUrl.trim();
-      const url = new URL('https://www.airalo.com/ecuador-esim');
-      return withParams(url, { partner_id: ids.airaloPartnerId });
+      return AIRALO_LINKS.ecuadorEsim;
+    },
+
+    klook(place: keyof typeof KLOOK_LINKS) {
+      return KLOOK_LINKS[place];
     },
   };
 }
@@ -160,8 +178,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'otavalo',
       kicker: 'Tours',
       title: 'Otavalo market',
-      href: links.civitatis('/en/otavalo/'),
-      partner: 'civitatis',
+      href: links.klook('otavalo'),
+      partner: 'klook',
       art: 'art-market',
       photo: scene('otavalo'),
       cta: 'See tours',
@@ -170,8 +188,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'mitad',
       kicker: 'Tours',
       title: 'Mitad del Mundo',
-      href: links.civitatis('/en/quito/middle-world-intinan-museum-tour/'),
-      partner: 'civitatis',
+      href: links.klook('quito'),
+      partner: 'klook',
       art: 'art-equator',
       photo: scene('equator'),
       cta: 'See the tour',
@@ -200,8 +218,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'galapagos',
       kicker: 'Tours',
       title: 'Galápagos',
-      href: links.civitatis('/en/galapagos-islands/'),
-      partner: 'civitatis',
+      href: links.klook('galapagos'),
+      partner: 'klook',
       art: 'art-sea',
       photo: scene('galapagos'),
       cta: 'See trips',
@@ -210,8 +228,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'mindo',
       kicker: 'Tours',
       title: 'Mindo cloud forest',
-      href: links.civitatis('/en/mindo/'),
-      partner: 'civitatis',
+      href: links.klook('quito'),
+      partner: 'klook',
       art: 'art-forest',
       photo: scene('forest'),
       cta: 'See tours',
@@ -220,8 +238,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'banos',
       kicker: 'Tours',
       title: 'Baños',
-      href: links.civitatis('/en/banos-de-agua-santa/'),
-      partner: 'civitatis',
+      href: links.klook('quito'),
+      partner: 'klook',
       art: 'art-falls',
       photo: scene('falls'),
       cta: 'See tours',
@@ -240,8 +258,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'day-trips',
       kicker: 'Day trips',
       title: 'Days out of Quito',
-      href: links.civitatis('/en/quito/day-trips/'),
-      partner: 'civitatis',
+      href: links.klook('quito'),
+      partner: 'klook',
       art: 'art-volcano',
       photo: scene('cotopaxi'),
       cta: 'See trips',
@@ -298,34 +316,22 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
 }
 
 export interface HotelQuery {
-  query: string;
+  id: string;
   label: string;
+  /** Booking.com property path, always /hotel/ec/….html — never a search page. */
+  path: string;
+  photo: string;
 }
-
-/** Area scenery for hotel-search cards. Not a photo of a named property. */
-const HOTEL_SCENES: Record<string, string> = {
-  Quito: scene('quito'),
-  'Quito Old Town': scene('quito-street'),
-  Cumbaya: scene('quito'),
-  Tababela: scene('airport'),
-  'La Mariscal Quito': scene('quito'),
-  Otavalo: scene('otavalo'),
-  Cotopaxi: scene('cotopaxi'),
-  Mindo: scene('forest'),
-  'Banos Ecuador': scene('falls'),
-  Papallacta: scene('springs'),
-  Quilotoa: scene('quilotoa'),
-};
 
 export function hotelCard(hotel: HotelQuery, links = affiliateLinks): AffiliateCard {
   return {
-    id: `hotels-${hotel.query}`,
+    id: hotel.id,
     kicker: 'Hotels',
     title: hotel.label,
-    href: links.bookingSearch(hotel.query),
+    href: links.bookingHotel(hotel.path),
     partner: 'booking',
     art: 'art-stay',
-    photo: HOTEL_SCENES[hotel.query],
+    photo: hotel.photo,
     cta: 'Check rates',
   };
 }
@@ -336,12 +342,8 @@ export interface LuxuryStay {
   id: string;
   name: string;
   area: string;
-  /**
-   * Verified Booking.com property path. Null means we could not confirm a
-   * property URL, so Check rates uses destination search instead.
-   */
-  bookingPath: string | null;
-  searchQuery: string;
+  /** Verified Booking.com property path: /hotel/ec/….html */
+  bookingPath: string;
   /** Area scenery. Never a photo of a different property's building. */
   photo: string;
 }
@@ -352,7 +354,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Casa Gangotena',
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/casa-gangotena-quito.html',
-    searchQuery: 'Casa Gangotena Quito',
     photo: scene('quito-street'),
   },
   {
@@ -360,7 +361,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Illa Experience',
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/illa-experience.html',
-    searchQuery: 'Illa Experience Hotel Quito',
     photo: scene('quito'),
   },
   {
@@ -368,7 +368,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Plaza Grande',
     area: 'Quito Old Town',
     bookingPath: '/hotel/ec/plaza-grande.html',
-    searchQuery: 'Plaza Grande Hotel Quito',
     photo: scene('quito'),
   },
   {
@@ -376,16 +375,14 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'JW Marriott Quito',
     area: 'Quito',
     bookingPath: '/hotel/ec/jw-marriott-quito.html',
-    searchQuery: 'JW Marriott Quito',
     photo: scene('quito'),
   },
   {
-    id: 'zuleta',
-    name: 'Hacienda Zuleta',
+    id: 'pinsaqui',
+    name: 'Hacienda Pinsaquí',
     area: 'Near Otavalo',
-    // Telegraph lists Booking.com as the rate source, but no stable /hotel/ec/ path was verified.
-    bookingPath: null,
-    searchQuery: 'Hacienda Zuleta',
+    bookingPath: '/hotel/ec/hosteria-hacienda-pinsaqui.html',
+    // No Commons photo of this hacienda. Imbabura/Cuicocha scenery, not another lodge.
     photo: scene('valley'),
   },
   {
@@ -393,7 +390,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Hacienda Cusín',
     area: 'Otavalo',
     bookingPath: '/hotel/ec/hacienda-cusin.html',
-    searchQuery: 'Hacienda Cusin Otavalo',
     photo: scene('valley'),
   },
   {
@@ -401,7 +397,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'La Mirage',
     area: 'Cotacachi',
     bookingPath: '/hotel/ec/la-mirage-garden-spa.html',
-    searchQuery: 'La Mirage Garden Hotel Cotacachi',
     photo: scene('valley'),
   },
   {
@@ -409,7 +404,6 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'San Agustín de Callo',
     area: 'Cotopaxi',
     bookingPath: '/hotel/ec/hacienda-san-agustin-de-callo.html',
-    searchQuery: 'Hacienda San Agustin de Callo',
     photo: scene('cotopaxi'),
   },
   {
@@ -417,16 +411,13 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Hacienda El Porvenir',
     area: 'Cotopaxi',
     bookingPath: '/hotel/ec/hacienda-el-porvenir-tierra-del-volcan.html',
-    searchQuery: 'Hacienda El Porvenir Cotopaxi',
     photo: scene('cotopaxi'),
   },
   {
     id: 'mashpi',
     name: 'Mashpi Lodge',
     area: 'Cloud forest',
-    // No verified Booking.com or Expedia property URL. Search the area by name.
-    bookingPath: null,
-    searchQuery: 'Mashpi Lodge',
+    bookingPath: '/hotel/ec/mashpi-lodge.html',
     photo: scene('forest'),
   },
   {
@@ -434,20 +425,18 @@ export const LUXURY_STAYS: LuxuryStay[] = [
     name: 'Bellavista Lodge',
     area: 'Mindo',
     bookingPath: '/hotel/ec/bellavista-cloud-forest-lodge.html',
-    searchQuery: 'Bellavista Cloud Forest Lodge',
     photo: scene('forest'),
   },
 ];
 
-export const HOME_LUXURY_IDS = ['gangotena', 'illa', 'zuleta', 'callo', 'mashpi', 'mirage'];
+export const HOME_LUXURY_IDS = ['gangotena', 'illa', 'pinsaqui', 'callo', 'mashpi', 'mirage'];
 
 export function stayById(id: string): LuxuryStay | undefined {
   return LUXURY_STAYS.find((stay) => stay.id === id);
 }
 
 export function stayHref(stay: LuxuryStay, links = affiliateLinks): string {
-  if (stay.bookingPath) return links.bookingHotel(stay.bookingPath);
-  return links.bookingSearch(stay.searchQuery);
+  return links.bookingHotel(stay.bookingPath);
 }
 
 export interface PostAffiliatePlan {
@@ -458,17 +447,72 @@ export interface PostAffiliatePlan {
   luxury?: string[];
 }
 
-const QUITO: HotelQuery = { query: 'Quito', label: 'Quito hotels' };
-const OLD_TOWN: HotelQuery = { query: 'Quito Old Town', label: 'Old Town hotels' };
-const CUMBAYA: HotelQuery = { query: 'Cumbaya', label: 'Cumbayá hotels' };
-const AIRPORT: HotelQuery = { query: 'Tababela', label: 'Airport hotels' };
-const MARISCAL: HotelQuery = { query: 'La Mariscal Quito', label: 'La Mariscal hotels' };
-const OTAVALO: HotelQuery = { query: 'Otavalo', label: 'Otavalo hotels' };
-const COTOPAXI: HotelQuery = { query: 'Cotopaxi', label: 'Cotopaxi stays' };
-const MINDO: HotelQuery = { query: 'Mindo', label: 'Mindo lodges' };
-const BANOS: HotelQuery = { query: 'Banos Ecuador', label: 'Baños hotels' };
-const PAPALLACTA: HotelQuery = { query: 'Papallacta', label: 'Papallacta stays' };
-const QUILOTOA: HotelQuery = { query: 'Quilotoa', label: 'Quilotoa stays' };
+const QUITO: HotelQuery = {
+  id: 'hotels-quito',
+  label: 'JW Marriott Quito',
+  path: '/hotel/ec/jw-marriott-quito.html',
+  photo: scene('quito'),
+};
+const OLD_TOWN: HotelQuery = {
+  id: 'hotels-old-town',
+  label: 'Casa Gangotena',
+  path: '/hotel/ec/casa-gangotena-quito.html',
+  photo: scene('quito-street'),
+};
+const CUMBAYA: HotelQuery = {
+  id: 'hotels-cumbaya',
+  label: 'San José de Puembo',
+  path: '/hotel/ec/san-jose-de-puembo-quito-airport.html',
+  photo: scene('quito'),
+};
+const AIRPORT: HotelQuery = {
+  id: 'hotels-airport',
+  label: 'Wyndham Quito Airport',
+  path: '/hotel/ec/wyndham-quito-airport.html',
+  photo: scene('airport'),
+};
+const MARISCAL: HotelQuery = {
+  id: 'hotels-mariscal',
+  label: 'JW Marriott Quito',
+  path: '/hotel/ec/jw-marriott-quito.html',
+  photo: scene('quito'),
+};
+const OTAVALO: HotelQuery = {
+  id: 'hotels-otavalo',
+  label: 'Hacienda Pinsaquí',
+  path: '/hotel/ec/hosteria-hacienda-pinsaqui.html',
+  photo: scene('valley'),
+};
+const COTOPAXI: HotelQuery = {
+  id: 'hotels-cotopaxi',
+  label: 'San Agustín de Callo',
+  path: '/hotel/ec/hacienda-san-agustin-de-callo.html',
+  photo: scene('cotopaxi'),
+};
+const MINDO: HotelQuery = {
+  id: 'hotels-mindo',
+  label: 'Bellavista Lodge',
+  path: '/hotel/ec/bellavista-cloud-forest-lodge.html',
+  photo: scene('forest'),
+};
+const BANOS: HotelQuery = {
+  id: 'hotels-banos',
+  label: 'Sangay Spa Hotel',
+  path: '/hotel/ec/sangay-spa.html',
+  photo: scene('falls'),
+};
+const PAPALLACTA: HotelQuery = {
+  id: 'hotels-papallacta',
+  label: 'Termas de Papallacta',
+  path: '/hotel/ec/termas-de-papallacta.html',
+  photo: scene('springs'),
+};
+const QUILOTOA: HotelQuery = {
+  id: 'hotels-quilotoa',
+  label: 'San Agustín de Callo',
+  path: '/hotel/ec/hacienda-san-agustin-de-callo.html',
+  photo: scene('cotopaxi'),
+};
 
 const QUITO_LUXURY = ['gangotena', 'illa', 'plaza-grande'];
 
@@ -534,14 +578,14 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
     inlineTitle: 'An eSIM before you fly',
     hotel: QUITO,
     tour: 'quito-tours',
-    luxury: ['gangotena', 'illa', 'jw-marriott', 'zuleta'],
+    luxury: ['gangotena', 'illa', 'jw-marriott', 'pinsaqui'],
   },
   'getting-from-quito-airport-to-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
   'things-to-do-in-otavalo': {
     inline: 'otavalo',
     hotel: OTAVALO,
     tour: 'otavalo',
-    luxury: ['zuleta', 'cusin', 'mirage'],
+    luxury: ['pinsaqui', 'cusin', 'mirage'],
   },
   'visiting-mitad-del-mundo': {
     inline: 'mitad',
@@ -582,7 +626,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
     inline: 'day-trips',
     hotel: QUITO,
     tour: 'day-trips',
-    luxury: ['zuleta', 'callo', 'mashpi', 'gangotena'],
+    luxury: ['pinsaqui', 'callo', 'mashpi', 'gangotena'],
   },
   'private-transfer-vs-taxi-quito': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
   'avianca-av125-bogota-to-quito-night': {

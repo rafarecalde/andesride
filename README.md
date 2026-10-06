@@ -134,18 +134,31 @@ the partner’s normal page. Do not publish a half-filled tracking link.
 |---|---|---|
 | `getYourGuidePartnerId` | GetYourGuide Partner Portal → Account | Appended as `partner_id` on `getyourguide.com/s/?q=` |
 | `viatorPid` | Viator Partner Resource Center | Appended as `pid`, with Viator’s published `mcid=42383` and `medium=link` |
-| `civitatisAid` | Civitatis affiliates panel | Appended as `aid` |
+| `civitatisAid` | Civitatis affiliates panel | Not used on the site. Otavalo, Galápagos, and Quito-area tour cards use the Klook short links below |
 | `discoverCarsAid` | Discover Cars affiliate dashboard | Appended as `a_aid` on the Quito rental page |
 | `bookingAid` | Booking.com Partnerships, or the `aid` inside a Travelpayouts Booking.com link | Appended as `aid` |
 | `travelpayoutsMarker` | Set to `786112` | Sent as Booking.com’s `label` on hotel links. `bookingAid` is still a placeholder, so `aid` stays off until you paste the `aid` from a Travelpayouts Booking.com link |
-| `airaloImpactUrl` | Airalo’s Impact dashboard (paste the full tracking URL) | Used as-is for the Ecuador eSIM |
-| `airaloPartnerId` | Only if you do not have an Impact URL yet | Appended as `partner_id` on `airalo.com/ecuador-esim`. Airalo does not document that parameter; prefer `airaloImpactUrl` |
+| `airaloImpactUrl` | Airalo’s Impact dashboard (paste the full tracking URL) | Used as-is for the Ecuador eSIM, if set. Otherwise the Travelpayouts short link is used |
+| `airaloPartnerId` | Unused while the Travelpayouts eSIM link is live | The plain `airalo.com/ecuador-esim` URL is not published |
 
-Named hotels use a verified Booking.com property path when one was confirmed
-(Casa Gangotena, Illa Experience, Plaza Grande, JW Marriott, Hacienda Cusín,
-La Mirage, San Agustín de Callo, Hacienda El Porvenir, Bellavista). Hacienda
-Zuleta and Mashpi Lodge were not given a property URL — Check rates opens a
-Booking.com search for that name. There is no direct-booking form.
+Live Travelpayouts short links (marker 786112), in `AIRALO_LINKS` and `KLOOK_LINKS`:
+
+| Card | URL |
+|---|---|
+| Ecuador eSIM | `https://airalo.tpk.lu/wlqWEIpT` |
+| Klook Quito tours (also Mitad del Mundo, day trips, Mindo, and Baños, which had no separate short link) | `https://klook.tpk.lu/5dU9ztBd` |
+| Klook Galápagos | `https://klook.tpk.lu/orm6CUKt` |
+| Klook Otavalo | `https://klook.tpk.lu/KDthU8eu` |
+
+Every Booking.com link is a property page (`/hotel/ec/….html`) with `label=786112`.
+There is no destination search link. Hacienda Zuleta is not listed. Near Otavalo,
+Check rates opens Hostería Hacienda Pinsaquí. Mashpi Lodge uses its property page.
+Area cards use one named stay: JW Marriott (Quito and La Mariscal), Casa Gangotena
+(Old Town), San José de Puembo (Cumbayá valley), Wyndham Quito Airport, Pinsaquí
+(Otavalo), San Agustín de Callo (Cotopaxi and the Quilotoa guide), Bellavista
+(Mindo), Sangay Spa (Baños), and Termas de Papallacta. Pinsaquí uses the existing
+Imbabura landscape photo — Commons has no photo of that hacienda. There is no
+direct-booking form.
 
 The disclosure line is on every affiliate module, on `/disclosure` (footer),
 and in `/privacy`. Affiliate links use `rel="sponsored noopener"`. Clicks call
