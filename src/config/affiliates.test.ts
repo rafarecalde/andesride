@@ -47,7 +47,12 @@ test('placeholder ids fall back to plain partner URLs', () => {
   assert.equal(placeholderLinks.civitatis('/en/otavalo/').includes('aid='), false);
   assert.equal(placeholderLinks.discoverCars().includes('a_aid='), false);
   assert.equal(placeholderLinks.bookingSearch('Cumbaya').includes('aid='), false);
-  assert.equal(placeholderLinks.bookingSearch('Cumbaya').includes('label='), false);
+  assert.match(placeholderLinks.bookingSearch('Cumbaya'), /label=786112/);
+  assert.match(
+    placeholderLinks.bookingHotel('/hotel/ec/casa-gangotena-quito.html'),
+    /label=786112/,
+  );
+  assert.equal(AFFILIATE_IDS.travelpayoutsMarker, '786112');
   assert.equal(placeholderLinks.airalo(), 'https://www.airalo.com/ecuador-esim');
 });
 

@@ -22,8 +22,8 @@ export const AFFILIATE_IDS = {
   discoverCarsAid: 'DISCOVERCARS_A_AID_TODO',
   /** Booking.com affiliate id (`aid`) from partnerships.booking.com or the aid inside a Travelpayouts Booking link. */
   bookingAid: 'BOOKING_AID_TODO',
-  /** Travelpayouts partner marker. Sent as Booking.com's `label` once it is a real id. */
-  travelpayoutsMarker: 'TRAVELPAYOUTS_MARKER_TODO',
+  /** Travelpayouts partner marker. Sent as Booking.com's `label`. */
+  travelpayoutsMarker: '786112',
   airaloPartnerId: 'AIRALO_PARTNER_ID_TODO',
   /**
    * Paste the full Impact tracking URL from the Airalo affiliate dashboard.
