@@ -294,6 +294,9 @@ section{padding:64px 0;}
 .fc .fimg svg{height:78px;stroke:var(--ink);fill:none;stroke-width:1.3;opacity:.85;}
 .fc .fimg img{width:100%;height:100%;flex:1;min-height:0;object-fit:cover;object-position:center;}
 .fc .fimg .fimg-badge{position:absolute;bottom:8px;right:10px;font-size:.62rem;letter-spacing:.04em;color:var(--slate);background:rgba(255,255,255,.78);padding:2px 8px;border-radius:0;}
+.fc-visual{display:flex;flex-direction:column;min-width:0;}
+.fc-visual .fimg{height:auto;flex:1 1 auto;}
+.fref{margin:0;padding:10px 16px 12px;font-size:.75rem;line-height:1.45;color:var(--slate);background:#fff;}
 .fc-copy{padding:36px 36px 36px 32px;display:flex;flex-direction:column;justify-content:center;}
 .fc h3{font-size:1.28rem;padding:0;}
 .fc .cap{font-size:.9rem;color:var(--slate);margin-top:8px;padding:0;}

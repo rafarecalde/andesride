@@ -88,7 +88,9 @@ not a driver. Do not publish generated pictures of chauffeurs, name signs, or
 our vehicles.
 
 The fleet panel shows a Commons photograph of a black Changan CS55 Plus, with
-no caption under the photo. Its credit is on `/credits`. The booker uses a line icon.
+a short line under the photo: the vehicle is shown for reference and the actual
+make and model may differ. Its credit is on `/credits`. The booker uses a line
+icon and the same note.
 The owner terminal still `src/assets/_source/uio-terminal.webp` and the route
 map `src/assets/_source/route-map.webp` stay in How far. Every other photograph
 is a Wikimedia Commons file under CC BY, CC BY-SA, CC0, or public domain.
