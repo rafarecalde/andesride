@@ -135,13 +135,13 @@ the partner’s normal page. Do not publish a half-filled tracking link.
 | `getYourGuidePartnerId` | GetYourGuide Partner Portal → Account | Appended as `partner_id` on `getyourguide.com/s/?q=` |
 | `viatorPid` | Viator Partner Resource Center | Appended as `pid`, with Viator’s published `mcid=42383` and `medium=link` |
 | `civitatisAid` | Civitatis affiliates panel | Not used on the site. Otavalo, Galápagos, and Quito-area tour cards use the Klook short links below |
-| `discoverCarsAid` | Discover Cars affiliate dashboard | Appended as `a_aid` on the Quito rental page |
+| `discoverCarsAid` | Unused. Discover Cars declined the site | Car rental uses the Economybookings short link below |
 | `bookingAid` | Booking.com Partnerships, or the `aid` inside a Travelpayouts Booking.com link | Appended as `aid` |
 | `travelpayoutsMarker` | Set to `786112` | Sent as Booking.com’s `label` on hotel links. `bookingAid` is still a placeholder, so `aid` stays off until you paste the `aid` from a Travelpayouts Booking.com link |
 | `airaloImpactUrl` | Airalo’s Impact dashboard (paste the full tracking URL) | Used as-is for the Ecuador eSIM, if set. Otherwise the Travelpayouts short link is used |
 | `airaloPartnerId` | Unused while the Travelpayouts eSIM link is live | The plain `airalo.com/ecuador-esim` URL is not published |
 
-Live Travelpayouts short links (marker 786112), in `AIRALO_LINKS` and `KLOOK_LINKS`:
+Live Travelpayouts short links (marker 786112), in `AIRALO_LINKS`, `KLOOK_LINKS`, and `ECONOMYBOOKINGS_LINKS`:
 
 | Card | URL |
 |---|---|
@@ -149,6 +149,7 @@ Live Travelpayouts short links (marker 786112), in `AIRALO_LINKS` and `KLOOK_LIN
 | Klook Quito tours (also Mitad del Mundo, day trips, Mindo, and Baños, which had no separate short link) | `https://klook.tpk.lu/5dU9ztBd` |
 | Klook Galápagos | `https://klook.tpk.lu/orm6CUKt` |
 | Klook Otavalo | `https://klook.tpk.lu/KDthU8eu` |
+| Economybookings, car at UIO | `https://economybookings.tpk.lu/SogVnqj0` |
 
 Every Booking.com link is a property page (`/hotel/ec/….html`) with `label=786112`.
 There is no destination search link. Hacienda Zuleta is not listed. Near Otavalo,

@@ -5,6 +5,7 @@ import {
   AFFILIATE_IDS,
   AIRALO_LINKS,
   createAffiliateLinks,
+  ECONOMYBOOKINGS_LINKS,
   inlineOfferHtml,
   KLOOK_LINKS,
   isPlaceholderId,
@@ -60,6 +61,7 @@ test('placeholder ids fall back to plain partner URLs', () => {
   assert.equal(placeholderLinks.klook('quito'), KLOOK_LINKS.quito);
   assert.equal(placeholderLinks.klook('galapagos'), KLOOK_LINKS.galapagos);
   assert.equal(placeholderLinks.klook('otavalo'), KLOOK_LINKS.otavalo);
+  assert.equal(placeholderLinks.economybookings(), ECONOMYBOOKINGS_LINKS.quitoAirport);
 });
 
 test('real ids are appended with each partner’s documented parameter', () => {
@@ -108,11 +110,14 @@ test('live tour and eSIM cards use tracked Travelpayouts links, not Civitatis', 
   assert.equal(catalog.banos.href, KLOOK_LINKS.quito);
   assert.equal(catalog.esim.href, AIRALO_LINKS.ecuadorEsim);
   assert.equal(catalog.esim.partner, 'airalo');
+  assert.equal(catalog.car.href, ECONOMYBOOKINGS_LINKS.quitoAirport);
+  assert.equal(catalog.car.partner, 'economybookings');
   assert.match(catalog['quito-tours'].href, /^https:\/\/www\.getyourguide\.com\//);
   assert.match(catalog.cotopaxi.href, /^https:\/\/www\.viator\.com\//);
   for (const card of Object.values(catalog)) {
     assert.equal(card.href.includes('civitatis.com'), false, card.id);
     assert.equal(card.href.includes('airalo.com'), false, card.id);
+    assert.equal(card.href.includes('discovercars.com'), false, card.id);
   }
 });
 

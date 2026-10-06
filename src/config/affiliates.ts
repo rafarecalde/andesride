@@ -8,7 +8,7 @@
 // - GetYourGuide: ?partner_id= on any getyourguide.com URL (search: /s/?q=)
 // - Viator: ?pid=&mcid=42383&medium=link (42383 is Viator's published link medium)
 // - Civitatis: ?aid= on a civitatis.com URL (not used on the site; Civitatis does not pay)
-// - Discover Cars: ?a_aid= (Post Affiliate Pro)
+// - Discover Cars: not used. Car rental is the Economybookings short link below.
 // - Booking.com: ?aid= plus optional &label= for a Travelpayouts marker
 // - Airalo and Klook: Travelpayouts short links below (already redirect with marker 786112)
 
@@ -35,9 +35,14 @@ export const AFFILIATE_IDS = {
 /**
  * Travelpayouts short links for marker 786112. Each one redirects with tracking.
  * Airalo replaces the plain Ecuador eSIM page. Klook replaces Civitatis.
+ * Economybookings replaces Discover Cars.
  */
 export const AIRALO_LINKS = {
   ecuadorEsim: 'https://airalo.tpk.lu/wlqWEIpT',
+} as const;
+
+export const ECONOMYBOOKINGS_LINKS = {
+  quitoAirport: 'https://economybookings.tpk.lu/SogVnqj0',
 } as const;
 
 export const KLOOK_LINKS = {
@@ -96,10 +101,15 @@ export function createAffiliateLinks(ids: AffiliateIds = AFFILIATE_IDS) {
       return withParams(url, { aid: ids.civitatisAid });
     },
 
-    /** Quito pickup page. a_aid is Discover Cars' Post Affiliate Pro id. */
+    /** Unused. Discover Cars rejected the site; car rental uses economybookings(). */
     discoverCars(path = '/ecuador/quito') {
       const url = new URL(path, 'https://www.discovercars.com');
       return withParams(url, { a_aid: ids.discoverCarsAid });
+    },
+
+    /** Tracked Quito airport (UIO) car rental. */
+    economybookings() {
+      return ECONOMYBOOKINGS_LINKS.quitoAirport;
     },
 
     bookingSearch(destination: string) {
@@ -298,8 +308,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'car',
       kicker: 'Car rental',
       title: 'A car at UIO',
-      href: links.discoverCars(),
-      partner: 'discovercars',
+      href: links.economybookings(),
+      partner: 'economybookings',
       art: 'art-car',
       cta: 'Compare cars',
     },
