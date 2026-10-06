@@ -4,6 +4,7 @@ description: "Central Quito is about 9,350 feet (2,850 m). What that feels like 
 category: "Arrival tips"
 publishDate: 2026-10-03
 tags: ["altitude", "Quito", "UIO", "arrival", "acclimatization"]
+heroImage: basilica
 ---
 
 Central Quito sits high. The figure travelers repeat — about **9,350 feet**, or about **2,850 meters** — is the usual description of the city, and it is the one to plan around. You will notice it. Most people notice it as ordinary shortness of breath, not as an emergency. A few people feel rotten on night one. Neither outcome is something you can predict from how fit you are at sea level.

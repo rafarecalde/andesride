@@ -4,6 +4,7 @@ description: "What a ride from UIO to Quito really costs, why fares vary so much
 category: "Planning"
 publishDate: 2026-02-08
 tags: ["Quito airport", "taxi price", "UIO", "cost"]
+heroImage: uio
 ---
 
 "How much is a taxi from Quito airport?" is one of the first things travelers search before they fly — and the honest answer is: it depends, which is exactly the problem.

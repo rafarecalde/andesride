@@ -1,5 +1,5 @@
 ---
-import { HOME_LUXURY_IDS, stayById, stayHref } from '../config/affiliates';
+import { HOME_LUXURY_IDS, sceneAlt, stayById, stayHref } from '../config/affiliates';
 
 interface Props {
   ids?: string[];
@@ -29,8 +29,8 @@ const stays = ids.map((id) => stayById(id)).filter((stay) => stay != null);
           data-affiliate="booking"
           data-affiliate-label={stay.id}
         >
-          <span class="stay-photo" aria-hidden="true">
-            <img src={stay.photo} alt="" />
+          <span class="stay-photo">
+            <img src={stay.photo} alt={sceneAlt(stay.photo)} />
           </span>
           <span class="stay-body">
             <span>

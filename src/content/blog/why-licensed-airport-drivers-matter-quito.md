@@ -4,6 +4,7 @@ description: "Not every car outside UIO is a legitimate, insured ride. Here's th
 category: "Safety"
 publishDate: 2026-02-02
 tags: ["licensed drivers", "safety", "Quito airport", "insurance"]
+heroImage: uio
 ---
 
 The cheapest car outside the terminal isn't always the safest — and in an unfamiliar country, that trade-off matters more than a few dollars.

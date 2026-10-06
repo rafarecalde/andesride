@@ -5,6 +5,7 @@ category: "Costs & options"
 publishDate: 2026-05-28
 tags: ["Quito airport", "UIO", "transport", "cost", "comparison"]
 ctaZone: "quito"
+heroImage: uio
 ---
 
 Quito's airport (UIO) sits about 45–60 minutes from the city in Tababela, so "how do I actually get to my hotel?" is the first real decision of any trip. Here's every option, honestly compared.

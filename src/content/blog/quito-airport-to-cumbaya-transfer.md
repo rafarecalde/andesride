@@ -5,6 +5,7 @@ category: "Neighborhoods"
 publishDate: 2026-10-03
 tags: ["Cumbaya", "Quito airport", "UIO", "transfer", "Valle de Tumbaco"]
 ctaZone: "cumbaya"
+heroImage: cumbaya
 ---
 
 Cumbayá is the populated valley between Mariscal Sucre (UIO) and Quito. If your hotel confirmation says Cumbayá — or a street in the Valle de Tumbaco that your host calls Cumbayá — you are not booking the city rate, and you are not booking the airport hotel. You are booking the middle hop.

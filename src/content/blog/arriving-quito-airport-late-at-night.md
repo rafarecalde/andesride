@@ -5,6 +5,7 @@ category: "Arrival tips"
 publishDate: 2026-01-20
 updatedDate: 2026-09-20
 tags: ["Quito airport", "late arrival", "Miami flight", "safety", "UIO"]
+heroImage: uio
 ---
 
 A lot of international flights into **Mariscal Sucre (UIO)** land after dark — some near 9pm, others around 11:30pm or after midnight. You clear immigration in a quieter terminal, walk out with your bags, and the city is still a drive away on the highway. That is the hour this product is built for.

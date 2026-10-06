@@ -5,6 +5,7 @@ category: "Destinations"
 publishDate: 2026-04-25
 tags: ["Teleferico", "Pichincha", "Quito", "viewpoint", "hiking", "transfer"]
 ctaZone: "quito"
+heroImage: teleferico
 ---
 
 For the best panorama of Quito — the city stretching for miles along its high valley — head up the **TelefériQo**, one of the highest aerial cable cars in the world.

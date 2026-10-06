@@ -5,6 +5,7 @@ category: "Arrival tips"
 publishDate: 2026-01-28
 updatedDate: 2026-09-20
 tags: ["meet and greet", "Quito airport", "UIO", "arrival", "late arrival"]
+heroImage: uio
 ---
 
 There's a specific kind of stress in walking out of customs into a crowd of unfamiliar faces, in a country where you don't speak the language, looking for a ride that may or may not exist. It is sharper after a **late inbound** — many international flights into UIO land between about **9pm and 1am** — when the hall is thinner and you are too tired to negotiate.

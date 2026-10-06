@@ -14,7 +14,7 @@ interface Props {
 }
 const { title, description, path = '/', ogType = 'website', image } = Astro.props;
 const canonical = publicUrl(path || '/', Astro.site);
-const ogImage = publicUrl(image ?? '/og-default.png', Astro.site);
+const ogImage = publicUrl(image ?? '/og-default.jpg', Astro.site);
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -5,6 +5,7 @@ category: "Costs & options"
 publishDate: 2026-06-14
 tags: ["safety", "Uber", "Quito", "Quito airport", "rideshare"]
 ctaZone: "quito"
+heroImage: basilica
 ---
 
 Safety is a fair question to ask before you land somewhere new, and Quito is no exception. Here's a practical, non-alarmist take on getting around — and on arrival in particular.

@@ -162,6 +162,27 @@ function scene(file: string): string {
   return `/images/affiliates/${file}.webp`;
 }
 
+const SCENE_ALT: Record<string, string> = {
+  '/images/affiliates/equator.webp': 'The Mitad del Mundo monument outside Quito',
+  '/images/affiliates/quito.webp': 'Quito and the Basílica del Voto Nacional from El Panecillo',
+  '/images/affiliates/quito-street.webp': 'A street in Quito’s historic center',
+  '/images/affiliates/otavalo.webp': 'Stalls at the Otavalo artisan market',
+  '/images/affiliates/cotopaxi.webp': 'Snow-covered Cotopaxi in the Andes',
+  '/images/affiliates/quilotoa.webp': 'The turquoise crater lake of Quilotoa',
+  '/images/affiliates/galapagos.webp': 'Pinnacle Rock and the bays of Bartolomé, Galápagos',
+  '/images/affiliates/forest.webp': 'Cloud forest in the Mindo reserve',
+  '/images/affiliates/falls.webp': 'Pailón del Diablo waterfall near Baños',
+  '/images/affiliates/springs.webp': 'Páramo scenery at Papallacta, east of Quito',
+  '/images/affiliates/valley.webp': 'Laguna Cuicocha with the Imbabura volcano behind it',
+  '/images/affiliates/peak.webp': 'The TelefériQo climbing Pichincha above Quito',
+  '/images/affiliates/pululahua.webp': 'The green crater of Pululahua',
+  '/images/affiliates/airport.webp': 'Mariscal Sucre International Airport (UIO) terminal, Tababela',
+};
+
+export function sceneAlt(src?: string): string {
+  return (src && SCENE_ALT[src]) || '';
+}
+
 export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCard> {
   return {
     'quito-tours': {
@@ -737,7 +758,7 @@ export function inlineOfferHtml(slug: string, links = affiliateLinks): string {
   if (!card) return '';
   return `<aside class="offer" data-inline-offer="${esc(card.id)}">
 <a href="${esc(card.href)}" rel="sponsored noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
-<span class="art ${esc(card.art)}" aria-hidden="true">${card.photo ? `<img src="${esc(card.photo)}" alt="">` : ''}</span>
+<span class="art ${esc(card.art)}">${card.photo ? `<img src="${esc(card.photo)}" alt="${esc(sceneAlt(card.photo))}">` : ''}</span>
 <span class="offer-copy"><span class="offer-kicker">${esc(card.kicker)}</span><strong>${esc(card.title)}</strong></span>
 <span class="offer-go">${esc(card.cta)}</span>
 </a>

@@ -5,6 +5,7 @@ category: "Neighborhoods"
 publishDate: 2026-03-21
 tags: ["Cumbaya", "Tumbaco", "Quito airport", "Valle de Tumbaco", "transfer"]
 ctaZone: "cumbaya"
+heroImage: cumbaya
 ---
 
 If you want a calmer, warmer, and closer base than central Quito — especially handy near the airport — the **Valle de Tumbaco** is the local secret. Cumbayá and Tumbaco sit lower than the city, so the climate is milder and the pace is more relaxed.

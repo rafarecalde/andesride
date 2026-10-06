@@ -4,6 +4,7 @@ description: "Baños is Ecuador's adventure capital — waterfalls, the famous t
 category: "Day trips"
 publishDate: 2026-04-04
 tags: ["Banos", "Agua Santa", "Quito", "waterfalls", "adventure", "transfer"]
+heroImage: banos
 ---
 
 Tucked into a green gorge below the Tungurahua volcano, Baños de Agua Santa packs more adrenaline and scenery per square kilometre than almost anywhere in Ecuador.

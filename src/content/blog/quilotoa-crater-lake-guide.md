@@ -4,6 +4,7 @@ description: "Quilotoa's emerald-turquoise crater lake is one of Ecuador's most 
 category: "Day trips"
 publishDate: 2026-04-11
 tags: ["Quilotoa", "crater lake", "Quito", "day trip", "hiking", "transfer"]
+heroImage: quilotoa
 ---
 
 Round a final bend in the highlands and the ground simply falls away into a vast caldera filled with impossibly turquoise water. Quilotoa is the kind of view that stops conversations.

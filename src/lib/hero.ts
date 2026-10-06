@@ -1,3 +1,3 @@
-// Homepage portraits come from src/lib/photos.ts (owner stills, contained).
-// Kept so older imports keep resolving.
-export { meetGreetPhoto as heroPhoto } from './photos';
+// The homepage place photo is the Commons UIO terminal (getPhoto('uio')).
+// It is not a picture of our drivers.
+export { getPhoto } from './photos';

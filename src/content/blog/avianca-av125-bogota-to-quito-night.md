@@ -4,6 +4,7 @@ description: "Avianca AV125 from Bogotá to UIO has recently been scheduled arou
 category: "Arrival tips"
 publishDate: 2026-10-03
 tags: ["Avianca", "Bogotá", "AV125", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 Avianca flight **AV125** flies Bogotá (BOG) to **Mariscal Sucre (UIO)**. In early October 2026, public flight-status history showed a scheduled arrival of **23:40 — about 11:40pm local** — with the aircraft leaving Bogotá at 22:05. Landings on 1, 2, and 3 October 2026 were 11:49pm, 11:42pm, and 11:33pm. Late September on the same boards was the same clock, with a few nights slipping a little past midnight. Another schedule listing has shown an earlier 10:25pm arrival for this flight number. Use the time on your Avianca reservation, and check [avianca.com](https://www.avianca.com) again before departure. “Typically around 11:40pm” is what recent boards showed, not a guarantee for every future date.

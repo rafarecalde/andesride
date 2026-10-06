@@ -4,6 +4,7 @@ description: "United flight UA1002 from Houston to UIO typically arrives around 
 category: "Arrival tips"
 publishDate: 2026-10-02
 tags: ["United Airlines", "Houston", "UA1002", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 United Airlines flight **UA1002** is the evening nonstop from Houston George Bush (IAH) to **Mariscal Sucre (UIO)**. A published schedule effective 8 September 2026 through 24 October 2026 lists an 18:05 departure from Houston and a **23:25 arrival in Quito — 11:25pm local**. A public flight-status page for 4 October 2026 showed the same scheduled gate arrival, 23:25. From 25 October 2026 the same flight is listed a few minutes later, around 11:30pm, on most days of the week. Confirm the time on [united.com](https://www.united.com) before you fly. Schedules move, and a delay out of Houston can push you past midnight.

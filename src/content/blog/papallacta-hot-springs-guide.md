@@ -4,6 +4,7 @@ description: "Papallacta's thermal pools are the perfect first or last stop in E
 category: "Destinations"
 publishDate: 2026-03-07
 tags: ["Papallacta", "hot springs", "Quito airport", "thermal pools", "transfer"]
+heroImage: papallacta
 ---
 
 After a long-haul flight, almost nothing beats sinking into a steaming, mineral-rich thermal pool with the páramo rising around you. Papallacta is that place — and it's one of the smartest trips to book for your **arrival or departure day**.

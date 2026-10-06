@@ -4,6 +4,7 @@ description: "Copa Airlines CM211 from Panama City to UIO typically arrives arou
 category: "Arrival tips"
 publishDate: 2026-10-02
 tags: ["Copa Airlines", "Panama City", "CM211", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 Copa Airlines flight **CM211** is the late nonstop from Panama City Tocumen (PTY) to **Mariscal Sucre (UIO)**. Through 24 October 2026 a published schedule lists a 22:31 departure from Tocumen and a **00:32 arrival in Quito — 12:32am local**, the next calendar day. Public status boards for 3–9 October 2026 showed that same 12:32am scheduled arrival, and recent landings in late September were clustered around midnight. From 25 October 2026 the listed arrival moves only slightly, to about 12:31am. Check [copa.com](https://www.copaair.com) or your booking. Copa’s hub means many people on CM211 have already changed planes in Panama. The clock in Quito does not care how long your day has been.

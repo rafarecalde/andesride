@@ -5,6 +5,7 @@ category: "Neighborhoods"
 publishDate: 2026-03-14
 tags: ["Quito", "Old Town", "Centro Historico", "Quito airport", "transfer"]
 ctaZone: "quito"
+heroImage: plaza
 ---
 
 Quito's Old Town was one of the first UNESCO World Heritage Sites ever named — and walking it, you understand why. Cobbled streets, gilded churches, and grand plazas spread across the slopes beneath Pichincha volcano.

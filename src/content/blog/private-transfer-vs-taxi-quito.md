@@ -5,6 +5,7 @@ category: "Costs & options"
 publishDate: 2026-06-06
 tags: ["private transfer", "taxi", "Quito airport", "UIO", "comparison"]
 ctaZone: "quito"
+heroImage: uio
 ---
 
 The two most common ways into Quito from the airport are a regular taxi and a pre-booked private transfer. They look similar on the surface — a car and a driver — but the experience and the math are quite different.

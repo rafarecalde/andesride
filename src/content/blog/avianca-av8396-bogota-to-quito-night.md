@@ -4,6 +4,7 @@ description: "Avianca AV8396 from Bogotá into UIO has recently been scheduled a
 category: "Arrival tips"
 publishDate: 2026-10-04
 tags: ["Avianca", "Bogotá", "AV8396", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 Avianca flight **AV8396** reaches **Mariscal Sucre (UIO)** from Bogotá (BOG) in the middle of the night. Public status boards for 4–11 October 2026 listed a **23:40 departure from Bogotá and a 01:15 arrival in Quito — about 1:15am local**. The same flight number operates Buenos Aires to Bogotá earlier that day, then continues to Quito, so a lot of passengers have already been traveling for many hours before this leg. Recent landings in late September and the first days of October were often close to 1:00am, sometimes a bit earlier and sometimes later when the first leg ran behind. Check [avianca.com](https://www.avianca.com) and the time on your ticket. This flight number has carried more than one published clock. “Typically around 1:15am” describes the early-October boards, and it can move.

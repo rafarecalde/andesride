@@ -4,6 +4,7 @@ description: "Should you rent a car at Quito airport or book private transfers? 
 category: "Costs & options"
 publishDate: 2026-06-22
 tags: ["car rental", "Quito airport", "private transfer", "driving Ecuador", "UIO"]
+heroImage: uio
 ---
 
 A rental car promises freedom, and for some Ecuador itineraries it delivers. But for a lot of travelers — especially those based in Quito and doing day trips — point-to-point private transfers end up being the saner, and sometimes cheaper, choice. Here's the trade-off.

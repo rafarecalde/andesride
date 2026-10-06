@@ -4,6 +4,7 @@ description: "LATAM flight LA1443 from Bogotá to UIO typically arrives around 1
 category: "Arrival tips"
 publishDate: 2026-10-03
 tags: ["LATAM", "Bogotá", "LA1443", "Quito airport", "late arrival", "UIO"]
+heroImage: uio
 ---
 
 LATAM flight **LA1443** is a nonstop from Bogotá (BOG) to **Mariscal Sucre (UIO)**. Published schedules list a 21:15 departure from El Dorado and a **23:00 arrival in Quito — 11:00pm local**. A public status board for 2 October 2026 showed that same 11:00pm scheduled arrival, with the aircraft in at 10:55pm. Other recent days that week were on the same clock. The flight is only about an hour and 45 minutes, which is why people underestimate it. You board in the evening and you are in Ecuador at 11. Check [latam.com](https://www.latamairlines.com) before you go. A short hop still moves when the airline retimes the bank.

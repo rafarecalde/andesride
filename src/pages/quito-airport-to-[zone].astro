@@ -1,7 +1,10 @@
 ---
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingCta from '../components/BookingCta.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
 import { SITE } from '../config';
+import { getPhoto } from '../lib/photos';
 import { u } from '../lib/url';
 import { publicUrl } from '../lib/publicUrl';
 import rates from '../data/rates.json';
@@ -11,6 +14,7 @@ export function getStaticPaths() {
 }
 
 const { zone } = Astro.props;
+const place = getPhoto(zone.key === 'cumbaya' ? 'cumbaya' : zone.key === 'quito' ? 'plaza' : 'uio');
 const path = `/quito-airport-to-${zone.key}`;
 const suv = rates.vehicles[0];
 const isCity = zone.key === 'quito';
@@ -36,6 +40,7 @@ const schema = {
   title={`Quito Airport to ${zone.name} — Prepaid Luxury SUV (UIO) | ${SITE.name}`}
   description={`Prepaid luxury SUV from Quito airport (UIO) to ${zone.name}: $${zone.price} USD, about ${zone.eta}, licensed driver, flight tracking and meet & greet included. Pay up front.`}
   path={path}
+  image={place.src.src}
   schema={schema}
 >
   <header class="page-hero">
@@ -48,6 +53,18 @@ const schema = {
   </header>
 
   <div class="wrap" style="padding:40px 0 64px">
+    <figure class="place-hero">
+      <Picture
+        src={place.src}
+        alt={place.alt}
+        formats={['avif', 'webp']}
+        quality={68}
+        widths={[640, 960, 1400]}
+        sizes="(min-width: 900px) 920px, 100vw"
+        loading="eager"
+      />
+      <figcaption><PhotoCredit id={place.id} /></figcaption>
+    </figure>
     <div class="route-facts">
       <div class="rfact"><div class="k">Prepaid (luxury SUV)</div><div class="v">${zone.price} <small>USD</small></div></div>
       <div class="rfact"><div class="k">Drive time</div><div class="v" style="font-size:1.2rem">{zone.eta}</div></div>

@@ -4,6 +4,7 @@ description: "How do you pay for transport from Quito airport — cash or card? 
 category: "Costs & options"
 publishDate: 2026-06-18
 tags: ["Quito airport", "payment", "USD", "tipping", "money"]
+heroImage: uio
 ---
 
 Money logistics are easy to overlook until you're standing at arrivals working out how to pay. Here's the quick version for Quito.

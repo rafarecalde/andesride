@@ -1,5 +1,5 @@
 ---
-import type { AffiliateCard } from '../config/affiliates';
+import { sceneAlt, type AffiliateCard } from '../config/affiliates';
 
 interface Props {
   card: AffiliateCard;
@@ -14,8 +14,8 @@ const { card } = Astro.props;
   data-affiliate={card.partner}
   data-affiliate-label={card.id}
 >
-  <span class:list={['art', card.art]} aria-hidden="true">
-    {card.photo && <img src={card.photo} alt="" />}
+  <span class:list={['art', card.art]}>
+    {card.photo && <img src={card.photo} alt={sceneAlt(card.photo)} />}
   </span>
   <span class="trip-meta">
     <span>

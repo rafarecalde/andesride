@@ -5,6 +5,7 @@ category: "Arrival tips"
 publishDate: 2026-10-03
 tags: ["Old Town", "Hyatt", "Swissotel", "Oro Verde", "Casa Gangotena", "Quito airport", "UIO"]
 ctaZone: "quito"
+heroImage: plaza
 ---
 
 Old Town, a Hyatt, Swissôtel, Hotel Oro Verde, and Casa Gangotena are different neighborhoods and different buildings. From Mariscal Sucre (UIO) they are the same transfer product: anywhere in Quito, **$100** prepaid, one way, in a luxury SUV. You do not pay a separate "Old Town fare" or a hotel surcharge because the property is well known.

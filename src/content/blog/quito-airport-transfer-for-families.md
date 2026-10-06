@@ -4,6 +4,7 @@ description: "Traveling to Quito as a family? Child seats, room for bags, and a 
 category: "Family travel"
 publishDate: 2026-01-24
 tags: ["family travel", "child seat", "Quito airport", "luggage"]
+heroImage: uio
 ---
 
 Hauling kids, car seats, and a week's worth of luggage through an unfamiliar airport is nobody's idea of fun — especially after a long flight to altitude.

@@ -5,6 +5,7 @@ category: "Airport tips"
 publishDate: 2026-05-09
 tags: ["Quito airport", "Tababela", "Puembo", "hotels", "layover", "transfer"]
 ctaZone: "wyndham-airport"
+heroImage: uio
 ---
 
 Quito's airport (UIO) sits out in Tababela, a good 45–60 minutes from the city. If you have a pre-dawn departure or a short connection, that distance is the enemy — which is why staying close to the airport is one of the best moves a traveler can make.

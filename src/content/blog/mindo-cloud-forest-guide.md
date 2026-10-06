@@ -4,6 +4,7 @@ description: "Mindo is Ecuador's cloud-forest playground — hummingbirds, water
 category: "Destinations"
 publishDate: 2026-02-21
 tags: ["Mindo", "cloud forest", "Quito airport", "birding", "transfer"]
+heroImage: mindo
 ---
 
 If Quito's altitude has you a little breathless, Mindo is the perfect antidote: a lush, warm cloud forest northwest of the city where the air is thick with birdsong instead of thin with elevation.
