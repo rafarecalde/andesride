@@ -137,7 +137,7 @@ the partner’s normal page. Do not publish a half-filled tracking link.
 | `civitatisAid` | Civitatis affiliates panel | Appended as `aid` |
 | `discoverCarsAid` | Discover Cars affiliate dashboard | Appended as `a_aid` on the Quito rental page |
 | `bookingAid` | Booking.com Partnerships, or the `aid` inside a Travelpayouts Booking.com link | Appended as `aid` |
-| `travelpayoutsMarker` | Travelpayouts partner id (marker) | Sent as Booking.com’s `label`. Needs a real `bookingAid` as well — Travelpayouts’ own aid, copied from a link they generate |
+| `travelpayoutsMarker` | Set to `786112` | Sent as Booking.com’s `label` on hotel links. `bookingAid` is still a placeholder, so `aid` stays off until you paste the `aid` from a Travelpayouts Booking.com link |
 | `airaloImpactUrl` | Airalo’s Impact dashboard (paste the full tracking URL) | Used as-is for the Ecuador eSIM |
 | `airaloPartnerId` | Only if you do not have an Impact URL yet | Appended as `partner_id` on `airalo.com/ecuador-esim`. Airalo does not document that parameter; prefer `airaloImpactUrl` |
 
@@ -150,6 +150,8 @@ Booking.com search for that name. There is no direct-booking form.
 The disclosure line is on every affiliate module, on `/disclosure` (footer),
 and in `/privacy`. Affiliate links use `rel="sponsored noopener"`. Clicks call
 `plausible` or `gtag` only if one of those functions is already on the page.
+`BaseLayout` also loads the Travelpayouts Drive script (`emrldco.com`), which
+may turn some outbound travel links into affiliate links. `/disclosure` says so.
 
 Destination photos live in `public/images/affiliates/` (Wikimedia Commons,
 credited on `/disclosure`). Car rental and eSIM cards keep the line icon.
