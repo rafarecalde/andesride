@@ -5,7 +5,8 @@
 // partner URL — never a broken or half-built tracking link.
 //
 // Link shapes follow each program's public docs:
-// - GetYourGuide: ?partner_id= on any getyourguide.com URL (search: /s/?q=)
+// - GetYourGuide: ?partner_id=&utm_medium=online_publisher on any getyourguide.com URL
+//   (city page such as /quito-l2774/, or search /s/?q=). No activity ids. No widget.
 // - Viator: ?pid=&mcid=42383&medium=link (42383 is Viator's published link medium)
 // - Civitatis: ?aid= on a civitatis.com URL (not used on the site; Civitatis does not pay)
 // - Discover Cars: not used. Car rental is the Economybookings short link below.
@@ -16,7 +17,7 @@ export const AFFILIATE_DISCLOSURE =
   'We may earn a commission if you book through these links, at no extra cost to you.';
 
 export const AFFILIATE_IDS = {
-  getYourGuidePartnerId: 'GYG_PARTNER_ID_TODO',
+  getYourGuidePartnerId: 'XMZLWQZ',
   viatorPid: 'VIATOR_PID_TODO',
   civitatisAid: 'CIVITATIS_AID_TODO',
   discoverCarsAid: 'DISCOVERCARS_A_AID_TODO',
@@ -56,6 +57,9 @@ export type AffiliateIds = { [K in keyof typeof AFFILIATE_IDS]: string };
 /** Viator's published campaign id for ordinary text links. Not a publisher id. */
 export const VIATOR_LINK_MCID = '42383';
 
+/** GetYourGuide's published medium for a normal publisher link. */
+export const GYG_UTM_MEDIUM = 'online_publisher';
+
 export function isPlaceholderId(value: string | undefined | null): boolean {
   if (!value) return true;
   const trimmed = value.trim();
@@ -70,13 +74,26 @@ function withParams(url: URL, params: Record<string, string | undefined>): strin
   return url.toString();
 }
 
+function trackGetYourGuide(url: URL, ids: AffiliateIds): string {
+  return withParams(url, {
+    partner_id: ids.getYourGuidePartnerId,
+    utm_medium: isPlaceholderId(ids.getYourGuidePartnerId) ? undefined : GYG_UTM_MEDIUM,
+  });
+}
+
 export function createAffiliateLinks(ids: AffiliateIds = AFFILIATE_IDS) {
   return {
-    /** Documented search deep link: https://www.getyourguide.com/s/?q=&partner_id= */
+    /** Search page: https://www.getyourguide.com/s/?q=&partner_id=&utm_medium=online_publisher */
     getYourGuide(query: string) {
       const url = new URL('https://www.getyourguide.com/s/');
       url.searchParams.set('q', query);
-      return withParams(url, { partner_id: ids.getYourGuidePartnerId });
+      return trackGetYourGuide(url, ids);
+    },
+
+    /** Location page such as /quito-l2774/. Existing query params are kept; partner_id is replaced. */
+    getYourGuideLocation(path: string) {
+      const url = new URL(path.startsWith('/') ? path : `/${path}`, 'https://www.getyourguide.com');
+      return trackGetYourGuide(url, ids);
     },
 
     /**
@@ -189,7 +206,7 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'quito-tours',
       kicker: 'Tours',
       title: 'Quito & the equator',
-      href: links.getYourGuide('Quito city tour Mitad del Mundo'),
+      href: links.getYourGuideLocation('/quito-l2774/'),
       partner: 'getyourguide',
       art: 'art-equator',
       photo: scene('equator'),
@@ -215,8 +232,28 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       photo: scene('otavalo'),
       cta: 'See tours',
     },
+    'otavalo-gyg': {
+      id: 'otavalo-gyg',
+      kicker: 'Tours',
+      title: 'Otavalo market',
+      href: links.getYourGuide('Otavalo'),
+      partner: 'getyourguide',
+      art: 'art-market',
+      photo: scene('otavalo'),
+      cta: 'See tours',
+    },
     mitad: {
       id: 'mitad',
+      kicker: 'Tours',
+      title: 'Mitad del Mundo',
+      href: links.getYourGuide('Mitad del Mundo'),
+      partner: 'getyourguide',
+      art: 'art-equator',
+      photo: scene('equator'),
+      cta: 'See the tour',
+    },
+    'mitad-klook': {
+      id: 'mitad-klook',
       kicker: 'Tours',
       title: 'Mitad del Mundo',
       href: links.klook('quito'),
@@ -229,8 +266,8 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'cotopaxi',
       kicker: 'Day trips',
       title: 'Cotopaxi & Quilotoa',
-      href: links.viator('Cotopaxi Quilotoa day trip'),
-      partner: 'viator',
+      href: links.getYourGuide('Cotopaxi'),
+      partner: 'getyourguide',
       art: 'art-volcano',
       photo: scene('cotopaxi'),
       cta: 'See trips',
@@ -259,6 +296,16 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'mindo',
       kicker: 'Tours',
       title: 'Mindo cloud forest',
+      href: links.getYourGuide('Mindo'),
+      partner: 'getyourguide',
+      art: 'art-forest',
+      photo: scene('forest'),
+      cta: 'See tours',
+    },
+    'mindo-klook': {
+      id: 'mindo-klook',
+      kicker: 'Tours',
+      title: 'Mindo cloud forest',
       href: links.klook('quito'),
       partner: 'klook',
       art: 'art-forest',
@@ -267,6 +314,16 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
     },
     banos: {
       id: 'banos',
+      kicker: 'Tours',
+      title: 'Baños',
+      href: links.getYourGuide('Banos'),
+      partner: 'getyourguide',
+      art: 'art-falls',
+      photo: scene('falls'),
+      cta: 'See tours',
+    },
+    'banos-klook': {
+      id: 'banos-klook',
       kicker: 'Tours',
       title: 'Baños',
       href: links.klook('quito'),
@@ -291,6 +348,16 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       title: 'Days out of Quito',
       href: links.klook('quito'),
       partner: 'klook',
+      art: 'art-volcano',
+      photo: scene('cotopaxi'),
+      cta: 'See trips',
+    },
+    'day-trips-gyg': {
+      id: 'day-trips-gyg',
+      kicker: 'Day trips',
+      title: 'Days out of Quito',
+      href: links.getYourGuide('Cotopaxi'),
+      partner: 'getyourguide',
       art: 'art-volcano',
       photo: scene('cotopaxi'),
       cta: 'See trips',
@@ -613,7 +680,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
   },
   'getting-from-quito-airport-to-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
   'things-to-do-in-otavalo': {
-    inline: 'otavalo',
+    inline: 'otavalo-gyg',
     hotel: OTAVALO,
     tour: 'otavalo',
     luxury: ['pinsaqui', 'cusin', 'mirage'],
@@ -621,7 +688,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
   'visiting-mitad-del-mundo': {
     inline: 'mitad',
     hotel: QUITO,
-    tour: 'mitad',
+    tour: 'mitad-klook',
     luxury: ['gangotena', 'illa'],
   },
   'altitude-in-quito-what-to-expect': {
@@ -632,7 +699,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
   },
   'paying-for-quito-airport-rides': { inline: 'esim', hotel: QUITO, tour: 'quito-tours' },
   'pululahua-crater-guide': { inline: 'pululahua', hotel: QUITO, tour: 'pululahua' },
-  'banos-de-agua-santa-guide': { inline: 'banos', hotel: BANOS, tour: 'banos' },
+  'banos-de-agua-santa-guide': { inline: 'banos', hotel: BANOS, tour: 'banos-klook' },
   'where-to-stay-near-quito-airport': { inline: 'hotels-airport', hotel: AIRPORT, tour: 'quito-tours' },
   'arriving-quito-airport-late-at-night': {
     inline: 'quito-tours',
@@ -654,7 +721,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
   },
   'quito-airport-transfer-for-families': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
   'best-day-trips-from-quito': {
-    inline: 'day-trips',
+    inline: 'day-trips-gyg',
     hotel: QUITO,
     tour: 'day-trips',
     luxury: ['pinsaqui', 'callo', 'mashpi', 'gangotena'],
@@ -683,7 +750,7 @@ export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
   'mindo-cloud-forest-guide': {
     inline: 'mindo',
     hotel: MINDO,
-    tour: 'mindo',
+    tour: 'mindo-klook',
     luxury: ['mashpi', 'bellavista'],
   },
 };
@@ -757,7 +824,7 @@ export function inlineOfferHtml(slug: string, links = affiliateLinks): string {
   const card = inlineCardForPost(slug, links);
   if (!card) return '';
   return `<aside class="offer" data-inline-offer="${esc(card.id)}">
-<a href="${esc(card.href)}" rel="sponsored noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
+<a href="${esc(card.href)}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
 <span class="art ${esc(card.art)}">${card.photo ? `<img src="${esc(card.photo)}" alt="${esc(sceneAlt(card.photo))}">` : ''}</span>
 <span class="offer-copy"><span class="offer-kicker">${esc(card.kicker)}</span><strong>${esc(card.title)}</strong></span>
 <span class="offer-go">${esc(card.cta)}</span>

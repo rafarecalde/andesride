@@ -17,8 +17,10 @@ import {
   stayHref,
 } from './affiliates.ts';
 
-const placeholderLinks = createAffiliateLinks();
-
+const placeholderLinks = createAffiliateLinks({
+  ...AFFILIATE_IDS,
+  getYourGuidePartnerId: 'GYG_PARTNER_ID_TODO',
+});
 test('placeholder partner ids are recognized', () => {
   assert.equal(isPlaceholderId('GYG_PARTNER_ID_TODO'), true);
   assert.equal(isPlaceholderId(''), true);
@@ -77,7 +79,14 @@ test('real ids are appended with each partner’s documented parameter', () => {
     airaloImpactUrl: 'AIRALO_IMPACT_URL_TODO',
   });
 
-  assert.match(links.getYourGuide('Quito'), /partner_id=GYG123/);
+  assert.equal(
+    links.getYourGuide('Quito'),
+    'https://www.getyourguide.com/s/?q=Quito&partner_id=GYG123&utm_medium=online_publisher',
+  );
+  assert.equal(
+    links.getYourGuideLocation('/quito-l2774/?partner_id=OLD'),
+    'https://www.getyourguide.com/quito-l2774/?partner_id=GYG123&utm_medium=online_publisher',
+  );
   const viator = links.viator('Galapagos');
   assert.match(viator, /pid=P00012345/);
   assert.match(viator, /mcid=42383/);
@@ -104,16 +113,34 @@ test('live tour and eSIM cards use tracked Travelpayouts links, not Civitatis', 
   assert.equal(catalog.otavalo.partner, 'klook');
   assert.equal(catalog.galapagos.href, KLOOK_LINKS.galapagos);
   assert.equal(catalog.galapagos.partner, 'klook');
-  assert.equal(catalog.mitad.href, KLOOK_LINKS.quito);
+  assert.equal(catalog['mitad-klook'].href, KLOOK_LINKS.quito);
   assert.equal(catalog['day-trips'].href, KLOOK_LINKS.quito);
-  assert.equal(catalog.mindo.href, KLOOK_LINKS.quito);
-  assert.equal(catalog.banos.href, KLOOK_LINKS.quito);
+  assert.equal(catalog['mindo-klook'].href, KLOOK_LINKS.quito);
+  assert.equal(catalog['banos-klook'].href, KLOOK_LINKS.quito);
   assert.equal(catalog.esim.href, AIRALO_LINKS.ecuadorEsim);
   assert.equal(catalog.esim.partner, 'airalo');
   assert.equal(catalog.car.href, ECONOMYBOOKINGS_LINKS.quitoAirport);
   assert.equal(catalog.car.partner, 'economybookings');
-  assert.match(catalog['quito-tours'].href, /^https:\/\/www\.getyourguide\.com\//);
-  assert.match(catalog.cotopaxi.href, /^https:\/\/www\.viator\.com\//);
+  assert.equal(
+    catalog['quito-tours'].href,
+    'https://www.getyourguide.com/quito-l2774/?partner_id=XMZLWQZ&utm_medium=online_publisher',
+  );
+  assert.equal(
+    catalog.cotopaxi.href,
+    'https://www.getyourguide.com/s/?q=Cotopaxi&partner_id=XMZLWQZ&utm_medium=online_publisher',
+  );
+  assert.equal(catalog.mitad.partner, 'getyourguide');
+  assert.equal(catalog.mindo.partner, 'getyourguide');
+  assert.equal(catalog.banos.partner, 'getyourguide');
+  assert.equal(catalog['otavalo-gyg'].partner, 'getyourguide');
+  assert.match(catalog['otavalo-gyg'].href, /q=Otavalo/);
+  assert.equal(AFFILIATE_IDS.getYourGuidePartnerId, 'XMZLWQZ');
+  for (const card of Object.values(catalog)) {
+    if (!card.href.includes('getyourguide.com')) continue;
+    assert.match(card.href, /partner_id=XMZLWQZ/, card.id);
+    assert.match(card.href, /utm_medium=online_publisher/, card.id);
+    assert.equal(/-t\d+/.test(card.href), false, card.id);
+  }
   for (const card of Object.values(catalog)) {
     assert.equal(card.href.includes('civitatis.com'), false, card.id);
     assert.equal(card.href.includes('airalo.com'), false, card.id);
@@ -159,10 +186,10 @@ test('every guide has one inline offer and sponsored attributes', () => {
   for (const slug of slugs) {
     assert.ok(POST_AFFILIATES[slug], `missing plan for ${slug}`);
     const html = inlineOfferHtml(slug);
-    assert.match(html, /rel="sponsored noopener"/);
+    assert.match(html, /rel="sponsored nofollow noopener"/);
     assert.match(html, /target="_blank"/);
     assert.equal(html.includes('TODO'), false, slug);
-    assert.equal(html.includes('commission') && html.includes('%'), false);
+    assert.equal(/\b\d+\s*%/.test(html), false, slug);
   }
 });
 
