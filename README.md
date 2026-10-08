@@ -128,7 +128,7 @@ the partner’s normal page. Do not publish a half-filled tracking link.
 | Field | Where to get it | What it does |
 |---|---|---|
 | `getYourGuidePartnerId` | Set to `XMZLWQZ` | Appended as `partner_id` with `utm_medium=online_publisher` on location pages (`/quito-l2774/`) and search (`/s/?q=`). No GetYourGuide widget. |
-| `viatorPid` | Viator Partner Resource Center | Appended as `pid`, with Viator’s published `mcid=42383` and `medium=link` |
+| `viatorPid` | Set to `P00324546` | Appended as `pid` with `mcid=42383` and `medium=link` on `/Quito/d4427-ttd` and `searchResults/all?text=` |
 | `civitatisAid` | Civitatis affiliates panel | Not used on the site. Otavalo, Galápagos, and Quito-area tour cards use the Klook short links below |
 | `discoverCarsAid` | Unused. Discover Cars declined the site | Car rental uses the Economybookings short link below |
 | `bookingAid` | Booking.com Partnerships, or the `aid` inside a Travelpayouts Booking.com link | Appended as `aid` |
