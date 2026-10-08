@@ -5,8 +5,9 @@
 // partner URL — never a broken or half-built tracking link.
 //
 // Link shapes follow each program's public docs:
-// - GetYourGuide: ?partner_id= on any getyourguide.com URL (search: /s/?q=)
-// - Viator: ?pid=&mcid=42383&medium=link (42383 is Viator's published link medium)
+// - GetYourGuide: ?partner_id=&utm_medium=online_publisher on any getyourguide.com URL
+//   (city page such as /quito-l2774/, or search /s/?q=). No activity ids. No widget.
+// - Viator: ?pid=&mcid=42383&medium=link (Quito page /Quito/d4427-ttd or /searchResults/all?text=)
 // - Civitatis: ?aid= on a civitatis.com URL (not used on the site; Civitatis does not pay)
 // - Discover Cars: not used. Car rental is the Economybookings short link below.
 // - Booking.com: ?aid= plus optional &label= for a Travelpayouts marker
@@ -16,8 +17,8 @@ export const AFFILIATE_DISCLOSURE =
   'We may earn a commission if you book through these links, at no extra cost to you.';
 
 export const AFFILIATE_IDS = {
-  getYourGuidePartnerId: 'GYG_PARTNER_ID_TODO',
-  viatorPid: 'VIATOR_PID_TODO',
+  getYourGuidePartnerId: 'XMZLWQZ',
+  viatorPid: 'P00324546',
   civitatisAid: 'CIVITATIS_AID_TODO',
   discoverCarsAid: 'DISCOVERCARS_A_AID_TODO',
   /** Booking.com affiliate id (`aid`) from partnerships.booking.com or the aid inside a Travelpayouts Booking link. */
@@ -56,6 +57,9 @@ export type AffiliateIds = { [K in keyof typeof AFFILIATE_IDS]: string };
 /** Viator's published campaign id for ordinary text links. Not a publisher id. */
 export const VIATOR_LINK_MCID = '42383';
 
+/** GetYourGuide's published medium for a normal publisher link. */
+export const GYG_UTM_MEDIUM = 'online_publisher';
+
 export function isPlaceholderId(value: string | undefined | null): boolean {
   if (!value) return true;
   const trimmed = value.trim();
@@ -70,29 +74,47 @@ function withParams(url: URL, params: Record<string, string | undefined>): strin
   return url.toString();
 }
 
+function trackViator(url: URL, ids: AffiliateIds): string {
+  if (isPlaceholderId(ids.viatorPid)) return url.toString();
+  url.searchParams.set('pid', ids.viatorPid);
+  url.searchParams.set('mcid', VIATOR_LINK_MCID);
+  url.searchParams.set('medium', 'link');
+  return url.toString();
+}
+
+function trackGetYourGuide(url: URL, ids: AffiliateIds): string {
+  return withParams(url, {
+    partner_id: ids.getYourGuidePartnerId,
+    utm_medium: isPlaceholderId(ids.getYourGuidePartnerId) ? undefined : GYG_UTM_MEDIUM,
+  });
+}
+
 export function createAffiliateLinks(ids: AffiliateIds = AFFILIATE_IDS) {
   return {
-    /** Documented search deep link: https://www.getyourguide.com/s/?q=&partner_id= */
+    /** Search page: https://www.getyourguide.com/s/?q=&partner_id=&utm_medium=online_publisher */
     getYourGuide(query: string) {
       const url = new URL('https://www.getyourguide.com/s/');
       url.searchParams.set('q', query);
-      return withParams(url, { partner_id: ids.getYourGuidePartnerId });
+      return trackGetYourGuide(url, ids);
     },
 
-    /**
-     * Search URL plus Viator's pid / mcid / medium=link.
-     * Destination d-codes are not hardcoded: Viator blocks unauthenticated checks,
-     * so the public search URL is the stable deep link.
-     */
+    /** Location page such as /quito-l2774/. Existing query params are kept; partner_id is replaced. */
+    getYourGuideLocation(path: string) {
+      const url = new URL(path.startsWith('/') ? path : `/${path}`, 'https://www.getyourguide.com');
+      return trackGetYourGuide(url, ids);
+    },
+
+    /** Search: https://www.viator.com/searchResults/all?text=&pid=&mcid=42383&medium=link */
     viator(text: string) {
       const url = new URL('https://www.viator.com/searchResults/all');
       url.searchParams.set('text', text);
-      if (!isPlaceholderId(ids.viatorPid)) {
-        url.searchParams.set('pid', ids.viatorPid);
-        url.searchParams.set('mcid', VIATOR_LINK_MCID);
-        url.searchParams.set('medium', 'link');
-      }
-      return url.toString();
+      return trackViator(url, ids);
+    },
+
+    /** Destination page such as /Quito/d4427-ttd. Existing query params are kept; pid is replaced. */
+    viatorDestination(path: string) {
+      const url = new URL(path.startsWith('/') ? path : `/${path}`, 'https://www.viator.com');
+      return trackViator(url, ids);
     },
 
     /** path is a site path such as /en/quito/ — aid is Civitatis's published param. */
@@ -189,8 +211,18 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'quito-tours',
       kicker: 'Tours',
       title: 'Quito & the equator',
-      href: links.getYourGuide('Quito city tour Mitad del Mundo'),
+      href: links.getYourGuideLocation('/quito-l2774/'),
       partner: 'getyourguide',
+      art: 'art-equator',
+      photo: scene('equator'),
+      cta: 'See tours',
+    },
+    'quito-viator': {
+      id: 'quito-viator',
+      kicker: 'Tours',
+      title: 'Quito & the equator',
+      href: links.viatorDestination('/Quito/d4427-ttd'),
+      partner: 'viator',
       art: 'art-equator',
       photo: scene('equator'),
       cta: 'See tours',
@@ -215,8 +247,38 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       photo: scene('otavalo'),
       cta: 'See tours',
     },
+    'otavalo-gyg': {
+      id: 'otavalo-gyg',
+      kicker: 'Tours',
+      title: 'Otavalo market',
+      href: links.getYourGuide('Otavalo'),
+      partner: 'getyourguide',
+      art: 'art-market',
+      photo: scene('otavalo'),
+      cta: 'See tours',
+    },
+    'otavalo-viator': {
+      id: 'otavalo-viator',
+      kicker: 'Tours',
+      title: 'Otavalo market',
+      href: links.viator('Otavalo'),
+      partner: 'viator',
+      art: 'art-market',
+      photo: scene('otavalo'),
+      cta: 'See tours',
+    },
     mitad: {
       id: 'mitad',
+      kicker: 'Tours',
+      title: 'Mitad del Mundo',
+      href: links.getYourGuide('Mitad del Mundo'),
+      partner: 'getyourguide',
+      art: 'art-equator',
+      photo: scene('equator'),
+      cta: 'See the tour',
+    },
+    'mitad-klook': {
+      id: 'mitad-klook',
       kicker: 'Tours',
       title: 'Mitad del Mundo',
       href: links.klook('quito'),
@@ -225,11 +287,31 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       photo: scene('equator'),
       cta: 'See the tour',
     },
+    'mitad-viator': {
+      id: 'mitad-viator',
+      kicker: 'Tours',
+      title: 'Mitad del Mundo',
+      href: links.viator('Mitad del Mundo'),
+      partner: 'viator',
+      art: 'art-equator',
+      photo: scene('equator'),
+      cta: 'See the tour',
+    },
     cotopaxi: {
       id: 'cotopaxi',
       kicker: 'Day trips',
       title: 'Cotopaxi & Quilotoa',
-      href: links.viator('Cotopaxi Quilotoa day trip'),
+      href: links.getYourGuide('Cotopaxi'),
+      partner: 'getyourguide',
+      art: 'art-volcano',
+      photo: scene('cotopaxi'),
+      cta: 'See trips',
+    },
+    'cotopaxi-viator': {
+      id: 'cotopaxi-viator',
+      kicker: 'Day trips',
+      title: 'Cotopaxi & Quilotoa',
+      href: links.viator('Cotopaxi'),
       partner: 'viator',
       art: 'art-volcano',
       photo: scene('cotopaxi'),
@@ -241,6 +323,16 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       title: 'Quilotoa crater',
       href: links.getYourGuide('Quilotoa crater lake from Quito'),
       partner: 'getyourguide',
+      art: 'art-lake',
+      photo: scene('quilotoa'),
+      cta: 'See trips',
+    },
+    'quilotoa-viator': {
+      id: 'quilotoa-viator',
+      kicker: 'Day trips',
+      title: 'Quilotoa crater',
+      href: links.viator('Quilotoa'),
+      partner: 'viator',
       art: 'art-lake',
       photo: scene('quilotoa'),
       cta: 'See trips',
@@ -259,8 +351,28 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'mindo',
       kicker: 'Tours',
       title: 'Mindo cloud forest',
+      href: links.getYourGuide('Mindo'),
+      partner: 'getyourguide',
+      art: 'art-forest',
+      photo: scene('forest'),
+      cta: 'See tours',
+    },
+    'mindo-klook': {
+      id: 'mindo-klook',
+      kicker: 'Tours',
+      title: 'Mindo cloud forest',
       href: links.klook('quito'),
       partner: 'klook',
+      art: 'art-forest',
+      photo: scene('forest'),
+      cta: 'See tours',
+    },
+    'mindo-viator': {
+      id: 'mindo-viator',
+      kicker: 'Tours',
+      title: 'Mindo cloud forest',
+      href: links.viator('Mindo'),
+      partner: 'viator',
       art: 'art-forest',
       photo: scene('forest'),
       cta: 'See tours',
@@ -269,8 +381,28 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       id: 'banos',
       kicker: 'Tours',
       title: 'Baños',
+      href: links.getYourGuide('Banos'),
+      partner: 'getyourguide',
+      art: 'art-falls',
+      photo: scene('falls'),
+      cta: 'See tours',
+    },
+    'banos-klook': {
+      id: 'banos-klook',
+      kicker: 'Tours',
+      title: 'Baños',
       href: links.klook('quito'),
       partner: 'klook',
+      art: 'art-falls',
+      photo: scene('falls'),
+      cta: 'See tours',
+    },
+    'banos-viator': {
+      id: 'banos-viator',
+      kicker: 'Tours',
+      title: 'Baños',
+      href: links.viator('Banos'),
+      partner: 'viator',
       art: 'art-falls',
       photo: scene('falls'),
       cta: 'See tours',
@@ -295,12 +427,32 @@ export function tripCatalog(links = affiliateLinks): Record<string, AffiliateCar
       photo: scene('cotopaxi'),
       cta: 'See trips',
     },
+    'day-trips-gyg': {
+      id: 'day-trips-gyg',
+      kicker: 'Day trips',
+      title: 'Days out of Quito',
+      href: links.getYourGuide('Cotopaxi'),
+      partner: 'getyourguide',
+      art: 'art-volcano',
+      photo: scene('cotopaxi'),
+      cta: 'See trips',
+    },
     teleferico: {
       id: 'teleferico',
       kicker: 'Tours',
       title: 'TelefériQo',
       href: links.getYourGuide('Teleferico Quito Pichincha'),
       partner: 'getyourguide',
+      art: 'art-peak',
+      photo: scene('peak'),
+      cta: 'See tours',
+    },
+    'teleferico-viator': {
+      id: 'teleferico-viator',
+      kicker: 'Tours',
+      title: 'TelefériQo',
+      href: links.viator('Teleferico'),
+      partner: 'viator',
       art: 'art-peak',
       photo: scene('peak'),
       cta: 'See tours',
@@ -475,6 +627,8 @@ export interface PostAffiliatePlan {
   inlineTitle?: string;
   hotel: HotelQuery;
   tour: string;
+  /** Extra tour card when inline and tour already use two different partners. */
+  viator?: string;
   luxury?: string[];
 }
 
@@ -548,142 +702,148 @@ const QUILOTOA: HotelQuery = {
 const QUITO_LUXURY = ['gangotena', 'illa', 'plaza-grande'];
 
 export const POST_AFFILIATES: Record<string, PostAffiliatePlan> = {
-  'why-licensed-airport-drivers-matter-quito': { inline: 'esim', hotel: QUITO, tour: 'quito-tours' },
+  'why-licensed-airport-drivers-matter-quito': { inline: 'esim', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'teleferico-quito-pichincha': {
     inline: 'teleferico',
     hotel: QUITO,
-    tour: 'teleferico',
+    tour: 'teleferico-viator',
     luxury: ['gangotena', 'illa'],
   },
   'quito-old-town-guide': {
     inline: 'old-town-tour',
     hotel: OLD_TOWN,
-    tour: 'old-town-tour',
+    tour: 'quito-viator',
     luxury: QUITO_LUXURY,
   },
-  'taxi-or-uber-from-quito-airport-at-night': { inline: 'esim', inlineTitle: 'Data when you land', hotel: QUITO, tour: 'quito-tours' },
-  'renting-a-car-vs-private-transfer-quito': { inline: 'car', hotel: QUITO, tour: 'quito-tours' },
+  'taxi-or-uber-from-quito-airport-at-night': { inline: 'esim', inlineTitle: 'Data when you land', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
+  'renting-a-car-vs-private-transfer-quito': { inline: 'car', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'united-ua1002-houston-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
-  'dont-arrive-to-an-empty-airport': { inline: 'esim', inlineTitle: 'A working phone', hotel: QUITO, tour: 'quito-tours' },
+  'dont-arrive-to-an-empty-airport': { inline: 'esim', inlineTitle: 'A working phone', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'copa-cm211-panama-city-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
-  'quilotoa-crater-lake-guide': { inline: 'quilotoa', hotel: QUILOTOA, tour: 'quilotoa' },
-  'how-far-is-quito-airport-from-the-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
+  'quilotoa-crater-lake-guide': { inline: 'quilotoa', hotel: QUILOTOA, tour: 'quilotoa-viator' },
+  'how-far-is-quito-airport-from-the-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-viator' },
   'avianca-av8396-bogota-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
-  'quito-airport-to-cumbaya-transfer': { inline: 'hotels-cumbaya', hotel: CUMBAYA, tour: 'quito-tours' },
-  'quito-airport-to-wyndham-do-you-need-a-car': { inline: 'car', hotel: AIRPORT, tour: 'quito-tours' },
-  'how-much-is-a-taxi-from-quito-airport': { inline: 'esim', hotel: QUITO, tour: 'quito-tours' },
-  'cumbaya-tumbaco-guide': { inline: 'hotels-cumbaya', hotel: CUMBAYA, tour: 'quito-tours' },
+  'quito-airport-to-cumbaya-transfer': { inline: 'hotels-cumbaya', hotel: CUMBAYA, tour: 'quito-tours', viator: 'quito-viator' },
+  'quito-airport-to-wyndham-do-you-need-a-car': { inline: 'car', hotel: AIRPORT, tour: 'quito-tours', viator: 'quito-viator' },
+  'how-much-is-a-taxi-from-quito-airport': { inline: 'esim', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
+  'cumbaya-tumbaco-guide': { inline: 'hotels-cumbaya', hotel: CUMBAYA, tour: 'quito-tours', viator: 'quito-viator' },
   'papallacta-hot-springs-guide': { inline: 'papallacta', hotel: PAPALLACTA, tour: 'papallacta' },
-  'uber-from-quito-airport': { inline: 'esim', inlineTitle: 'Data when you land', hotel: QUITO, tour: 'quito-tours' },
+  'uber-from-quito-airport': { inline: 'esim', inlineTitle: 'Data when you land', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'la-mariscal-quito-guide': {
     inline: 'food-tour',
     hotel: MARISCAL,
     tour: 'food-tour',
     luxury: ['jw-marriott'],
   },
-  'quito-airport-arrival-guide': { inline: 'esim', inlineTitle: 'An eSIM before you fly', hotel: QUITO, tour: 'quito-tours' },
-  'is-uber-safe-in-quito': { inline: 'esim', hotel: QUITO, tour: 'quito-tours' },
+  'quito-airport-arrival-guide': { inline: 'esim', inlineTitle: 'An eSIM before you fly', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
+  'is-uber-safe-in-quito': { inline: 'esim', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'latam-la1443-bogota-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
   'first-trip-to-quito-from-the-us': {
     inline: 'esim',
     inlineTitle: 'An eSIM before you fly',
     hotel: QUITO,
     tour: 'quito-tours',
+    viator: 'quito-viator',
     luxury: ['gangotena', 'illa', 'jw-marriott', 'pinsaqui'],
   },
-  'getting-from-quito-airport-to-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
+  'getting-from-quito-airport-to-city': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-viator' },
   'things-to-do-in-otavalo': {
-    inline: 'otavalo',
+    inline: 'otavalo-gyg',
     hotel: OTAVALO,
     tour: 'otavalo',
+    viator: 'otavalo-viator',
     luxury: ['pinsaqui', 'cusin', 'mirage'],
   },
   'visiting-mitad-del-mundo': {
     inline: 'mitad',
     hotel: QUITO,
-    tour: 'mitad',
+    tour: 'mitad-klook',
+    viator: 'mitad-viator',
     luxury: ['gangotena', 'illa'],
   },
   'altitude-in-quito-what-to-expect': {
     inline: 'quito-tours',
     inlineTitle: 'An easy first day',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
-  'paying-for-quito-airport-rides': { inline: 'esim', hotel: QUITO, tour: 'quito-tours' },
+  'paying-for-quito-airport-rides': { inline: 'esim', hotel: QUITO, tour: 'quito-tours', viator: 'quito-viator' },
   'pululahua-crater-guide': { inline: 'pululahua', hotel: QUITO, tour: 'pululahua' },
-  'banos-de-agua-santa-guide': { inline: 'banos', hotel: BANOS, tour: 'banos' },
-  'where-to-stay-near-quito-airport': { inline: 'hotels-airport', hotel: AIRPORT, tour: 'quito-tours' },
+  'banos-de-agua-santa-guide': { inline: 'banos', hotel: BANOS, tour: 'banos-klook', viator: 'banos-viator' },
+  'where-to-stay-near-quito-airport': { inline: 'hotels-airport', hotel: AIRPORT, tour: 'quito-tours', viator: 'quito-viator' },
   'arriving-quito-airport-late-at-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
   'quito-airport-to-old-town-hotels': {
     inline: 'stay-gangotena',
     hotel: OLD_TOWN,
     tour: 'old-town-tour',
+    viator: 'quito-viator',
     luxury: QUITO_LUXURY,
   },
   'american-airlines-aa833-miami-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
-  'quito-airport-transfer-for-families': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
+  'quito-airport-transfer-for-families': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-viator' },
   'best-day-trips-from-quito': {
-    inline: 'day-trips',
+    inline: 'day-trips-gyg',
     hotel: QUITO,
     tour: 'day-trips',
+    viator: 'cotopaxi-viator',
     luxury: ['pinsaqui', 'callo', 'mashpi', 'gangotena'],
   },
-  'private-transfer-vs-taxi-quito': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
+  'private-transfer-vs-taxi-quito': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-viator' },
   'avianca-av125-bogota-to-quito-night': {
     inline: 'quito-tours',
     inlineTitle: 'Tomorrow in Quito',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
   },
   'cotopaxi-national-park-day-trip': {
     inline: 'cotopaxi',
     hotel: COTOPAXI,
-    tour: 'cotopaxi',
+    tour: 'cotopaxi-viator',
     luxury: ['callo', 'porvenir'],
   },
   'quito-layover-guide': {
     inline: 'quito-tours',
     inlineTitle: 'If you leave the airport',
     hotel: QUITO,
-    tour: 'quito-tours',
+    tour: 'quito-viator',
     luxury: ['gangotena', 'illa'],
   },
-  'aeroservicios-bus-vs-private-transfer': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-tours' },
+  'aeroservicios-bus-vs-private-transfer': { inline: 'quito-tours', hotel: QUITO, tour: 'quito-viator' },
   'mindo-cloud-forest-guide': {
     inline: 'mindo',
     hotel: MINDO,
-    tour: 'mindo',
+    tour: 'mindo-klook',
+    viator: 'mindo-viator',
     luxury: ['mashpi', 'bellavista'],
   },
 };
@@ -734,7 +894,12 @@ export function postEndCards(slug: string, links = affiliateLinks): AffiliateCar
   };
   const tour = cardForOffer(plan.tour, links) ?? tripCatalog(links)['quito-tours'];
   const catalog = tripCatalog(links);
-  return [hotelCard(plan.hotel, links), catalog.car, tour, catalog.esim];
+  const cards = [hotelCard(plan.hotel, links), catalog.car, tour, catalog.esim];
+  if (plan.viator) {
+    const extra = cardForOffer(plan.viator, links);
+    if (extra) cards.splice(3, 0, extra);
+  }
+  return cards;
 }
 
 export function inlineCardForPost(slug: string, links = affiliateLinks): AffiliateCard | undefined {
@@ -757,7 +922,7 @@ export function inlineOfferHtml(slug: string, links = affiliateLinks): string {
   const card = inlineCardForPost(slug, links);
   if (!card) return '';
   return `<aside class="offer" data-inline-offer="${esc(card.id)}">
-<a href="${esc(card.href)}" rel="sponsored noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
+<a href="${esc(card.href)}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="${esc(card.partner)}" data-affiliate-label="${esc(card.id)}">
 <span class="art ${esc(card.art)}">${card.photo ? `<img src="${esc(card.photo)}" alt="${esc(sceneAlt(card.photo))}">` : ''}</span>
 <span class="offer-copy"><span class="offer-kicker">${esc(card.kicker)}</span><strong>${esc(card.title)}</strong></span>
 <span class="offer-go">${esc(card.cta)}</span>

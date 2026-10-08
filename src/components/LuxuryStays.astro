@@ -24,7 +24,7 @@ const stays = ids.map((id) => stayById(id)).filter((stay) => stay != null);
         <a
           class="stay-card"
           href={stayHref(stay)}
-          rel="sponsored noopener"
+          rel="sponsored nofollow noopener"
           target="_blank"
           data-affiliate="booking"
           data-affiliate-label={stay.id}

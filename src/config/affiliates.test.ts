@@ -17,8 +17,11 @@ import {
   stayHref,
 } from './affiliates.ts';
 
-const placeholderLinks = createAffiliateLinks();
-
+const placeholderLinks = createAffiliateLinks({
+  ...AFFILIATE_IDS,
+  getYourGuidePartnerId: 'GYG_PARTNER_ID_TODO',
+  viatorPid: 'VIATOR_PID_TODO',
+});
 test('placeholder partner ids are recognized', () => {
   assert.equal(isPlaceholderId('GYG_PARTNER_ID_TODO'), true);
   assert.equal(isPlaceholderId(''), true);
@@ -77,11 +80,22 @@ test('real ids are appended with each partner’s documented parameter', () => {
     airaloImpactUrl: 'AIRALO_IMPACT_URL_TODO',
   });
 
-  assert.match(links.getYourGuide('Quito'), /partner_id=GYG123/);
-  const viator = links.viator('Galapagos');
-  assert.match(viator, /pid=P00012345/);
-  assert.match(viator, /mcid=42383/);
-  assert.match(viator, /medium=link/);
+  assert.equal(
+    links.getYourGuide('Quito'),
+    'https://www.getyourguide.com/s/?q=Quito&partner_id=GYG123&utm_medium=online_publisher',
+  );
+  assert.equal(
+    links.getYourGuideLocation('/quito-l2774/?partner_id=OLD'),
+    'https://www.getyourguide.com/quito-l2774/?partner_id=GYG123&utm_medium=online_publisher',
+  );
+  assert.equal(
+    links.viator('Cotopaxi'),
+    'https://www.viator.com/searchResults/all?text=Cotopaxi&pid=P00012345&mcid=42383&medium=link',
+  );
+  assert.equal(
+    links.viatorDestination('/Quito/d4427-ttd?pid=OLD'),
+    'https://www.viator.com/Quito/d4427-ttd?pid=P00012345&mcid=42383&medium=link',
+  );
   assert.match(links.civitatis('/en/galapagos-islands/'), /aid=10000/);
   assert.match(links.discoverCars(), /a_aid=packed/);
   const hotels = links.bookingSearch('Quito');
@@ -104,21 +118,77 @@ test('live tour and eSIM cards use tracked Travelpayouts links, not Civitatis', 
   assert.equal(catalog.otavalo.partner, 'klook');
   assert.equal(catalog.galapagos.href, KLOOK_LINKS.galapagos);
   assert.equal(catalog.galapagos.partner, 'klook');
-  assert.equal(catalog.mitad.href, KLOOK_LINKS.quito);
+  assert.equal(catalog['mitad-klook'].href, KLOOK_LINKS.quito);
   assert.equal(catalog['day-trips'].href, KLOOK_LINKS.quito);
-  assert.equal(catalog.mindo.href, KLOOK_LINKS.quito);
-  assert.equal(catalog.banos.href, KLOOK_LINKS.quito);
+  assert.equal(catalog['mindo-klook'].href, KLOOK_LINKS.quito);
+  assert.equal(catalog['banos-klook'].href, KLOOK_LINKS.quito);
   assert.equal(catalog.esim.href, AIRALO_LINKS.ecuadorEsim);
   assert.equal(catalog.esim.partner, 'airalo');
   assert.equal(catalog.car.href, ECONOMYBOOKINGS_LINKS.quitoAirport);
   assert.equal(catalog.car.partner, 'economybookings');
-  assert.match(catalog['quito-tours'].href, /^https:\/\/www\.getyourguide\.com\//);
-  assert.match(catalog.cotopaxi.href, /^https:\/\/www\.viator\.com\//);
+  assert.equal(
+    catalog['quito-tours'].href,
+    'https://www.getyourguide.com/quito-l2774/?partner_id=XMZLWQZ&utm_medium=online_publisher',
+  );
+  assert.equal(
+    catalog.cotopaxi.href,
+    'https://www.getyourguide.com/s/?q=Cotopaxi&partner_id=XMZLWQZ&utm_medium=online_publisher',
+  );
+  assert.equal(catalog.mitad.partner, 'getyourguide');
+  assert.equal(catalog.mindo.partner, 'getyourguide');
+  assert.equal(catalog.banos.partner, 'getyourguide');
+  assert.equal(catalog['otavalo-gyg'].partner, 'getyourguide');
+  assert.match(catalog['otavalo-gyg'].href, /q=Otavalo/);
+  assert.equal(AFFILIATE_IDS.getYourGuidePartnerId, 'XMZLWQZ');
+  assert.equal(AFFILIATE_IDS.viatorPid, 'P00324546');
+  assert.equal(
+    catalog['quito-viator'].href,
+    'https://www.viator.com/Quito/d4427-ttd?pid=P00324546&mcid=42383&medium=link',
+  );
+  assert.equal(
+    catalog['cotopaxi-viator'].href,
+    'https://www.viator.com/searchResults/all?text=Cotopaxi&pid=P00324546&mcid=42383&medium=link',
+  );
+  for (const card of Object.values(catalog)) {
+    if (!card.href.includes('viator.com')) continue;
+    assert.match(card.href, /pid=P00324546/, card.id);
+    assert.match(card.href, /mcid=42383/, card.id);
+    assert.match(card.href, /medium=link/, card.id);
+  }
+  for (const card of Object.values(catalog)) {
+    if (!card.href.includes('getyourguide.com')) continue;
+    assert.match(card.href, /partner_id=XMZLWQZ/, card.id);
+    assert.match(card.href, /utm_medium=online_publisher/, card.id);
+    assert.equal(/-t\d+/.test(card.href), false, card.id);
+  }
   for (const card of Object.values(catalog)) {
     assert.equal(card.href.includes('civitatis.com'), false, card.id);
     assert.equal(card.href.includes('airalo.com'), false, card.id);
     assert.equal(card.href.includes('discovercars.com'), false, card.id);
   }
+});
+
+test('tour guides offer tracked Viator beside GetYourGuide and Klook', () => {
+  const partners = (slug: string) => postEndCards(slug).map((card) => card.partner);
+  assert.deepEqual(
+    postEndCards('things-to-do-in-otavalo').filter((card) => card.partner !== 'booking' && card.partner !== 'economybookings' && card.partner !== 'airalo').map((card) => card.partner),
+    ['klook', 'viator'],
+  );
+  assert.match(inlineOfferHtml('things-to-do-in-otavalo'), /getyourguide\.com/);
+  assert.ok(partners('visiting-mitad-del-mundo').includes('klook'));
+  assert.ok(partners('visiting-mitad-del-mundo').includes('viator'));
+  assert.match(inlineOfferHtml('visiting-mitad-del-mundo'), /q=Mitad\+del\+Mundo/);
+  assert.ok(partners('mindo-cloud-forest-guide').includes('klook'));
+  assert.ok(partners('banos-de-agua-santa-guide').includes('viator'));
+  assert.ok(partners('cotopaxi-national-park-day-trip').includes('viator'));
+  assert.match(inlineOfferHtml('cotopaxi-national-park-day-trip'), /getyourguide\.com/);
+  assert.match(inlineOfferHtml('teleferico-quito-pichincha'), /getyourguide\.com/);
+  assert.ok(partners('teleferico-quito-pichincha').includes('viator'));
+  assert.ok(partners('quilotoa-crater-lake-guide').includes('viator'));
+  assert.match(inlineOfferHtml('quilotoa-crater-lake-guide'), /getyourguide\.com/);
+  const quito = postEndCards('how-far-is-quito-airport-from-the-city');
+  assert.ok(quito.some((card) => card.href.includes('/Quito/d4427-ttd')));
+  assert.match(inlineOfferHtml('how-far-is-quito-airport-from-the-city'), /quito-l2774/);
 });
 
 test('named hotels use a Booking.com property page with the Travelpayouts marker', () => {
@@ -159,10 +229,10 @@ test('every guide has one inline offer and sponsored attributes', () => {
   for (const slug of slugs) {
     assert.ok(POST_AFFILIATES[slug], `missing plan for ${slug}`);
     const html = inlineOfferHtml(slug);
-    assert.match(html, /rel="sponsored noopener"/);
+    assert.match(html, /rel="sponsored nofollow noopener"/);
     assert.match(html, /target="_blank"/);
     assert.equal(html.includes('TODO'), false, slug);
-    assert.equal(html.includes('commission') && html.includes('%'), false);
+    assert.equal(/\b\d+\s*%/.test(html), false, slug);
   }
 });
 
