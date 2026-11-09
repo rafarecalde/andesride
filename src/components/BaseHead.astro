@@ -11,8 +11,9 @@ interface Props {
   path?: string;
   ogType?: 'website' | 'article';
   image?: string;
+  noindex?: boolean;
 }
-const { title, description, path = '/', ogType = 'website', image } = Astro.props;
+const { title, description, path = '/', ogType = 'website', image, noindex = false } = Astro.props;
 const canonical = publicUrl(path || '/', Astro.site);
 const ogImage = publicUrl(image ?? '/og-default.jpg', Astro.site);
 ---
@@ -22,6 +23,7 @@ const ogImage = publicUrl(image ?? '/og-default.jpg', Astro.site);
 
 <title>{title}</title>
 <meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex,nofollow" />}
 <link rel="canonical" href={canonical} />
 <link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
 

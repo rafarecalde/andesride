@@ -8,9 +8,19 @@ export function publicOrigin(site?: URL | string | undefined): string {
   return raw.replace(/\/$/, '') + '/';
 }
 
+/** HTML page paths get a trailing slash so canonicals match the sitemap and GitHub Pages URLs. */
+function normalizePath(path: string): string {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  if (p === '/') return '/';
+  if (p.endsWith('/')) return p;
+  // Keep asset URLs (og images, favicons) without a forced slash.
+  if (/\.[a-zA-Z0-9]{2,8}$/.test(p)) return p;
+  return `${p}/`;
+}
+
 export function publicUrl(path: string, site?: URL | string | undefined): string {
   const origin = publicOrigin(site);
-  const p = path.startsWith('/') ? path : `/${path}`;
+  const p = normalizePath(path);
   if (!origin) return SITE.domain ? p : u(p);
   // When SITE.domain is set, canonical URLs are root-hosted on that domain
   // (no GitHub Pages /andesride prefix). In-page links still use u().

@@ -52,8 +52,13 @@ function rehypeBase() {
 export default defineConfig({
   site: SITE,
   base: BASE,
-  trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  trailingSlash: 'always',
+  integrations: [
+    sitemap({
+      // Confirmation page is transactional; keep it out of the index.
+      filter: (page) => !page.includes('/success'),
+    }),
+  ],
   markdown: {
     remarkPlugins: [remarkInlineAffiliate],
     rehypePlugins: [rehypeBase],

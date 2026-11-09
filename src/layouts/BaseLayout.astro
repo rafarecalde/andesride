@@ -11,14 +11,15 @@ interface Props {
   path?: string;
   ogType?: 'website' | 'article';
   image?: string;
+  noindex?: boolean;
   schema?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description, path, ogType, image, schema } = Astro.props;
+const { title, description, path, ogType, image, noindex, schema } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} path={path} ogType={ogType} image={image} />
+    <BaseHead title={title} description={description} path={path} ogType={ogType} image={image} noindex={noindex} />
     {schema && <JsonLd schema={schema} />}
     <script is:inline nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
       (function () {
