@@ -24,24 +24,31 @@ const SITE = 'https://uiotransfers.com';
 const BASE = '/';
 const withBase = (path) => (BASE === '/' ? path : `${BASE}${path === '/' ? '/' : path}`);
 
+// Page paths need a trailing slash (trailingSlash: 'always'). Assets do not.
+function withPageSlash(path) {
+  const cut = path.search(/[?#]/);
+  const pathname = cut === -1 ? path : path.slice(0, cut);
+  const suffix = cut === -1 ? '' : path.slice(cut);
+  if (pathname === '/' || pathname === '') return (pathname || '/') + suffix;
+  if (pathname.endsWith('/')) return pathname + suffix;
+  if (/\.[a-zA-Z0-9]{2,8}$/.test(pathname)) return pathname + suffix;
+  return `${pathname}/${suffix}`;
+}
+
 // Base-aware rewrite of internal links inside markdown (href/src starting with
-// "/"). No-op when BASE is '/'. Avoids a unist dependency by recursing manually.
+// "/"). Also adds the trailing slash Astro requires on page URLs. Avoids a
+// unist dependency by recursing manually.
 function rehypeBase() {
   const base = BASE === '/' ? '' : BASE;
-  if (!base) return () => {};
   const fix = (node) => {
     if (node.type === 'element' && node.properties) {
       for (const attr of ['href', 'src']) {
         const v = node.properties[attr];
-        if (
-          typeof v === 'string' &&
-          v.startsWith('/') &&
-          !v.startsWith('//') &&
-          v !== base &&
-          !v.startsWith(base + '/')
-        ) {
-          node.properties[attr] = base + v;
-        }
+        if (typeof v !== 'string' || !v.startsWith('/') || v.startsWith('//')) continue;
+        let next = v;
+        if (base && next !== base && !next.startsWith(base + '/')) next = base + next;
+        if (attr === 'href') next = withPageSlash(next);
+        if (next !== v) node.properties[attr] = next;
       }
     }
     (node.children || []).forEach(fix);
@@ -64,10 +71,12 @@ export default defineConfig({
     rehypePlugins: [rehypeBase],
   },
   redirects: {
-    '/quito-airport-to-puembo': withBase('/quito-airport-to-wyndham-airport'),
-    '/quito-airport-to-norte': withBase('/quito-airport-to-quito'),
-    '/quito-airport-to-centro': withBase('/quito-airport-to-quito'),
-    '/quito-airport-to-sur': withBase('/quito-airport-to-quito'),
+    // Destinations include the trailing slash. These targets are concrete URLs,
+    // not route patterns, so Astro will not append the slash itself.
+    '/quito-airport-to-puembo': withBase('/quito-airport-to-wyndham-airport/'),
+    '/quito-airport-to-norte': withBase('/quito-airport-to-quito/'),
+    '/quito-airport-to-centro': withBase('/quito-airport-to-quito/'),
+    '/quito-airport-to-sur': withBase('/quito-airport-to-quito/'),
     // /quito-airport-to-cumbaya is a live prepaid product page now (see rates.json).
     '/quito-airport-to-mitad': withBase('/'),
     '/quito-airport-to-papallacta': withBase('/'),
